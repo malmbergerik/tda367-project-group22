@@ -1,7 +1,5 @@
 package td_game.model.map;
 
-import java.nio.file.Path;
-
 public class PathTile extends TileBase{
 
     private final PathType pathType;

@@ -3,10 +3,6 @@ package td_game;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import td_game.model.map.GrassTile;
-import td_game.model.map.PathTile;
-import td_game.model.map.PathType;
-
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater (() -> {
