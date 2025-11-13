@@ -33,7 +33,7 @@ public class GridMap implements IMap{
 
     @Override
     public TileBase getTile(int x, int y) {
-        if(x<=col && x>=0 && y<=row && y>=0){
+        if(x<=row && x>=0 && y<=col && y>=0){
             return tiles[x][y];
         }
         throw new IndexOutOfBoundsException("The index is out of bounce");
