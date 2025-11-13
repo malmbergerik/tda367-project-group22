@@ -1,6 +1,9 @@
 package td_game.model.map;
 
 public abstract class TileBase {
+
+    // Look into the need for x and y coordinates
+
     private final int x;
     private final int y;
     private final TileType type;
