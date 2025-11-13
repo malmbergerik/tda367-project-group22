@@ -36,14 +36,17 @@ public class GridMap implements IMap{
         if(x<=row && x>=0 && y<=col && y>=0){
             return tiles[x][y];
         }
-        throw new IndexOutOfBoundsException("The index is out of bounce");
+        else {
+            throw new IndexOutOfBoundsException("The index is out of bounce");
+        }
     }
 
     @Override
     public void setTile(int x, int y, TileBase tile) {
         if(x<=row && x>=0 && y<=col && y>=0) {
             tiles[x][y] = tile;
+        } else {
+            throw new IndexOutOfBoundsException("The index is out of bounds");
         }
-        throw new IndexOutOfBoundsException("The index is out of bounds");
     }
 }
