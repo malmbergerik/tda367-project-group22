@@ -1,4 +1,6 @@
 package td_game.view;
 
-public class GamePanel {
+import javax.swing.*;
+
+public class GamePanel extends JPanel {
 }
