@@ -1,4 +1,6 @@
 package td_game.view;
+import td_game.model.GameEventType;
+import td_game.model.GameObserver;
 import td_game.model.map.GridMap;
 import td_game.model.map.TileBase;
 import td_game.view.helper.TileViewManager;
@@ -6,11 +8,17 @@ import td_game.view.helper.TileViewManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.function.Consumer;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements GameObserver{
     private GridMap gridMap;
     private TileViewManager tileViewManager;
     private int SCALE = 3;
+
+    private final Queue<Consumer<Graphics>> drawNextQueue = new LinkedList<>();
+
 
     public GamePanel(GridMap gridMap) {
         this.gridMap = gridMap;
@@ -28,6 +36,39 @@ public class GamePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        while(!drawNextQueue.isEmpty()){
+            Consumer<Graphics> task = drawNextQueue.poll();
+            task.accept(g);
+        }
+
+
+        //g.dispose();
+    }
+
+    @Override
+    public void update(GameEventType eventType) {
+        switch (eventType){
+
+
+            case MOVING_OBJECTS_UPDATE -> {
+                //Redraw projectiles and enemies
+            }
+            case TOWER_UPDATE -> {
+                //Redraw towers
+            }
+            case TILES_UPDATE -> {
+                drawNextQueue.add(this::drawTiles);
+                repaint();
+            }
+
+        }
+    }
+    public void update(){
+        drawNextQueue.add(this::drawTiles);
+        repaint();
+    }
+
+    private void drawTiles(Graphics g){
         for (int row = 0; row < gridMap.getRow(); ++row) {
             for (int col = 0; col < gridMap.getCol(); ++col) {
                 TileBase currentTile = gridMap.getTile(row,col);
@@ -38,15 +79,7 @@ public class GamePanel extends JPanel {
 
                 g.drawImage(image, screen_x*SCALE, screen_y*SCALE, 16*SCALE, 16*SCALE, null);
 
-
-
-
             }
         }
-
-        g.dispose();
     }
-
-
-
 }
