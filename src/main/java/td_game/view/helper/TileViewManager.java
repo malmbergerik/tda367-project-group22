@@ -21,10 +21,13 @@ public class TileViewManager {
     }
 
     public void loadTileImages(){
+
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
         try {
-            InputStream grassStream = getClass().getResourceAsStream("/assets/grass.png");
-            InputStream pathStream = getClass().getResourceAsStream("/assets/tile.png");
-            InputStream waterStream = getClass().getResourceAsStream("/assets/water.png");
+            InputStream grassStream = classLoader.getResourceAsStream("assets/grass.png");
+            InputStream pathStream = classLoader.getResourceAsStream("assets/tile.png");
+            InputStream waterStream = classLoader.getResourceAsStream("assets/water.png");
 
             if (grassStream == null || pathStream == null || waterStream == null) {
                 throw new IOException("Could not find path to file");
