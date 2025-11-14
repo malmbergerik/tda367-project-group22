@@ -3,6 +3,7 @@ import td_game.model.GameEventType;
 import td_game.model.GameObserver;
 import td_game.model.map.GridMap;
 import td_game.model.map.TileBase;
+import td_game.model.modelnit.GameModel;
 import td_game.view.helper.TileViewManager;
 
 import javax.swing.*;
@@ -13,22 +14,26 @@ import java.util.Queue;
 import java.util.function.Consumer;
 
 public class GamePanel extends JPanel implements GameObserver{
-    private GridMap gridMap;
-    private TileViewManager tileViewManager;
-    private int SCALE = 3;
+    private GameModel gameModel;
+    private final TileViewManager tileViewManager;
+    private final int SCALE = 3;
 
     private final Queue<Consumer<Graphics>> drawNextQueue = new LinkedList<>();
 
 
-    public GamePanel(GridMap gridMap) {
-        this.gridMap = gridMap;
+    public GamePanel(GameModel gameModel) {
+        this.gameModel = gameModel;
+        gameModel.registerObserver(this);
+
         tileViewManager = new TileViewManager();
 
-        int width = gridMap.getWidth();
-        int height = gridMap.getHeight();
+        int width = gameModel.getX();
+        int height = gameModel.getY();
 
         this.setSize(width * SCALE, height * SCALE);
         this.setDoubleBuffered(true);
+
+        drawNextQueue.add(this::drawTiles);
 
     }
 
@@ -63,12 +68,15 @@ public class GamePanel extends JPanel implements GameObserver{
 
         }
     }
+
     public void update(){
         drawNextQueue.add(this::drawTiles);
         repaint();
     }
 
     private void drawTiles(Graphics g){
+        GridMap gridMap = gameModel.getGridMap();
+
         for (int row = 0; row < gridMap.getRow(); ++row) {
             for (int col = 0; col < gridMap.getCol(); ++col) {
                 TileBase currentTile = gridMap.getTile(row,col);
