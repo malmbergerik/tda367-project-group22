@@ -5,6 +5,8 @@ import td_game.model.GameState;
 import java.util.ArrayList;
 
 public class GameModel implements GameObservable {
+
+    /*
     private List<GameObservers> observers = new ArrayList<>();
     private GameState currentState = GameState.Menu;
 
@@ -35,12 +37,12 @@ public class GameModel implements GameObservable {
 
     @Override
     public void registerObserver(GameObserver observer) {
-
+        // Todo
     }
 
     @Override
     public void unregisterObserver(GameObserver observer) {
-
+        // Todo
     }
 
     @Override
