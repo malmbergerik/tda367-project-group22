@@ -1,3 +1,5 @@
+package td_game.model.enemy;
+
 public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable {
     private double health;
     private double speed;

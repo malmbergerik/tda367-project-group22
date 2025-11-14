@@ -1,4 +1,4 @@
-package td_game.model.map;
+package td_game.model.enemy;
 
 public enum EnemyType {
     enemy1,

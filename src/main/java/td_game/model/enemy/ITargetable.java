@@ -1,4 +1,6 @@
+package td_game.model.enemy;
+
 public interface ITargetable {
-    void getX();
-    void getY();
+    double getX();
+    double getY();
 }

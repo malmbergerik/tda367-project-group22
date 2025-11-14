@@ -1,4 +1,6 @@
+package td_game.model.enemy;
+
 public interface IDamageable {
     void takeDamage(double amount);
-    void isAlive();
+    boolean isAlive();
 }
