@@ -17,12 +17,12 @@ public class GridMap implements IMap{
     public int getCol() {return col;}
 
     @Override
-    public int getHeight() {
+    public int getWidth() {
         return col*tileSize;
     }
 
     @Override
-    public int getWidth() {
+    public int getHeight() {
         return row*tileSize;
     }
 
@@ -33,7 +33,7 @@ public class GridMap implements IMap{
 
     @Override
     public TileBase getTile(int x, int y) {
-        if(x<=row && x>=0 && y<=col && y>=0){
+        if (x >= 0 && x < row && y >= 0 && y < col) {
             return tiles[x][y];
         }
         else {
@@ -43,7 +43,7 @@ public class GridMap implements IMap{
 
     @Override
     public void setTile(int x, int y, TileBase tile) {
-        if(x<=row && x>=0 && y<=col && y>=0) {
+        if (x >= 0 && x < row && y >= 0 && y < col) {
             tiles[x][y] = tile;
         } else {
             throw new IndexOutOfBoundsException("The index is out of bounds");
