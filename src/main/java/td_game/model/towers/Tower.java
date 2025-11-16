@@ -29,11 +29,11 @@ public class Tower{
     }
     public double lenTooEnemy(EnemyType enemy)
     {
-        return  Math.sqrt(Math.pow(enemy.getX() - (getTowerX() + 8),2) + Math.pow(enemy.getY()- (getY() + 8),2));
+        return  Math.sqrt(Math.pow(enemy.getX() - (getX() + 8),2) + Math.pow(enemy.getY()- (getY() + 8),2));
     }
     public double getAngleToEnemy(EnemyType enemy)
     {
-        return  Math.atan2(enemy.getY()- (getTowerY() + 8), enemy.getX() - (getX() + 8)) * (180/Math.PI);
+        return  Math.atan2(enemy.getY()- (getY() + 8), enemy.getX() - (getX() + 8)) * (180/Math.PI);
     }
    /*
     public EnemyType getEnemyClosest(List enemies)
