@@ -39,6 +39,8 @@ public class MenuPanel extends JPanel {
         playButton.setContentAreaFilled(false);
         playButton.setFocusPainted(false);
 
+        playButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         add(playButton);
     }
 
