@@ -3,6 +3,7 @@ package td_game.view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -10,6 +11,7 @@ public class MenuPanel extends JPanel {
     private JButton playButton;
     private Image backgroundImage;
     private Image playButtonImage;
+    private Image hoverButtonImage;
 
     public MenuPanel() {
         setLayout(new GridBagLayout());
@@ -21,14 +23,21 @@ public class MenuPanel extends JPanel {
         try {
 
             backgroundImage = ImageIO.read(getClass().getResourceAsStream("/assets/menu.png"));
-            //InputStream buttomStream = classLoader.getResourceAsStream("assets/grass.png");
+            playButtonImage = ImageIO.read(getClass().getResourceAsStream("/assets/play.png"));
+            hoverButtonImage = ImageIO.read(getClass().getResourceAsStream("/assets/hoverPlay.png"));
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        playButton = new JButton();
-        playButton.setSize(200, 100);
-        playButton.setBackground(Color.BLUE);
+        ImageIcon staticIcon = new ImageIcon(playButtonImage);
+        ImageIcon hoverIcon = new ImageIcon(hoverButtonImage);
+
+        playButton = new JButton(staticIcon);
+        playButton.setRolloverIcon(hoverIcon);
+        playButton.setBorderPainted(false);
+        playButton.setContentAreaFilled(false);
+        playButton.setFocusPainted(false);
 
         add(playButton);
     }
@@ -39,6 +48,10 @@ public class MenuPanel extends JPanel {
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
+    }
+
+    public void addPlayButtonListener(ActionListener listener) {
+        playButton.addActionListener(listener);
     }
 
 }

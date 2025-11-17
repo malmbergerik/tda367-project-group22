@@ -35,7 +35,7 @@ public class WindowFrame extends JFrame {
 
     }
 
-    protected MenuPanel getMenuPanel() {
+    public MenuPanel getMenuPanel() {
         return menuPanel;
     }
 
@@ -43,7 +43,7 @@ public class WindowFrame extends JFrame {
         return gamePanel;
     }
 
-    private void showPanel(String panelName) {
+    public void showPanel(String panelName) {
         cl.show(getContentPane(), panelName);
 
     }
