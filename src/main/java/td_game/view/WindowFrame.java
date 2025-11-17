@@ -1,29 +1,53 @@
 package td_game.view;
 
-import td_game.model.map.GrassTile;
 import td_game.model.map.GridMap;
-import td_game.model.map.TileBase;
 import td_game.model.modelnit.GameModel;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class WindowFrame extends JFrame {
     private final int width = 1024;
     private final int height = 768;
     private GamePanel gamePanel;
-    private GridMap model;
+    private MenuPanel menuPanel;
+    private CardLayout cl;
+
 
     public WindowFrame(GameModel model) {
 
-        gamePanel =new GamePanel(model);
-        JFrame frame = new JFrame();
-        frame.setSize(width, height);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.add(gamePanel);
+        setSize(width, height);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
 
+        cl = new CardLayout();
+        setLayout(cl);
+
+        gamePanel = new GamePanel(model);
+        menuPanel = new MenuPanel();
+
+        add(gamePanel, "Game");
+        add(menuPanel, "Menu");
+
+        showPanel("Menu");
 
     }
+
+    protected MenuPanel getMenuPanel() {
+        return menuPanel;
+    }
+
+    protected GamePanel getGamePanel(){
+        return gamePanel;
+    }
+
+    private void showPanel(String panelName) {
+        cl.show(getContentPane(), panelName);
+
+    }
+
+
 
 }
