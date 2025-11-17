@@ -17,13 +17,11 @@ public class GridMap implements IMap{
     public int getCol() {return col;}
 
     @Override
-    public int getHeight() {
-        return col*tileSize;
-    }
+    public int getHeight() {return row*tileSize;}
 
     @Override
     public int getWidth() {
-        return row*tileSize;
+        return col*tileSize;
     }
 
     @Override
