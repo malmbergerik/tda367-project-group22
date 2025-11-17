@@ -17,7 +17,6 @@ public class WindowFrame extends JFrame {
     public WindowFrame(GameModel model) {
 
         setSize(width, height);
-        setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -31,6 +30,8 @@ public class WindowFrame extends JFrame {
         add(gamePanel, "Game");
         add(menuPanel, "Menu");
 
+        setVisible(true);
+        pack();
         showPanel("Menu");
 
     }

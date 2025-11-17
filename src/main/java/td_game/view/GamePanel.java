@@ -21,18 +21,33 @@ public class GamePanel extends JPanel {
         add(sideBar, BorderLayout.EAST);
 
         //Left side
-        JPanel leftside = new JPanel(new BorderLayout());
-        add(leftside,BorderLayout.CENTER);
+        JPanel leftSideBar = new JPanel(new GridBagLayout());
+        add(leftSideBar,BorderLayout.CENTER);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx= 0;
+        gbc.weightx = 0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = GridBagConstraints.NONE;
 
         GameViewPanel gameView = new GameViewPanel(model);
-        leftside.add(gameView, BorderLayout.CENTER);
+        gameView.setPreferredSize(new Dimension(720, 576));
 
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+
+        leftSideBar.add(gameView, gbc);
 
 
         JPanel bottomBar = new JPanel();
         bottomBar.setPreferredSize(new Dimension(720, 192));
         bottomBar.setBackground(Color.BLUE);
-        leftside.add(bottomBar, BorderLayout.SOUTH);
+
+        gbc.gridy = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        leftSideBar.add(bottomBar, gbc);
 
 
 
