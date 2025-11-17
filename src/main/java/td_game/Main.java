@@ -7,11 +7,8 @@ import td_game.view.WindowFrame;
 public class Main {
 
     public static void main(String[] args) {
-        GameModel gameModel = new GameModel(320,320,16);
+        GameModel gameModel = new GameModel(640,640,32);
         WindowFrame frame = new WindowFrame(gameModel);
-
-
-
 
     }
 }
