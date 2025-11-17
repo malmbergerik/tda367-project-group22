@@ -22,7 +22,7 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
         return posX;
     }
 
-    public double getPosY() {
+    public double getY() {
         return posY;
     }
 
