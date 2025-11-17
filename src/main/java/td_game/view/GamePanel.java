@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 public class GamePanel extends JPanel implements GameObserver{
     private GameModel gameModel;
     private final TileViewManager tileViewManager;
-    private final int SCALE = 3;
+    private final int SCALE = 1;
 
     private final Queue<Consumer<Graphics>> drawNextQueue = new LinkedList<>();
 
@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements GameObserver{
 
         int width = gameModel.getX();
         int height = gameModel.getY();
+
 
         this.setSize(width * SCALE, height * SCALE);
         this.setDoubleBuffered(true);
@@ -82,10 +83,12 @@ public class GamePanel extends JPanel implements GameObserver{
                 TileBase currentTile = gridMap.getTile(row,col);
                 BufferedImage image = tileViewManager.getTileImage(currentTile);
 
-                int screen_x = col*16;
-                int screen_y = row*16;
+                int tilesize = gridMap.getTileSize();
 
-                g.drawImage(image, screen_x*SCALE, screen_y*SCALE, 16*SCALE, 16*SCALE, null);
+                int screen_x = col*tilesize;
+                int screen_y = row*tilesize;
+
+                g.drawImage(image, screen_x*SCALE, screen_y*SCALE, tilesize*SCALE, tilesize*SCALE, null);
 
             }
         }
