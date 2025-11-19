@@ -1,19 +1,12 @@
 package td_game.model.enemy;
 
 public class Enemy1 extends ABaseEnemy{
-    private double health;
-    private double speed;
-    private double posX;
-    private double posY;
 
-    /*
-    public Enemy1(double health, double speed, double posX, double posY) {
+    public Enemy1(double health, double speed, Path path){
         this.health = health;
         this.speed = speed;
-        this.posX = posX;
-        this.posY = posY;
+        this.path = path;
     }
-    */
 
     @Override
     public double getX() {
@@ -32,6 +25,8 @@ public class Enemy1 extends ABaseEnemy{
 
     @Override
     public void move() {
+        /*waypioint logic......
         posX ++;
+         */
     }
 }
