@@ -11,11 +11,7 @@ public class MenuPanel extends APanel {
     private JButton playButton;
     private JButton exitButton;
 
-    private Image backgroundImage;
-    private Image playButtonImage;
-    private Image hoverPlayButtonImage;
-    private Image exitButtonImage;
-    private Image hoverExitButtonImage;
+    private final Image backgroundImage;
 
     private boolean playButtonPressed = false;
 
@@ -27,10 +23,10 @@ public class MenuPanel extends APanel {
         this.setLayout(new GridBagLayout());
 
         backgroundImage = loadImage("/assets/menu.png");
-        playButtonImage = loadImage("/assets/play.png");
-        hoverPlayButtonImage = loadImage("/assets/hoverPlay.png");
-        exitButtonImage = loadImage("/assets/exit.png"); // Assuming this asset exists
-        hoverExitButtonImage = loadImage("/assets/hoverExit.png");
+        Image playButtonImage = loadImage("/assets/play.png");
+        Image hoverPlayButtonImage = loadImage("/assets/hoverPlay.png");
+        Image exitButtonImage = loadImage("/assets/exit.png"); // Assuming this asset exists
+        Image hoverExitButtonImage = loadImage("/assets/hoverExit.png");
 
         playButton = createButton(playButtonImage, hoverPlayButtonImage);
         exitButton = createButton(exitButtonImage, hoverExitButtonImage);
@@ -42,7 +38,7 @@ public class MenuPanel extends APanel {
         // Layout  setup
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.insets = new Insets(0, 0, 10, 0);
 
         gbc.gridy = 1;
         this.add(playButton, gbc);
