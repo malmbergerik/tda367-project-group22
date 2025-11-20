@@ -51,9 +51,9 @@ public class MapLoader {
 
     private static TileBase charToTile(char c) {
         return switch (c) {
-            case '0' -> new PathTile(0,0,PathType.NORMAL);
-            case '1' -> new GrassTile(0,0);
-            case '2' -> new WaterTile(0,0);
+            case '0' -> new PathTile(PathType.NORMAL);
+            case '1' -> new GrassTile();
+            case '2' -> new WaterTile();
             default -> throw new IllegalArgumentException("Unknown character" + c);
         };
     }
