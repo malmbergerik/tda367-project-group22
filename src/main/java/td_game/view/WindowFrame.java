@@ -18,7 +18,6 @@ public class WindowFrame extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.add(mainPanel);
 
@@ -27,6 +26,8 @@ public class WindowFrame extends JFrame {
     public void addView(JPanel viewPanel, String viewName) {
         mainPanel.add(viewPanel, viewName);
         this.pack();
+        this.setLocationRelativeTo(null);
+
     }
 
     public void showView(String view) {
