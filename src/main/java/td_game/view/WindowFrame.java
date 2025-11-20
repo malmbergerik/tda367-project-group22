@@ -1,9 +1,6 @@
 package td_game.view;
 
-import td_game.model.map.GridMap;
-import td_game.model.modelnit.GameModel;
-
- import java.awt.*;
+import java.awt.*;
 import javax.swing.*;
 
 public class WindowFrame extends JFrame {
@@ -29,9 +26,9 @@ public class WindowFrame extends JFrame {
         this.setSize(size);
         this.setVisible(true);
 
-        this.menuView = new MenuPanel();
+        this.menuView = new MenuPanel(width, height);
         //this.levelSelectView = new LevelSelectPanel(this);
-        this.gameView = new GamePanel(width, height, TILEWIDHT, TILEHEIGHT);
+        //this.gameView = new GamePanel(width, height, TILEWIDHT, TILEHEIGHT);
         //this.pauseView = new PausePanel(this);
         //this.gameOverView = new GameOverPanel(this);
 
@@ -49,7 +46,7 @@ public class WindowFrame extends JFrame {
 
     public void displayMenuView() {
         //this.removeViewFromFrame(this.levelSelectView);
-        this.removeViewFromFrame(this.gameView);
+        //this.removeViewFromFrame(this.gameView);
         //this.removeViewFromFrame(this.pauseView);
         //this.removeViewFromFrame(this.gameOverView);
         this.addViewToFrame(this.menuView);
@@ -64,7 +61,7 @@ public class WindowFrame extends JFrame {
     }
 
     public void displayPauseView() {
-        //this.removeViewFromFrame(this.menuView);
+        this.removeViewFromFrame(this.menuView);
         //this.removeViewFromFrame(this.levelSelectView);
         this.removeViewFromFrame(this.gameView);
         //this.removeViewFromFrame(this.gameOverView);
@@ -72,7 +69,7 @@ public class WindowFrame extends JFrame {
     }
 
     public void displayGameOverView() {
-        //this.removeViewFromFrame(this.menuView);
+        this.removeViewFromFrame(this.menuView);
         //this.removeViewFromFrame(this.levelSelectView);
         this.removeViewFromFrame(this.gameView);
         //this.removeViewFromFrame(this.pauseView);
@@ -81,10 +78,15 @@ public class WindowFrame extends JFrame {
 
     public void displayLevelSelectView() {
         this.removeViewFromFrame(this.menuView);
-        //this.removeViewFromFrame(this.gameView);
+        this.removeViewFromFrame(this.gameView);
         //this.removeViewFromFrame(this.pauseView);
         //this.removeViewFromFrame(this.gameOverView);
         //this.addViewToFrame(this.levelSelectView);
     }
-    
+
+    public boolean getStartButtonPressed() {
+        boolean pressed = this.menuView.getPlayButtonPressed();
+        this.menuView.resetPlayButtonPressed();
+        return pressed;
+    }
 }
