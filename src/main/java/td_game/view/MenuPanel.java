@@ -19,13 +19,14 @@ public class MenuPanel extends APanel {
         super(width, height);
 
         Dimension size = new Dimension(width, height);
-        this.setSize(size);
+        this.setPreferredSize(size);
         this.setLayout(new GridBagLayout());
+        
 
         backgroundImage = loadImage("/assets/menu.png");
         Image playButtonImage = loadImage("/assets/play.png");
         Image hoverPlayButtonImage = loadImage("/assets/hoverPlay.png");
-        Image exitButtonImage = loadImage("/assets/exit.png"); // Assuming this asset exists
+        Image exitButtonImage = loadImage("/assets/exit.png");
         Image hoverExitButtonImage = loadImage("/assets/hoverExit.png");
 
         playButton = createButton(playButtonImage, hoverPlayButtonImage);
