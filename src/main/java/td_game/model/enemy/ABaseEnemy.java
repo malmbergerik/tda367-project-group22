@@ -23,6 +23,14 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
         }
     }
 
+    public boolean hasReachedEnd() {
+        if (path == null || path.length() == 0) {
+            return true;
+        }
+
+        return currentWaypointIndex >= path.length();
+    }
+
     public double getX() {
         return posX;
     }
