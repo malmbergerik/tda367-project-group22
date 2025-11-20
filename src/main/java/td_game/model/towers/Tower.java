@@ -42,7 +42,7 @@ public class Tower{
     }
     public double lenTooEnemy(ABaseEnemy enemy)
     {
-        return  Math.sqrt(Math.pow(enemy.getX() - (getX() ),2) + Math.pow(enemy.getY()- (getY() ),2));
+        return  Math.sqrt(Math.pow(enemy.getX() - (getX()),2) + Math.pow(enemy.getY()- (getY() ),2));
     }
     public double getAngleToEnemy(ABaseEnemy enemy)
     {
