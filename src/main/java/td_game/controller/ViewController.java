@@ -18,7 +18,7 @@ public class MenuController {
         view.getMenuPanel().addPlayButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                view.showPanel("Game");
+                view.displayGameView();
             }
         });
 
