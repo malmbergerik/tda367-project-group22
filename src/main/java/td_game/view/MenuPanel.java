@@ -7,21 +7,18 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MenuPanel extends APanel {
-    private JButton playButton;
-    private JButton exitButton;
-
+public class MenuPanel extends APanel implements IMenuView {
+    private final JButton playButton;
+    private final JButton exitButton;
     private final Image backgroundImage;
-
-    private boolean playButtonPressed = false;
 
     public MenuPanel(int width, int height) {
         super(width, height);
 
         Dimension size = new Dimension(width, height);
-        this.setPreferredSize(size);
-        this.setLayout(new GridBagLayout());
-        
+        setPreferredSize(size);
+        setLayout(new GridBagLayout());
+
 
         backgroundImage = loadImage("/assets/menu.png");
         Image playButtonImage = loadImage("/assets/play.png");
@@ -31,10 +28,6 @@ public class MenuPanel extends APanel {
 
         playButton = createButton(playButtonImage, hoverPlayButtonImage);
         exitButton = createButton(exitButtonImage, hoverExitButtonImage);
-
-        this.playButton.addActionListener(e -> setPlayButtonPressed());
-        this.exitButton.addActionListener(e -> System.exit(0));
-
 
         // Layout  setup
         GridBagConstraints gbc = new GridBagConstraints();
@@ -47,6 +40,14 @@ public class MenuPanel extends APanel {
         gbc.gridy = 2;
         this.add(exitButton, gbc);
 
+    }
+
+    public void addPlayListener(ActionListener listener) {
+        playButton.addActionListener(listener);
+    }
+
+    public  void addExitListener(ActionListener listener) {
+        exitButton.addActionListener(listener);
     }
 
     private JButton createButton (Image staticImage, Image hoverImage){
@@ -78,15 +79,8 @@ public class MenuPanel extends APanel {
         }
     }
 
-    protected boolean getPlayButtonPressed() {
-        return playButtonPressed;
-    }
-
-    protected void setPlayButtonPressed() {
-        this.playButtonPressed = true;
-    }
-
-    protected void resetPlayButtonPressed() {
-        this.playButtonPressed = false;
+    @Override
+    public JPanel getViewPanel() {
+        return this;
     }
 }

@@ -5,54 +5,37 @@ import td_game.model.modelnit.GameModel;
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel extends JPanel {
-    private GameModel model;
-    //private SideBarPanel sideBar;
-    //private BottomBar bottomBar;
+public class GamePanel extends JPanel implements IView{
+    private final GameViewPanel gameView;
+    private final JPanel sideBar; //This needs to be its own class later
+    private final JPanel bottomBar; //This needs to be its own class later
 
     public GamePanel(GameModel model) {
 
         setLayout(new BorderLayout());
 
-        //Right side
-        JPanel sideBar = new JPanel();
-        sideBar.setPreferredSize(new Dimension(304, 768));
-        sideBar.setBackground(Color.RED);
-        add(sideBar, BorderLayout.EAST);
-
-        //Left side
-        JPanel leftSideBar = new JPanel(new GridBagLayout());
-        add(leftSideBar,BorderLayout.CENTER);
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx= 0;
-        gbc.weightx = 0;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.fill = GridBagConstraints.NONE;
-
-        GameViewPanel gameView = new GameViewPanel(model);
+        gameView = new GameViewPanel(model);
         gameView.setPreferredSize(new Dimension(720, 576));
 
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 0;
-
-        leftSideBar.add(gameView, gbc);
-
-
-        JPanel bottomBar = new JPanel();
+        bottomBar = new JPanel(); // Replace with actual bottom bar implementation
         bottomBar.setPreferredSize(new Dimension(720, 192));
         bottomBar.setBackground(Color.BLUE);
 
-        gbc.gridy = 1;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        leftSideBar.add(bottomBar, gbc);
+        // Left container for game view and bottom bar
+        JPanel leftPanel = new JPanel(new BorderLayout());
+        leftPanel.add(gameView, BorderLayout.CENTER);
+        leftPanel.add(bottomBar, BorderLayout.SOUTH);
 
+        sideBar = new JPanel(); // Replace with actual side bar implementation
+        sideBar.setPreferredSize(new Dimension(304, 768));
+        sideBar.setBackground(Color.RED);
 
-
-
-
+        add(leftPanel, BorderLayout.CENTER);
+        add(sideBar, BorderLayout.EAST);
     }
 
+    @Override
+    public JPanel getViewPanel() {
+        return this;
+    }
 }
