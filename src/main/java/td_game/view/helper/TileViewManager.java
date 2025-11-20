@@ -25,9 +25,9 @@ public class TileViewManager {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
         try {
-            InputStream grassStream = classLoader.getResourceAsStream("assets/tileset/overworld/grass.png");
-            InputStream pathStream = classLoader.getResourceAsStream("assets/tileset/overworld/path.png");
-            InputStream waterStream = classLoader.getResourceAsStream("assets/tileset/overworld/water.png");
+            InputStream grassStream = classLoader.getResourceAsStream("assets/tileset/underground/grass.png");
+            InputStream pathStream = classLoader.getResourceAsStream("assets/tileset/underground/path.png");
+            InputStream waterStream = classLoader.getResourceAsStream("assets/tileset/underground/water.png");
 
             if (grassStream == null || pathStream == null || waterStream == null) {
                 throw new IOException("Could not find path to file");
