@@ -14,7 +14,6 @@ public class Main {
         WindowFrame frame = new WindowFrame(1024, 768);
         frame.displayMenuView();
         ViewController gameController = new ViewController(frame);
-
     }
 }
 
