@@ -5,22 +5,19 @@ import td_game.view.WindowFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuController {
+public class ViewController {
 
     private WindowFrame view;
 
-    public MenuController(WindowFrame view) {
+    public ViewController(WindowFrame view) {
         this.view = view;
         initController();
     }
 
     private void initController() {
-        view.getMenuPanel().addPlayButtonListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                view.displayGameView();
-            }
-        });
+        if (view.getStartButtonPressed()) {
+            view.displayGameView();
+        }
 
     }
 }
