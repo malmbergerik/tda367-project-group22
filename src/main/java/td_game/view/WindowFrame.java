@@ -3,52 +3,88 @@ package td_game.view;
 import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
 
+ import java.awt.*;
 import javax.swing.*;
-import java.awt.*;
 
 public class WindowFrame extends JFrame {
-    private final int width = 1024;
-    private final int height = 768;
-    private GamePanel gamePanel;
-    private MenuPanel menuPanel;
+
+    private MenuPanel menuView;
+    //private LevelSelectPanel levelSelectView;
+    private GamePanel gameView;
+    //private PausePanel pauseView;
+    //private GameOverPanel gameOverView;
+
+    private static final int TILEWIDHT = 16;
+    private static final int TILEHEIGHT = 16;
     private CardLayout cl;
 
 
-    public WindowFrame(GameModel model) {
+    public WindowFrame(int width, int height) {
+        super();
+        Dimension size = new Dimension(width, height);
+        this.setTitle("Dungeon Defence");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setSize(size);
+        this.setVisible(true);
 
-        setSize(width, height);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
-
-        cl = new CardLayout();
-        setLayout(cl);
-
-        gamePanel = new GamePanel(model);
-        menuPanel = new MenuPanel();
-
-        add(gamePanel, "Game");
-        add(menuPanel, "Menu");
-
-        setVisible(true);
-        pack();
-        showPanel("Menu");
+        this.menuView = new MenuPanel();
+        //this.levelSelectView = new LevelSelectPanel(this);
+        this.gameView = new GamePanel(width, height, TILEWIDHT, TILEHEIGHT);
+        //this.pauseView = new PausePanel(this);
+        //this.gameOverView = new GameOverPanel(this);
 
     }
 
-    public MenuPanel getMenuPanel() {
-        return menuPanel;
+    private void addViewToFrame(JPanel view) {
+        this.add(view);
+        this.validate();
     }
 
-    protected GamePanel getGamePanel(){
-        return gamePanel;
+    private void removeViewFromFrame(JPanel view) {
+        this.remove(view);
+        this.repaint();
     }
 
-    public void showPanel(String panelName) {
-        cl.show(getContentPane(), panelName);
-
+    public void displayMenuView() {
+        //this.removeViewFromFrame(this.levelSelectView);
+        this.removeViewFromFrame(this.gameView);
+        //this.removeViewFromFrame(this.pauseView);
+        //this.removeViewFromFrame(this.gameOverView);
+        this.addViewToFrame(this.menuView);
     }
 
+    public void displayGameView() {
+        this.removeViewFromFrame(this.menuView);
+        //this.removeViewFromFrame(this.levelSelectView);
+        //this.removeViewFromFrame(this.pauseView);
+        //this.removeViewFromFrame(this.gameOverView);
+        this.addViewToFrame(this.gameView);
+    }
 
+    public void displayPauseView() {
+        //this.removeViewFromFrame(this.menuView);
+        //this.removeViewFromFrame(this.levelSelectView);
+        this.removeViewFromFrame(this.gameView);
+        //this.removeViewFromFrame(this.gameOverView);
+        //this.addViewToFrame(this.pauseView);
+    }
 
+    public void displayGameOverView() {
+        //this.removeViewFromFrame(this.menuView);
+        //this.removeViewFromFrame(this.levelSelectView);
+        this.removeViewFromFrame(this.gameView);
+        //this.removeViewFromFrame(this.pauseView);
+        //this.addViewToFrame(this.gameOverView);
+    }
+
+    public void displayLevelSelectView() {
+        this.removeViewFromFrame(this.menuView);
+        //this.removeViewFromFrame(this.gameView);
+        //this.removeViewFromFrame(this.pauseView);
+        //this.removeViewFromFrame(this.gameOverView);
+        //this.addViewToFrame(this.levelSelectView);
+    }
+    
 }
