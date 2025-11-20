@@ -10,12 +10,11 @@ public class GamePanel extends JPanel implements IView{
     private final JPanel sideBar; //This needs to be its own class later
     private final JPanel bottomBar; //This needs to be its own class later
 
-    public GamePanel(GameModel model) {
+    public GamePanel(int width, int height) {
 
         setLayout(new BorderLayout());
 
-        gameView = new GameViewPanel(model);
-        gameView.setPreferredSize(new Dimension(720, 576));
+        gameView = new GameViewPanel(width, height);
 
         bottomBar = new JPanel(); // Replace with actual bottom bar implementation
         bottomBar.setPreferredSize(new Dimension(720, 192));
@@ -26,12 +25,16 @@ public class GamePanel extends JPanel implements IView{
         leftPanel.add(gameView, BorderLayout.CENTER);
         leftPanel.add(bottomBar, BorderLayout.SOUTH);
 
-        sideBar = new JPanel(); // Replace with actual side bar implementation
+        sideBar = new JPanel(); // Replace with actual sidebar implementation
         sideBar.setPreferredSize(new Dimension(304, 768));
         sideBar.setBackground(Color.RED);
 
         add(leftPanel, BorderLayout.CENTER);
         add(sideBar, BorderLayout.EAST);
+    }
+
+    public GameViewPanel getGameViewPanel() {
+        return gameView;
     }
 
     @Override

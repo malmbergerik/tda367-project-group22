@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MenuPanel extends APanel implements IMenuView {
+public class MenuPanel extends APanel implements IMenuView, IView {
     private final JButton playButton;
     private final JButton exitButton;
     private final Image backgroundImage;

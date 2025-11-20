@@ -13,83 +13,40 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Consumer;
 
-public class GameViewPanel extends JPanel implements GameObserver{
-    private GameModel gameModel;
+public class GameViewPanel extends JPanel {
     private final TileViewManager tileViewManager;
+    private GridMap currentGridMap;
     private final int SCALE = 3;
 
-    private final Queue<Consumer<Graphics>> drawNextQueue = new LinkedList<>();
-
-
-    public GameViewPanel(GameModel gameModel) {
-        this.gameModel = gameModel;
-        gameModel.registerObserver(this);
-
+    public GameViewPanel(int width, int height) {
         tileViewManager = new TileViewManager();
-
-        int width = gameModel.getX();
-        int height = gameModel.getY();
-
-
-        this.setSize(width * SCALE, height * SCALE);
+        setPreferredSize(new Dimension(width, height));
         this.setDoubleBuffered(true);
+    }
 
-        drawNextQueue.add(this::drawTiles);
-
+    public void updateTiles(GridMap gridMap) {
+        this.currentGridMap = gridMap;
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        while(!drawNextQueue.isEmpty()){
-            Consumer<Graphics> task = drawNextQueue.poll();
-            task.accept(g);
+        if (currentGridMap != null) {
+            drawTiles(g);
         }
-
-
-        //g.dispose();
-    }
-
-    @Override
-    public void update(GameEventType eventType) {
-        switch (eventType){
-
-
-            case MOVING_OBJECTS_UPDATE -> {
-                //Redraw projectiles and enemies
-            }
-            case TOWER_UPDATE -> {
-                //Redraw towers
-            }
-            case TILES_UPDATE -> {
-                drawNextQueue.add(this::drawTiles);
-                repaint();
-            }
-
-        }
-    }
-
-    public void update(){
-        drawNextQueue.add(this::drawTiles);
-        repaint();
     }
 
     private void drawTiles(Graphics g){
-        GridMap gridMap = gameModel.getGridMap();
-
-        for (int row = 0; row < gridMap.getRow(); ++row) {
-            for (int col = 0; col < gridMap.getCol(); ++col) {
-                TileBase currentTile = gridMap.getTile(row,col);
-                BufferedImage image = tileViewManager.getTileImage(currentTile);
-
-                int tilesize = gridMap.getTileSize();
-
-                int screen_x = col*tilesize;
-                int screen_y = row*tilesize;
-
-                g.drawImage(image, screen_x*SCALE, screen_y*SCALE, tilesize*SCALE, tilesize*SCALE, null);
-
+        for (int row = 0; row < currentGridMap.getRow(); row++) {
+            for (int col = 0; col < currentGridMap.getCol(); col++) {
+                TileBase currentTile = currentGridMap.getTile(row, col);
+                BufferedImage tileImage = tileViewManager.getTileImage(currentTile);
+                int tilesize = currentGridMap.getTileSize();
+                int screen_x = col * tilesize;
+                int screen_y = row * tilesize;
+                g.drawImage(tileImage, screen_x * SCALE, screen_y * SCALE, tilesize * SCALE, tilesize * SCALE, null);
             }
         }
     }
