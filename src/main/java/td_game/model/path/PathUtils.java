@@ -17,7 +17,7 @@ public final class PathUtils {
     private PathUtils() {}
 
     public static double tileCenterWorldX(IMap map, int tileRow, int tileCol) {
-        return tileCol * map.getTileSize() + map.getTileSize() / 2;
+        return tileCol * map.getTileSize() + map.getTileSize() / 2.0;
     }
 
     public static double tileCenterWorldY(IMap map, int tileRow, int tileCol) {
