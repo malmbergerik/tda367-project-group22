@@ -10,14 +10,16 @@ public class Tower{
     private long lastTimeSinceShoot = 0;
     private ArrayList<ABaseEnemy> enemyInRange;
     private ArrayList<ABaseEnemy> testEnemyList; //Test lista för att kunna testa koden
+    private int projectileAmount;
 
-    public Tower( int attackCooldown, double x, double y, int attackRange ){ //kommer också ta en class Projectile så att man dynamiskt kan ändra projectile
+    public Tower( int attackCooldown, double x, double y, int attackRange, int projectileAmount ){ //kommer också ta en class Projectile så att man dynamiskt kan ändra projectile
         this.attackCooldown = attackCooldown;
         this.x = x;
         this.y = y;
         this.attackRange = attackRange;
         this.testEnemyList = new ArrayList<ABaseEnemy>();
         this.enemyInRange = new ArrayList<ABaseEnemy>();
+        this.projectileAmount = projectileAmount;
     }
     public void addEnemyInTestList(ABaseEnemy enemy) //Test lista för att kunna testa koden
     {
@@ -78,7 +80,9 @@ public class Tower{
         {
             if ((lenTooEnemy(e) < this.attackRange) && ((System.currentTimeMillis() - lastTimeSinceShoot) > this.attackCooldown))
             {
-                //new Projectile(getAngleToEnemy(firstEnemyInRange));
+                for (int i=0; i<= this.projectileAmount; i++) {
+                    //new Projectile(getAngleToEnemy(   firstEnemyInRange )- 15*Math.round(0.5*projectileAmount) + 15*i);
+                }
                 lastTimeSinceShoot = System.currentTimeMillis();
                 return;
             }
