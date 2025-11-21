@@ -23,7 +23,9 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
         }
     }
 
+
     public boolean hasReachedEnd() {
+        //if the enemy has no path, consider it has reached the end
         if (path == null || path.length() == 0) {
             return true;
         }
