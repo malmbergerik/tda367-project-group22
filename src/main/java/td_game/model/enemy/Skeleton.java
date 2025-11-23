@@ -1,10 +1,14 @@
 package td_game.model.enemy;
 
+import java.lang.Math;
+
 public class Skeleton extends ABaseEnemy{
 
-    public Enemy1(double health, double speed, Path path){
+    public Skeleton(double health, double speed, int width, int height, Path path){
         this.health = health;
         this.speed = speed;
+        this.width = width;
+        this.height = height;
         this.path = path;
 
         if (path != null && path.length() > 0) {
@@ -20,15 +24,6 @@ public class Skeleton extends ABaseEnemy{
         }
     }
 
-    @Override
-    public double getX() {
-        return posX;
-    }
-
-    @Override
-    public double getY() {
-        return posY;
-    }
 
     @Override
     public void takeDamage(double amount) {
@@ -42,10 +37,30 @@ public class Skeleton extends ABaseEnemy{
            double nextX = targetWaypoint.getX();
            double nextY = targetWaypoint.getY();
 
-           double deltaX = nextX - posX;
-           double deltaY = nextY - posY;
+           double dx = nextX - posX;
+           double dy = nextY - posY;
 
+           //pythagorean theorem to calculate distance
+           double distanceToWaypoint = Math.sqrt(dx * dx + dy * dy);
 
+           if (distanceToWaypoint <= speed) {
+               //reach the waypoint
+               posX = nextX;
+               posY = nextY;
+               currentWaypointIndex++;
+
+               // Immediately move towards the next waypoint if it exists
+               if (!hasReachedEnd()) {
+                   move();
+               }
+           }
+
+           else {
+               //move towards the waypoint
+               double ratio = speed / distanceToWaypoint;
+               posX += dx * ratio;
+               posY += dy * ratio;
+           }
         }
     }
 }

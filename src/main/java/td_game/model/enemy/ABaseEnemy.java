@@ -7,6 +7,8 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
     protected double speed;
     protected double posX;
     protected double posY;
+    protected double width;
+    protected double height;
 
     protected Path path;
     protected int currentWaypointIndex = 0;
@@ -33,13 +35,21 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
         return currentWaypointIndex >= path.length();
     }
 
+    @Override
     public double getX() {
         return posX;
     }
 
+    @Override
     public double getY() {
         return posY;
     }
+
+    @Override
+    public int getWidth() {return width;}
+
+    @Override
+    public int getHeight() {return height;}
 
     public abstract void move();
 }
