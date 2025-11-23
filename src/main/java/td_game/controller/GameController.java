@@ -19,9 +19,28 @@ public class GameController implements GameObserver {
 
     @Override
     public void update(GameEventType eventType) {
-        if (eventType == GameEventType.TILES_UPDATE) {
-            // Handle tile updates, (push data from model to view)
-            view.updateTiles(model.getGridMap());
+        switch (eventType) {
+            case TILES_UPDATE -> handleTileUpdate();
+            case MOVING_OBJECTS_UPDATE -> handleMovingObjectsUpdate();
+            case TOWER_UPDATE -> handleTowerUpdate();
         }
+    }
+
+    private void handleTileUpdate(){
+        view.updateTiles(model.getGridMap());
+    }
+
+    private void handleMovingObjectsUpdate(){
+        //TODO link to view with gets for projectiles and enemies from model
+        /*
+        Should link to a method like updateTiles, see in view
+         */
+    }
+
+    private void handleTowerUpdate(){
+        //TODO link to view with gets for towers from model
+        /*
+        Should link to a method like updateTiles, see in view
+         */
     }
 }

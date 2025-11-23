@@ -17,6 +17,7 @@ public class GameViewPanel extends JPanel {
     private final TileViewManager tileViewManager;
     private GridMap currentGridMap;
     private final int SCALE = 3;
+    private BufferedImage tileLayer;
 
     public GameViewPanel(int width, int height) {
         tileViewManager = new TileViewManager();
@@ -26,19 +27,30 @@ public class GameViewPanel extends JPanel {
 
     public void updateTiles(GridMap gridMap) {
         this.currentGridMap = gridMap;
+        drawTiles();
         repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
 
-        if (currentGridMap != null) {
-            drawTiles(g);
-        }
+        if (tileLayer != null)
+            g.drawImage(tileLayer, 0, 0, null);
+
+        //TODO add enemy/projectile/towers drawing using g2 for smoothness
+
     }
 
-    private void drawTiles(Graphics g){
+    private void drawTiles(){
+        int tileSize = currentGridMap.getTileSize();
+        int width = currentGridMap.getCol() * tileSize * SCALE;
+        int height = currentGridMap.getRow() * tileSize * SCALE;
+
+        tileLayer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = tileLayer.createGraphics();
+
         for (int row = 0; row < currentGridMap.getRow(); row++) {
             for (int col = 0; col < currentGridMap.getCol(); col++) {
                 TileBase currentTile = currentGridMap.getTile(row, col);
@@ -46,8 +58,10 @@ public class GameViewPanel extends JPanel {
                 int tilesize = currentGridMap.getTileSize();
                 int screen_x = col * tilesize;
                 int screen_y = row * tilesize;
-                g.drawImage(tileImage, screen_x * SCALE, screen_y * SCALE, tilesize * SCALE, tilesize * SCALE, null);
+                g2.drawImage(tileImage, screen_x * SCALE, screen_y * SCALE, tilesize * SCALE, tilesize * SCALE, null);
             }
         }
+
+        g2.dispose();
     }
 }
