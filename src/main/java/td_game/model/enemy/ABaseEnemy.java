@@ -3,12 +3,12 @@ package td_game.model.enemy;
 import td_game.model.path.Path;
 
 public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable {
-    protected double health;
+    protected int health;
     protected double speed;
     protected double posX;
     protected double posY;
-    protected double width;
-    protected double height;
+    protected int width;
+    protected int height;
 
     protected Path path;
     protected int currentWaypointIndex = 0;
@@ -16,13 +16,7 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
     public abstract void takeDamage(double amount);
 
     public boolean isAlive() {
-        if (health <= 0) {
-            return false;
-        }
-
-        else {
-            return true;
-        }
+        return health > 0;
     }
 
 
@@ -51,5 +45,8 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
     @Override
     public int getHeight() {return height;}
 
+    public int getHealth() {return  health;}
+
+    @Override
     public abstract void move();
 }

@@ -1,14 +1,18 @@
 package td_game.model.enemy;
 
 import java.lang.Math;
+import td_game.model.path.Path;
+import td_game.model.path.Waypoint;
 
 public class Skeleton extends ABaseEnemy{
+    private static final int ENEMY_WIDTH = 8;
+    private static final int ENEMY_HEIGHT = 8;
 
-    public Skeleton(double health, double speed, int width, int height, Path path){
+    public Skeleton(double health, double speed, Path path){
         this.health = health;
         this.speed = speed;
-        this.width = width;
-        this.height = height;
+        this.width = ENEMY_WIDTH
+        this.height = ENEMY_HEIGHT
         this.path = path;
 
         if (path != null && path.length() > 0) {
@@ -30,37 +34,42 @@ public class Skeleton extends ABaseEnemy{
         health -= amount;
     }
 
+
     @Override
     public void move() {
-        if (!hasReachedEnd()) {
-           Waypoint targetWaypoint = path.get(currentWaypointIndex);
-           double nextX = targetWaypoint.getX();
-           double nextY = targetWaypoint.getY();
+        if (hasReachedEnd()) {
+            return; // Stop if the end of the path is reached.
+        }
 
-           double dx = nextX - posX;
-           double dy = nextY - posY;
+        double speedForTick = speed; // The total distance the enemy can move this tick.
 
-           //pythagorean theorem to calculate distance
-           double distanceToWaypoint = Math.sqrt(dx * dx + dy * dy);
+        // Loop as long as the enemy has movement speed left for this tick and has not reached the end.
+        while (speedForTick > 0 && !hasReachedEnd()) {
+            Waypoint targetWaypoint = path.get(currentWaypointIndex);
+            double targetX = targetWaypoint.getX();
+            double targetY = targetWaypoint.getY();
 
-           if (distanceToWaypoint <= speed) {
-               //reach the waypoint
-               posX = nextX;
-               posY = nextY;
-               currentWaypointIndex++;
+            double dx = targetX - posX;
+            double dy = targetY - posY;
 
-               // Immediately move towards the next waypoint if it exists
-               if (!hasReachedEnd()) {
-                   move();
-               }
-           }
+            double distanceToWaypoint = Math.sqrt(dx * dx + dy * dy);
 
-           else {
-               //move towards the waypoint
-               double ratio = speed / distanceToWaypoint;
-               posX += dx * ratio;
-               posY += dy * ratio;
-           }
+            if (distanceToWaypoint <= speedForTick) {
+                // The enemy can reach the waypoint in this step.
+                posX = targetX;
+                posY = targetY;
+                currentWaypointIndex++;
+                speedForTick -= distanceToWaypoint; // Subtract the distance traveled from the speed budget.
+            }
+            else {
+                // The enemy cannot reach the waypoint in this step, so move towards it.
+                double moveX = (dx / distanceToWaypoint) * speedForTick;
+                double moveY = (dy / distanceToWaypoint) * speedForTick;
+                posX += moveX;
+                posY += moveY;
+                speedForTick = 0; // All speed for this tick has been used.
+            }
         }
     }
+
 }
