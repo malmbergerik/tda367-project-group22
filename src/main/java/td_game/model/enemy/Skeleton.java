@@ -8,11 +8,11 @@ public class Skeleton extends ABaseEnemy{
     private static final int ENEMY_WIDTH = 8;
     private static final int ENEMY_HEIGHT = 8;
 
-    public Skeleton(double health, double speed, Path path){
+    public Skeleton(int health, double speed, Path path){
         this.health = health;
         this.speed = speed;
-        this.width = ENEMY_WIDTH
-        this.height = ENEMY_HEIGHT
+        this.width = ENEMY_WIDTH;
+        this.height = ENEMY_HEIGHT;
         this.path = path;
 
         if (path != null && path.length() > 0) {
@@ -30,7 +30,7 @@ public class Skeleton extends ABaseEnemy{
 
 
     @Override
-    public void takeDamage(double amount) {
+    public void takeDamage(int amount) {
         health -= amount;
     }
 
