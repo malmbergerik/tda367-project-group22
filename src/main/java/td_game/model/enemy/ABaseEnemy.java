@@ -13,7 +13,7 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
     protected Path path;
     protected int currentWaypointIndex = 0;
 
-    public abstract void takeDamage(double amount);
+    public abstract void takeDamage(int amount);
 
     public boolean isAlive() {
         return health > 0;
