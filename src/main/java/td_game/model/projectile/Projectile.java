@@ -17,8 +17,6 @@ public class Projectile {
     private long startTimeAlive = System.currentTimeMillis(); //är enbart i millisekunder
     private boolean isAlive = true;
     private ArrayList<ABaseEnemy> testEnemyList; //Test lista för att kunna testa koden
-    private int TEMPENEMYWIDTH = 16;
-    private int TEMPENEMYHEIGHT = 16;
     private double angle;
     private ArrayList<ABaseEnemy> enemiesHitThisFrame;
 
@@ -71,7 +69,7 @@ public class Projectile {
             return;
         }
         for (ABaseEnemy e: enemies) {
-            if ((checkCollision(createHitbox((int) e.getX(), (int) e.getY(),TEMPENEMYWIDTH, TEMPENEMYHEIGHT), createHitbox(this.x, this.y, this.width, this.height))) && ( !enemiesHitThisFrame.contains(e))) {
+            if ((checkCollision(createHitbox((int) e.getX(), (int) e.getY(),e.getWidth(), e.getHeight()), createHitbox(this.x, this.y, this.width, this.height))) && ( !enemiesHitThisFrame.contains(e))) {
                 e.takeDamage(this.damage);
                 pierce -= 1;
                 if (pierce <= 0){
