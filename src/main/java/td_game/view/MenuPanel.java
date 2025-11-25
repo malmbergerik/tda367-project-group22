@@ -14,11 +14,9 @@ public class MenuPanel extends APanel implements IMenuView, IView {
 
     public MenuPanel(int width, int height) {
         super(width, height);
-
         Dimension size = new Dimension(width, height);
         setPreferredSize(size);
         setLayout(new GridBagLayout());
-
 
         backgroundImage = loadImage("/assets/menu.png");
         Image playButtonImage = loadImage("/assets/play.png");
@@ -29,16 +27,8 @@ public class MenuPanel extends APanel implements IMenuView, IView {
         playButton = createButton(playButtonImage, hoverPlayButtonImage);
         exitButton = createButton(exitButtonImage, hoverExitButtonImage);
 
-        // Layout  setup
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.insets = new Insets(0, 0, 10, 0);
-
-        gbc.gridy = 1;
-        this.add(playButton, gbc);
-
-        gbc.gridy = 2;
-        this.add(exitButton, gbc);
+        addComponent(playButton,0);
+        addComponent(exitButton,1);
 
     }
 
@@ -77,6 +67,15 @@ public class MenuPanel extends APanel implements IMenuView, IView {
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
+    }
+
+    private void addComponent(JComponent component, int gridY){
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = gridY;
+        gbc.insets = new Insets(0, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        this.add(component, gbc);
     }
 
     @Override
