@@ -14,55 +14,36 @@ import java.util.Map;
 
 public class TileViewManager {
 
-    private final Map<TileType, BufferedImage> tileImages = new HashMap<>();
+    private final Map<String, BufferedImage> tileImages;
+
 
     public TileViewManager(){
+        tileImages = new HashMap<>();
         loadTileImages();
     }
 
-    public void loadTileImages(){
+    public void loadTileImages() {
 
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        tileImages.put("GRASS", loadImage("assets/grass.png"));
+        tileImages.put("PATH", loadImage("assets/tile.png"));
+        tileImages.put("WATER", loadImage("assets/water.png"));
+    }
 
+    private BufferedImage loadImage(String path) {
         try {
-            InputStream grassStream = classLoader.getResourceAsStream("assets/grass.png");
-            InputStream pathStream = classLoader.getResourceAsStream("assets/tile.png");
-            InputStream waterStream = classLoader.getResourceAsStream("assets/water.png");
-
-            if (grassStream == null || pathStream == null || waterStream == null) {
-                throw new IOException("Could not find path to file");
+            InputStream stream = getClass().getClassLoader().getResourceAsStream(path);
+            if (stream == null) {
+                throw new IOException("Could not find resource: " + path);
             }
-
-            tileImages.put(TileType.GRASS, ImageIO.read(grassStream));
-            tileImages.put(TileType.PATH, ImageIO.read(pathStream));
-            tileImages.put(TileType.WATER, ImageIO.read(waterStream));
-
+            return ImageIO.read(stream);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Failed to load image: " + path);
+            return null;
         }
     }
 
-    public BufferedImage getTileImage(TileBase tile) {
-        if(tile == null){
-            return createPurpleTile();
-        }
-        else if(tile.getType() == null){
-            return createPurpleTile();
-        }
-
-        return tileImages.getOrDefault(tile.getType(),createPurpleTile());
-
-
-
-    }
-    //Current for nonexisting tiles
-    private BufferedImage createPurpleTile() {
-        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = img.createGraphics();
-        g2.setColor(new Color(128, 0, 128));
-        g2.fillRect(0, 0, 16, 16);
-        g2.dispose();
-        return img;
+    public BufferedImage getTileImage(String key) {
+        return tileImages.get(key);
     }
 }
 

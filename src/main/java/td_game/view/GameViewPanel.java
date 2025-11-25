@@ -1,21 +1,19 @@
 package td_game.view;
-import td_game.model.GameEventType;
-import td_game.model.GameObserver;
+
 import td_game.model.map.GridMap;
 import td_game.model.map.TileBase;
-import td_game.model.modelnit.GameModel;
+
+import td_game.view.helper.MapViewData;
 import td_game.view.helper.TileViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.function.Consumer;
+
 
 public class GameViewPanel extends JPanel {
     private final TileViewManager tileViewManager;
-    private GridMap currentGridMap;
+    private MapViewData currentMapViewData;
     private final int SCALE = 3;
     private BufferedImage tileLayer;
 
@@ -25,8 +23,8 @@ public class GameViewPanel extends JPanel {
         this.setDoubleBuffered(true);
     }
 
-    public void updateTiles(GridMap gridMap) {
-        this.currentGridMap = gridMap;
+    public void updateTiles(MapViewData mapViewData){
+        this.currentMapViewData = mapViewData;
         drawTiles();
         repaint();
     }
@@ -43,22 +41,28 @@ public class GameViewPanel extends JPanel {
 
     }
 
-    private void drawTiles(){
-        int tileSize = currentGridMap.getTileSize();
-        int width = currentGridMap.getCol() * tileSize * SCALE;
-        int height = currentGridMap.getRow() * tileSize * SCALE;
+    private void drawTiles() {
+        if (currentMapViewData == null) return;
+
+        String[][] tileKeys = currentMapViewData.getTileKeys();
+        int tileSize = currentMapViewData.getTileSize();
+        int rows = tileKeys.length;
+        int cols = tileKeys[0].length;
+
+        int width = cols * tileSize * SCALE;
+        int height = rows * tileSize * SCALE;
 
         tileLayer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = tileLayer.createGraphics();
 
-        for (int row = 0; row < currentGridMap.getRow(); row++) {
-            for (int col = 0; col < currentGridMap.getCol(); col++) {
-                TileBase currentTile = currentGridMap.getTile(row, col);
-                BufferedImage tileImage = tileViewManager.getTileImage(currentTile);
-                int tilesize = currentGridMap.getTileSize();
-                int screen_x = col * tilesize;
-                int screen_y = row * tilesize;
-                g2.drawImage(tileImage, screen_x * SCALE, screen_y * SCALE, tilesize * SCALE, tilesize * SCALE, null);
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                String tileKey = tileKeys[row][col];
+                // TileViewManager använder nu en String-nyckel
+                BufferedImage tileImage = tileViewManager.getTileImage(tileKey);
+                int screen_x = col * tileSize;
+                int screen_y = row * tileSize;
+                g2.drawImage(tileImage, screen_x * SCALE, screen_y * SCALE, tileSize * SCALE, tileSize * SCALE, null);
             }
         }
 

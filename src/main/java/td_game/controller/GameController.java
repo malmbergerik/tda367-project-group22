@@ -1,9 +1,12 @@
 package td_game.controller;
 
 import td_game.model.GameEventType;
+import td_game.model.map.GridMap;
+import td_game.model.map.TileBase;
 import td_game.model.modelnit.GameModel;
 import td_game.view.GameViewPanel;
 import td_game.model.GameObserver;
+import td_game.view.helper.MapViewData;
 
 public class GameController implements GameObserver {
     private final GameModel model;
@@ -14,7 +17,7 @@ public class GameController implements GameObserver {
         this.view = view;
         this.model.registerObserver(this);
 
-        this.view.updateTiles(this.model.getGridMap());
+        updateMapInView();
     }
 
     @Override
@@ -27,7 +30,7 @@ public class GameController implements GameObserver {
     }
 
     private void handleTileUpdate(){
-        view.updateTiles(model.getGridMap());
+        updateMapInView();
     }
 
     private void handleMovingObjectsUpdate(){
@@ -43,4 +46,23 @@ public class GameController implements GameObserver {
         Should link to a method like updateTiles, see in view
          */
     }
+
+    private void updateMapInView() {
+        GridMap currentMap = model.getGridMap();
+        int rows = currentMap.getRow();
+        int cols = currentMap.getCol();
+        int tileSize = currentMap.getTileSize();
+        String[][] tileKeys = new String[rows][cols];
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                tileKeys[row][col] = currentMap.getTile(row, col).getType().name();
+            }
+        }
+
+        MapViewData mapViewData = new MapViewData(tileKeys, tileSize);
+        view.updateTiles(mapViewData);
+    }
+
+
 }
