@@ -1,11 +1,9 @@
 package td_game.model.projectile;
 
-import org.w3c.dom.css.Rect;
 import td_game.model.enemy.ABaseEnemy;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Projectile {
     private int pixelsPerMs;
@@ -24,7 +22,7 @@ public class Projectile {
     private double angle;
     private ArrayList<ABaseEnemy> enemiesHitThisFrame;
 
-    public Projectile(double angle,int pixelsPerTick, int width, int height, int damage, int pierce, int timeAlive, int x, int y) {
+    public Projectile(double angle,int pixelsPerMs, int width, int height, int damage, int pierce, int timeAlive, int x, int y) {
         this.pixelsPerMs = pixelsPerMs;
         this.width = width;
         this.height = height;
