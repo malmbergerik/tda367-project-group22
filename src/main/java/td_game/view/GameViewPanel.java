@@ -1,17 +1,17 @@
 package td_game.view;
 
-import td_game.model.map.GridMap;
-import td_game.model.map.TileBase;
-
 import td_game.view.helper.MapViewData;
 import td_game.view.helper.TileViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 
 public class GameViewPanel extends JPanel {
+    private IGameMouseListener mouseListener;
     private final TileViewManager tileViewManager;
     private MapViewData currentMapViewData;
     private final int SCALE = 3;
@@ -21,7 +21,29 @@ public class GameViewPanel extends JPanel {
         tileViewManager = new TileViewManager();
         setPreferredSize(new Dimension(width, height));
         this.setDoubleBuffered(true);
+
+        initMouseHandler();
+
     }
+
+    private void initMouseHandler(){
+        MouseAdapter mouseHandler = new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if(mouseListener != null) mouseListener.onMouseMoved(e.getX(),e.getY());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(mouseListener != null) mouseListener.onMouseClicked(e.getX(),e.getY());
+            }
+        };
+
+        addMouseListener(mouseHandler);
+        addMouseMotionListener(mouseHandler);
+    }
+
+    public int getSCALE(){return SCALE;}
 
     public void updateTiles(MapViewData mapViewData){
         this.currentMapViewData = mapViewData;
@@ -68,4 +90,9 @@ public class GameViewPanel extends JPanel {
 
         g2.dispose();
     }
+
+    public void setGameMouseListener(IGameMouseListener listener){
+        this.mouseListener = listener;
+    }
+
 }

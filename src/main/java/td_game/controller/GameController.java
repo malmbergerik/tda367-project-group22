@@ -6,63 +6,58 @@ import td_game.model.map.TileBase;
 import td_game.model.modelnit.GameModel;
 import td_game.view.GameViewPanel;
 import td_game.model.GameObserver;
+import td_game.view.IGameMouseListener;
 import td_game.view.helper.MapViewData;
 
 public class GameController implements GameObserver {
     private final GameModel model;
     private final GameViewPanel view;
+    private IPlacementController placementController;
+    private IGameUpdateController gameUpdateController;
 
     public GameController(GameModel model, GameViewPanel view) {
         this.model = model;
         this.view = view;
         this.model.registerObserver(this);
 
-        updateMapInView();
+        this.placementController = new PlacementController(model, view);
+        this.gameUpdateController = new GameUpdateController(model, view);
+
+        initGameMouseListener();
+
+        gameUpdateController.handleTileUpdate();
+
     }
+
+    private void initGameMouseListener() {
+        view.setGameMouseListener(new IGameMouseListener() {
+            @Override
+            public void onMouseMoved(int posX, int posY) {
+                placementController.handleMouseMoved(posX,posY);
+            }
+
+            @Override
+            public void onMouseClicked(int posX, int posY) {
+                placementController.handleMouseClicked(posX,posY);
+            }
+        });
+    }
+
 
     @Override
     public void update(GameEventType eventType) {
         switch (eventType) {
-            case TILES_UPDATE -> handleTileUpdate();
-            case MOVING_OBJECTS_UPDATE -> handleMovingObjectsUpdate();
-            case TOWER_UPDATE -> handleTowerUpdate();
+            case TILES_UPDATE -> gameUpdateController.handleTileUpdate();
+            case MOVING_OBJECTS_UPDATE -> gameUpdateController.handleMovingObjectsUpdate();
+            case TOWER_UPDATE -> gameUpdateController.handleTowersUpdate();
         }
     }
 
-    private void handleTileUpdate(){
-        updateMapInView();
-    }
 
-    private void handleMovingObjectsUpdate(){
-        //TODO link to view with gets for projectiles and enemies from model
-        /*
-        Should link to a method like updateTiles, see in view
-         */
-    }
 
-    private void handleTowerUpdate(){
-        //TODO link to view with gets for towers from model
-        /*
-        Should link to a method like updateTiles, see in view
-         */
-    }
 
-    private void updateMapInView() {
-        GridMap currentMap = model.getGridMap();
-        int rows = currentMap.getRow();
-        int cols = currentMap.getCol();
-        int tileSize = currentMap.getTileSize();
-        String[][] tileKeys = new String[rows][cols];
 
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                tileKeys[row][col] = currentMap.getTile(row, col).getType().name();
-            }
-        }
 
-        MapViewData mapViewData = new MapViewData(tileKeys, tileSize);
-        view.updateTiles(mapViewData);
-    }
 
 
 }
