@@ -22,7 +22,7 @@ public class GameModel implements GameObservable {
     /*
     Här vill vi ha listor för torn, enemies, pengar, spelaren...
 
-    private List<Enemy> activeEnemies = new ArrayList<>();
+    private List<ABaseEnemy> activeEnemies = new ArrayList<>();
     private List<Tower> placedTowers = new ArrayList<>();
     private List<Projectiles> activeProjectiles = new ArrayList<>();
 
@@ -58,10 +58,24 @@ public class GameModel implements GameObservable {
 
     public void gameTick() {
         if (currentState == GameState.PLAYING) {
-            // TODO
 
-           /*
+            /*
             Här vill vi ha alla tower.update(), enemies.update()...
+
+            //för varje enemy i activeEnemies
+            for (int i = 0; i < activeEnemies.size(); i++) {
+                ABaseEnemy enemy = activeEnemies.get(i);
+                enemy.move();
+                if (!enemy.isAlive() || enemy.hasReachedEnd()) {
+                    activeEnemies.remove(i);
+                    i--;
+                // spawn enemies, move enemies, check collisions, etc.
+                // TODO: Deduct lives if hasReachedEnd() is true
+                // TODO: Award gold if !enemy.isAlive() is true
+            }
+
+
+
 
             */
             notifyObserver();
