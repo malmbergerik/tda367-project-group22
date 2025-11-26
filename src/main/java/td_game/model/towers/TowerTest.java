@@ -2,6 +2,7 @@ package td_game.model.towers;
 
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.enemy.Skeleton;
+import td_game.model.path.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,9 +16,9 @@ public class TowerTest {
     @org.junit.jupiter.api.Test
     public void testShoot()
     {
-        ABaseEnemy enemy = new Skeleton(1,1,10,10);
+        ABaseEnemy enemy = new Skeleton(1,1,new Path());
 
-        Tower tower = new Tower(100,5,5,10);
+        Tower tower = new Tower(100,5,5,10,3);
         tower.addEnemyInTestList(enemy);
         tower.shoot();
     }

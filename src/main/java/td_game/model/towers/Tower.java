@@ -1,18 +1,20 @@
 package td_game.model.towers;
 import td_game.model.enemy.ABaseEnemy;
+import td_game.model.projectile.Projectile;
+
 import java.util.ArrayList;
 
 public class Tower{
     private int attackCooldown; //Millisekunder
-    private double x;
-    private double y;
+    private int x;
+    private int y;
     private int attackRange;
     private long lastTimeSinceShoot = 0;
     private ArrayList<ABaseEnemy> enemyInRange;
     private ArrayList<ABaseEnemy> testEnemyList; //Test lista för att kunna testa koden
     private int projectileAmount;
 
-    public Tower( int attackCooldown, double x, double y, int attackRange, int projectileAmount ){ //kommer också ta en class Projectile så att man dynamiskt kan ändra projectile
+    public Tower( int attackCooldown, int x, int y, int attackRange, int projectileAmount ){ //kommer också ta en class Projectile så att man dynamiskt kan ändra projectile
         this.attackCooldown = attackCooldown;
         this.x = x;
         this.y = y;
@@ -29,7 +31,7 @@ public class Tower{
     {
         return testEnemyList;
     }
-    public void setPos(double positionY, double positionX)
+    public void setPos(int positionY, int positionX)
     {
         this.x = positionX;
         this.y = positionY;
@@ -81,7 +83,7 @@ public class Tower{
             if ((lenTooEnemy(e) < this.attackRange) && ((System.currentTimeMillis() - lastTimeSinceShoot) > this.attackCooldown))
             {
                 for (int i=0; i<= this.projectileAmount; i++) {
-                    //new Projectile(getAngleToEnemy(   firstEnemyInRange )- 15*Math.round(0.5*projectileAmount) + 15*i);
+                    new Projectile((getAngleToEnemy( (firstEnemyInRange )) - 15*Math.round(0.5*projectileAmount) + 15*i), 1,5,8,1,3,5000,this.x,this.y);
                 }
                 lastTimeSinceShoot = System.currentTimeMillis();
                 return;

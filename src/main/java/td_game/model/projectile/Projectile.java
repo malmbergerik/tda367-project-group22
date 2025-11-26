@@ -1,8 +1,11 @@
 package td_game.model.projectile;
 
+
 import td_game.model.enemy.ABaseEnemy;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.security.spec.EllipticCurve;
 import java.util.ArrayList;
 
 public class Projectile {
@@ -11,22 +14,22 @@ public class Projectile {
     private int height;
     private int damage;
     private int pierce;
-    private int timeAlive;
+    private int timeAliveMs;
     private int x;
     private int y;
-    private long startTimeAlive = System.currentTimeMillis(); //är enbart i millisekunder
+    private long starttimeAliveMs = System.currentTimeMillis(); //är enbart i millisekunder
     private boolean isAlive = true;
     private ArrayList<ABaseEnemy> testEnemyList; //Test lista för att kunna testa koden
     private double angle;
     private ArrayList<ABaseEnemy> enemiesHitThisFrame;
 
-    public Projectile(double angle,int pixelsPerMs, int width, int height, int damage, int pierce, int timeAlive, int x, int y) {
+    public Projectile(double angle,int pixelsPerMs, int width, int height, int damage, int pierce, int timeAliveMs, int x, int y) {
         this.pixelsPerMs = pixelsPerMs;
         this.width = width;
         this.height = height;
         this.damage = damage;
         this.pierce = pierce;
-        this.timeAlive = timeAlive;
+        this.timeAliveMs = timeAliveMs;
         this.testEnemyList = new ArrayList<ABaseEnemy>();
         this.angle = angle;
         this.x = x;
@@ -49,13 +52,18 @@ public class Projectile {
         return this.x;
     }
 
-    public Rectangle createHitbox(int x, int y,int width, int height){
-        Rectangle rectangle = new Rectangle(x,y,width,height);
-        return rectangle;
+    public Ellipse2D createHitboxEllipse(Double x, Double y,Double width, Double height){
+        //Rectangle hitbox = new Rectangle(x, y, width, height);
+            Ellipse2D hitbox = new Ellipse2D.Double(x, y, width, height);
+        return hitbox;
+    }
+    public Rectangle createHitboxRectangle(int x, int y,int width, int height){
+        Rectangle hitbox = new Rectangle(x, y, width, height);
+        return hitbox;
     }
 
-    public Boolean checkCollision(Rectangle box1, Rectangle box2){
-        if  (box1.intersects(box2)){
+    public Boolean checkCollision(Ellipse2D box1, Rectangle box2){
+        if  (box1.getBounds2D().intersects(box2.getBounds2D())){
             return true;
         }
         return false;
@@ -64,12 +72,12 @@ public class Projectile {
     public void collisionProjectileEnemy()
     {
         ArrayList<ABaseEnemy> enemies = this.testEnemyList;
-        if ((this.startTimeAlive + this.timeAlive < System.currentTimeMillis()) || (this.pierce <= 0)) {
+        if ((this.starttimeAliveMs + this.timeAliveMs < System.currentTimeMillis()) || (this.pierce <= 0)) {
             this.isAlive = false;
             return;
         }
         for (ABaseEnemy e: enemies) {
-            if ((checkCollision(createHitbox((int) e.getX(), (int) e.getY(),e.getWidth(), e.getHeight()), createHitbox(this.x, this.y, this.width, this.height))) && ( !enemiesHitThisFrame.contains(e))) {
+            if ((checkCollision(createHitboxEllipse( e.getX(), e.getY(),(double) e.getWidth(), (double) e.getHeight()), createHitboxRectangle( this.x, this.y, this.width, this.height))) && ( !enemiesHitThisFrame.contains(e))) {
                 e.takeDamage(this.damage);
                 pierce -= 1;
                 if (pierce <= 0){
