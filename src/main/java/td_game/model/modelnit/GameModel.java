@@ -6,6 +6,8 @@ import td_game.model.GameState;
 import td_game.model.map.GridMap;
 import td_game.model.map.MapLoader;
 import td_game.model.map.TileBase;
+import td_game.model.path.Path;
+import td_game.model.path.PathManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,20 +21,26 @@ public class GameModel implements GameObservable {
     private List<GameObserver> observers = new ArrayList<GameObserver>();
     private GameState currentState = GameState.MENU;
     private int tickCounter = 0;
+    private final PathManager pathManager;
+    private Path currentPath;
 
-    /*
-    Här vill vi ha listor för torn, enemies, pengar, spelaren...
+
+
+    //Här vill vi ha listor för torn, enemies, pengar, spelaren...
 
     private List<ABaseEnemy> activeEnemies = new ArrayList<>();
     private List<Tower> placedTowers = new ArrayList<>();
     private List<Projectiles> activeProjectiles = new ArrayList<>();
 
-     */
+
     public GameModel(int x, int y, int tileSize){
 
         this.gridMap = MapLoader.loadMap("levels/lvl1.txt", tileSize);
         this.x = x;
         this.y = y;
+
+        this.pathManager = new PathManager();
+        this.currentPath = pathManager.getPathForMap(gridMap);
 
     }
 
@@ -68,7 +76,7 @@ public class GameModel implements GameObservable {
 
             updateEnemies();
             /*
-            Här vill vi ha alla tower.update(), enemies.update()...
+            Här vill vi ha alla tower.update(),
             */
             notifyObserver();
         }
@@ -93,9 +101,12 @@ public class GameModel implements GameObservable {
             */
     }
 
+    //one for now*
     public void spawnEnemies() {
-        //todo need coordinates for start point of path
-        //
+        if (currentPath != null && currentPath.length() > 0) {
+            ABaseEnemy newEnemy = EnemyFactory.createEnemy(EnemyType.skeleton, 100, 1.0, currentPath);
+            activeEnemies.add(newEnemy);
+        }
     }
 
     @Override
