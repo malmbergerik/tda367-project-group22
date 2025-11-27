@@ -18,6 +18,7 @@ public class GameModel implements GameObservable {
     private int y;
     private List<GameObserver> observers = new ArrayList<GameObserver>();
     private GameState currentState = GameState.MENU;
+    private int tickCounter = 0;
 
     /*
     Här vill vi ha listor för torn, enemies, pengar, spelaren...
@@ -49,7 +50,7 @@ public class GameModel implements GameObservable {
 
     public void updateTile(int row, int col, TileBase tile){
         gridMap.setTile(row,col,tile);
-        notifyObserver(GameEventType.TILES_UPDATE);
+        notifyObserver();
     }
 
     public void setGameState(GameState gameState) {
@@ -58,28 +59,43 @@ public class GameModel implements GameObservable {
 
     public void gameTick() {
         if (currentState == GameState.PLAYING) {
+            tickCounter++;
 
-            /*
-            Här vill vi ha alla tower.update(), enemies.update()...
-
-            //för varje enemy i activeEnemies
-            for (int i = 0; i < activeEnemies.size(); i++) {
-                ABaseEnemy enemy = activeEnemies.get(i);
-                enemy.move();
-                if (!enemy.isAlive() || enemy.hasReachedEnd()) {
-                    activeEnemies.remove(i);
-                    i--;
-                // spawn enemies, move enemies, check collisions, etc.
-                // TODO: Deduct lives if hasReachedEnd() is true
-                // TODO: Award gold if !enemy.isAlive() is true
+            if (tickCounter = 100) {
+                tickCounter = 0;
+                spawnEnemies();
             }
 
+            updateEnemies();
+            /*
+            Här vill vi ha alla tower.update(), enemies.update()...
+            */
+            notifyObserver();
+        }
+    }
 
-
+    public void updateEnemies () {
+        //för varje enemy i activeEnemies
+        for (int i = 0; i < activeEnemies.size(); i++) {
+            ABaseEnemy enemy = activeEnemies.get(i);
+            enemy.move();
+            if (!enemy.isAlive() || enemy.hasReachedEnd()) {
+                activeEnemies.remove(i);
+                i--;
+                // Player.deductLife()
+                // Player.awardGold()
+            }
+            // spawn enemies, move enemies, etc.
+            // TODO: Deduct lives if hasReachedEnd() is true
+            // TODO: Award gold if !enemy.isAlive() is true
+        }
 
             */
-            //notifyObserver();
-        }
+    }
+
+    public void spawnEnemies() {
+        //todo need coordinates for start point of path
+        //
     }
 
     @Override
@@ -90,13 +106,13 @@ public class GameModel implements GameObservable {
 
     @Override
     public void unregisterObserver(GameObserver observer) {
-        observers.remove(observer);
+        // Todo
     }
 
     @Override
-    public void notifyObserver(GameEventType eventType) {
+    public void notifyObserver() {
         for (GameObserver observer: observers) {
-            observer.update(eventType);
+            observer.update();
         }
     }
 }
