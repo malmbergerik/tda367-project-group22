@@ -79,7 +79,7 @@ public class GameModel implements GameObservable {
         if (currentState == GameState.PLAYING) {
             tickCounter++;
 
-            if (tickCounter == 100) {
+            if (tickCounter == 10000) {
                 tickCounter = 0;
                 spawnEnemies();
             }
@@ -93,21 +93,23 @@ public class GameModel implements GameObservable {
 
     public void updateEnemies () {
         //för varje enemy i activeEnemies
-        for (int i = 0; i < activeEnemies.size(); i++) {
-            ABaseEnemy enemy = activeEnemies.get(i);
-            enemy.move();
-            if (!enemy.isAlive() || enemy.hasReachedEnd()) {
-                activeEnemies.remove(i);
-                i--;
-                // Player.deductLife()
-                // Player.awardGold()
-            }
-            // spawn enemies, move enemies, etc.
-            // TODO: Deduct lives if hasReachedEnd() is true
-            // TODO: Award gold if !enemy.isAlive() is true
-        }
-        notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
+        while (!activeEnemies.isEmpty()) {
+            for (ABaseEnemy enemy : activeEnemies) {
+                System.out.println(enemy.getX());
+                enemy.move();
+                System.out.println(enemy.getX());
+                if (!enemy.isAlive() || enemy.hasReachedEnd()) {
+                    activeEnemies.remove(enemy);
 
+                    // Player.deductLife()
+                    // Player.awardGold()
+                }
+                // spawn enemies, move enemies, etc.
+                // TODO: Deduct lives if hasReachedEnd() is true
+                // TODO: Award gold if !enemy.isAlive() is true
+            }
+            notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
+        }
     }
 
     //one for now*
