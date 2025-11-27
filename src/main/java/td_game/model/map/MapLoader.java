@@ -51,6 +51,8 @@ public class MapLoader {
 
     private static TileBase charToTile(char c) {
         return switch (c) {
+            case 'S' -> new PathTile(PathType.START);
+            case 'E' -> new PathTile(PathType.END);
             case '0' -> new PathTile(PathType.NORMAL);
             case '1' -> new GrassTile();
             case '2' -> new WaterTile();
