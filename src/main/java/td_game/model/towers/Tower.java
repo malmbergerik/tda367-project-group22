@@ -1,6 +1,5 @@
 package td_game.model.towers;
 import td_game.model.enemy.ABaseEnemy;
-import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileFactory;
 
 import java.util.ArrayList;
