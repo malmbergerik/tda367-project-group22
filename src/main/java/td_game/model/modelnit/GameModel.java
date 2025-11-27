@@ -8,6 +8,11 @@ import td_game.model.map.MapLoader;
 import td_game.model.map.TileBase;
 import td_game.model.path.Path;
 import td_game.model.path.PathManager;
+import td_game.model.enemy.ABaseEnemy;
+import td_game.model.enemy.EnemyFactory;
+import td_game.model.enemy.EnemyType;
+import td_game.model.tower.Tower;
+import td_game.model.projectile.Projectile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +34,8 @@ public class GameModel implements GameObservable {
     //Här vill vi ha listor för torn, enemies, pengar, spelaren...
 
     private List<ABaseEnemy> activeEnemies = new ArrayList<>();
-    private List<Tower> placedTowers = new ArrayList<>();
-    private List<Projectiles> activeProjectiles = new ArrayList<>();
+    //private List<Tower> placedTowers = new ArrayList<>();
+    //private List<Projectiles> activeProjectiles = new ArrayList<>();
 
 
     public GameModel(int x, int y, int tileSize){
@@ -69,7 +74,7 @@ public class GameModel implements GameObservable {
         if (currentState == GameState.PLAYING) {
             tickCounter++;
 
-            if (tickCounter = 100) {
+            if (tickCounter == 100) {
                 tickCounter = 0;
                 spawnEnemies();
             }
@@ -97,8 +102,6 @@ public class GameModel implements GameObservable {
             // TODO: Deduct lives if hasReachedEnd() is true
             // TODO: Award gold if !enemy.isAlive() is true
         }
-
-            */
     }
 
     //one for now*
