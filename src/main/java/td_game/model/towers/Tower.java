@@ -52,7 +52,7 @@ public class Tower{
     }
     public double getAngleToEnemy(ABaseEnemy enemy)
     {
-        return  Math.atan2(enemy.getY()- (getY() + 8), enemy.getX() - (getX() + 8)) * (180/Math.PI);
+        return  Math.atan2(enemy.getY()- (getY()), enemy.getX() - (getX())) * (180/Math.PI);
     }
 
     public ArrayList<ABaseEnemy> getEnemyInRangeInOrder(ArrayList<ABaseEnemy> enemies)
