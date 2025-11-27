@@ -4,7 +4,7 @@ import td_game.model.enemy.ABaseEnemy;
 import td_game.model.enemy.Skeleton;
 import td_game.model.path.Path;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
