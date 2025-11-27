@@ -15,7 +15,7 @@ public class Skeleton extends ABaseEnemy{
         this.height = ENEMY_HEIGHT;
         this.path = path;
 
-        if (path != null && path.length() > 0) {
+        if (path != null && !path.isEmpty()) {
             Waypoint firstWaypoint = path.get(0); // Get the first waypoint (starting position)
             this.posX = firstWaypoint.getX();
             this.posY = firstWaypoint.getY();
