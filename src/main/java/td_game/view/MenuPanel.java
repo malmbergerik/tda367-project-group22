@@ -7,41 +7,58 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MenuPanel extends JPanel {
-    private JButton playButton;
-    private Image backgroundImage;
-    private Image playButtonImage;
-    private Image hoverButtonImage;
+public class MenuPanel extends APanel implements IMenuView, IView {
+    private final JButton playButton;
+    private final JButton exitButton;
+    private final Image backgroundImage;
 
-    public MenuPanel() {
+    public MenuPanel(int width, int height) {
+        super(width, height);
+        Dimension size = new Dimension(width, height);
+        setPreferredSize(size);
         setLayout(new GridBagLayout());
-        setPreferredSize(new Dimension(1024, 768));
 
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        backgroundImage = loadImage("/assets/menu.png");
+        Image playButtonImage = loadImage("/assets/play.png");
+        Image hoverPlayButtonImage = loadImage("/assets/hoverPlay.png");
+        Image exitButtonImage = loadImage("/assets/exit.png");
+        Image hoverExitButtonImage = loadImage("/assets/hoverExit.png");
 
-        
-        try {
+        playButton = createButton(playButtonImage, hoverPlayButtonImage);
+        exitButton = createButton(exitButtonImage, hoverExitButtonImage);
 
-            backgroundImage = ImageIO.read(getClass().getResourceAsStream("/assets/menu.png"));
-            playButtonImage = ImageIO.read(getClass().getResourceAsStream("/assets/play.png"));
-            hoverButtonImage = ImageIO.read(getClass().getResourceAsStream("/assets/hoverPlay.png"));
+        addComponent(playButton,0);
+        addComponent(exitButton,1);
 
+    }
+
+    public void addPlayListener(ActionListener listener) {
+        playButton.addActionListener(listener);
+    }
+
+    public  void addExitListener(ActionListener listener) {
+        exitButton.addActionListener(listener);
+    }
+
+    private JButton createButton (Image staticImage, Image hoverImage){
+        ImageIcon staticIcon = new ImageIcon(staticImage);
+        ImageIcon hoverIcon = new ImageIcon(hoverImage);
+
+        JButton button = new JButton(staticIcon);
+        button.setRolloverIcon(hoverIcon);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return button;
+    }
+
+    private Image loadImage (String path) {
+        try (InputStream is = getClass().getResourceAsStream(path)) {
+            return ImageIO.read(is);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to load image: " + path, e);
         }
-
-        ImageIcon staticIcon = new ImageIcon(playButtonImage);
-        ImageIcon hoverIcon = new ImageIcon(hoverButtonImage);
-
-        playButton = new JButton(staticIcon);
-        playButton.setRolloverIcon(hoverIcon);
-        playButton.setBorderPainted(false);
-        playButton.setContentAreaFilled(false);
-        playButton.setFocusPainted(false);
-
-        playButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        add(playButton);
     }
 
     @Override
@@ -52,8 +69,17 @@ public class MenuPanel extends JPanel {
         }
     }
 
-    public void addPlayButtonListener(ActionListener listener) {
-        playButton.addActionListener(listener);
+    private void addComponent(JComponent component, int gridY){
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = gridY;
+        gbc.insets = new Insets(0, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        this.add(component, gbc);
     }
 
+    @Override
+    public JPanel getViewPanel() {
+        return this;
+    }
 }

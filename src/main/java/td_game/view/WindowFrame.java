@@ -1,54 +1,40 @@
 package td_game.view;
 
-import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class WindowFrame extends JFrame {
-    private final int width = 1024;
-    private final int height = 768;
-    private GamePanel gamePanel;
-    private MenuPanel menuPanel;
-    private CardLayout cl;
 
+    private final CardLayout cardLayout;
+    private final JPanel mainPanel;
 
-    public WindowFrame(GameModel model) {
+    public WindowFrame(int width, int height) {
+        super("Dungeon Defence");
 
-        setSize(width, height);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
 
-        cl = new CardLayout();
-        setLayout(cl);
-
-        gamePanel = new GamePanel(model);
-        menuPanel = new MenuPanel();
-
-        add(gamePanel, "Game");
-        add(menuPanel, "Menu");
-
-        setVisible(true);
-        pack();
-        showPanel("Menu");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setVisible(true);
+        this.add(mainPanel);
 
     }
 
-    public MenuPanel getMenuPanel() {
-        return menuPanel;
-    }
-
-    protected GamePanel getGamePanel(){
-        return gamePanel;
-    }
-
-    public void showPanel(String panelName) {
-        cl.show(getContentPane(), panelName);
+    public void addView(JPanel viewPanel, String viewName) {
+        mainPanel.add(viewPanel, viewName);
+        this.pack();
+        this.setLocationRelativeTo(null);
 
     }
 
+    public void showView(String view) {
+        cardLayout.show(mainPanel, view);
+    }
 
-
+    public void makeVisible() {
+        this.setVisible(true);
+    }
 }

@@ -49,7 +49,7 @@ public class GameModel implements GameObservable {
 
     public void updateTile(int row, int col, TileBase tile){
         gridMap.setTile(row,col,tile);
-        notifyObserver();
+        notifyObserver(GameEventType.TILES_UPDATE);
     }
 
     public void setGameState(GameState gameState) {
@@ -78,7 +78,7 @@ public class GameModel implements GameObservable {
 
 
             */
-            notifyObserver();
+            //notifyObserver();
         }
     }
 
@@ -90,13 +90,13 @@ public class GameModel implements GameObservable {
 
     @Override
     public void unregisterObserver(GameObserver observer) {
-        // Todo
+        observers.remove(observer);
     }
 
     @Override
-    public void notifyObserver() {
+    public void notifyObserver(GameEventType eventType) {
         for (GameObserver observer: observers) {
-            observer.update();
+            observer.update(eventType);
         }
     }
 }
