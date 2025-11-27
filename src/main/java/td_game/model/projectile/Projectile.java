@@ -14,27 +14,29 @@ public class Projectile {
     private int height;
     private int damage;
     private int pierce;
-    private int timeAliveMs;
+    public int timeAliveTicks;
     private int x;
     private int y;
-    private long starttimeAliveMs = System.currentTimeMillis(); //är enbart i millisekunder
     private boolean isAlive = true;
     private ArrayList<ABaseEnemy> testEnemyList; //Test lista för att kunna testa koden
     private double angle;
     private ArrayList<ABaseEnemy> enemiesHitThisFrame;
 
-    public Projectile(double angle,int pixelsPerMs, int width, int height, int damage, int pierce, int timeAliveMs, int x, int y) {
+    public Projectile(double angle,int pixelsPerMs, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y) {
         this.pixelsPerMs = pixelsPerMs;
         this.width = width;
         this.height = height;
         this.damage = damage;
         this.pierce = pierce;
-        this.timeAliveMs = timeAliveMs;
+        this.timeAliveTicks = timeAliveTicks;
         this.testEnemyList = new ArrayList<ABaseEnemy>();
         this.angle = angle;
         this.x = x;
         this.y = y;
         this.enemiesHitThisFrame = new ArrayList<ABaseEnemy>();
+    }
+    public void addTestEnemyList(ABaseEnemy enemy){
+        testEnemyList.add(enemy);
     }
 
     public void move(double angle){
@@ -72,7 +74,7 @@ public class Projectile {
     public void collisionProjectileEnemy()
     {
         ArrayList<ABaseEnemy> enemies = this.testEnemyList;
-        if ((this.starttimeAliveMs + this.timeAliveMs < System.currentTimeMillis()) || (this.pierce <= 0)) {
+        if ((this.timeAliveTicks <= 0) || (this.pierce <= 0)) {
             this.isAlive = false;
             return;
         }
@@ -81,7 +83,7 @@ public class Projectile {
                 e.takeDamage(this.damage);
                 pierce -= 1;
                 if (pierce <= 0){
-                    isAlive = false;
+                    this.isAlive = false;
                     break;
                 }
                 if (e.isAlive()){
@@ -100,6 +102,7 @@ public class Projectile {
 
         collisionProjectileEnemy();
         this.enemiesHitThisFrame.clear();
+        this.timeAliveTicks -= 1;
     }
 
 }
