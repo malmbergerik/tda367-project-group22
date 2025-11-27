@@ -6,7 +6,7 @@ public class ProjectileFactory implements IProjectileFactory{
     private final int height;
     private final int damage;
     private final int pierce;
-    private final int timeAliveMs;
+    private final int timeAliveTicks;
 
     public ProjectileFactory(
             int pixelsPerMs,
@@ -14,14 +14,14 @@ public class ProjectileFactory implements IProjectileFactory{
             int height,
             int damage,
             int pierce,
-            int timeAliveMs
+            int timeAliveTicks
     ) {
         this.pixelsPerMs = pixelsPerMs;
         this.width = width;
         this.height = height;
         this.damage = damage;
         this.pierce = pierce;
-        this.timeAliveMs = timeAliveMs;
+        this.timeAliveTicks = timeAliveTicks;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ProjectileFactory implements IProjectileFactory{
                 height,
                 damage,
                 pierce,
-                timeAliveMs,
+                timeAliveTicks,
                 x,
                 y
         );
