@@ -11,7 +11,7 @@ import td_game.model.path.PathManager;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.enemy.EnemyFactory;
 import td_game.model.enemy.EnemyType;
-import td_game.model.tower.Tower;
+import td_game.model.towers.Tower;
 import td_game.model.projectile.Projectile;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class GameModel implements GameObservable {
     private int x;
     private int y;
     private List<GameObserver> observers = new ArrayList<GameObserver>();
-    private GameState currentState = GameState.MENU;
+    private GameState currentState = GameState.PLAYING;
     private int tickCounter = 0;
     private final PathManager pathManager;
     private Path currentPath;
@@ -47,6 +47,7 @@ public class GameModel implements GameObservable {
         this.pathManager = new PathManager();
         this.currentPath = pathManager.getPathForMap(gridMap);
 
+
     }
 
     public int getX() {
@@ -61,9 +62,13 @@ public class GameModel implements GameObservable {
         return gridMap;
     }
 
+    public List<ABaseEnemy> getActiveEnemies(){
+        return activeEnemies;
+    }
+
     public void updateTile(int row, int col, TileBase tile){
         gridMap.setTile(row,col,tile);
-        notifyObserver();
+        notifyObserver(GameEventType.TILES_UPDATE);
     }
 
     public void setGameState(GameState gameState) {
@@ -83,7 +88,6 @@ public class GameModel implements GameObservable {
             /*
             Här vill vi ha alla tower.update(),
             */
-            notifyObserver();
         }
     }
 
@@ -102,6 +106,8 @@ public class GameModel implements GameObservable {
             // TODO: Deduct lives if hasReachedEnd() is true
             // TODO: Award gold if !enemy.isAlive() is true
         }
+        notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
+
     }
 
     //one for now*
@@ -109,6 +115,7 @@ public class GameModel implements GameObservable {
         if (currentPath != null && currentPath.length() > 0) {
             ABaseEnemy newEnemy = EnemyFactory.createEnemy(EnemyType.skeleton, 100, 1.0, currentPath);
             activeEnemies.add(newEnemy);
+            notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
         }
     }
 
@@ -124,9 +131,9 @@ public class GameModel implements GameObservable {
     }
 
     @Override
-    public void notifyObserver() {
+    public void notifyObserver(GameEventType eventType) {
         for (GameObserver observer: observers) {
-            observer.update();
+            observer.update(eventType);
         }
     }
 }

@@ -16,6 +16,8 @@ public class Main {
     public static void main(String[] args) {
         GameModel gameModel = new GameModel(GAME_WIDTH, GAME_HEIGHT, TILE_SIZE);
         new AppController(gameModel, WINDOW_WIDTH, WINDOW_HEIGHT);
+        gameModel.spawnEnemies();
+        gameModel.gameTick();
     }
 }
 
