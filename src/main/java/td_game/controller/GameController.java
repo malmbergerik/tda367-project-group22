@@ -1,15 +1,12 @@
 package td_game.controller;
 
 import td_game.model.GameEventType;
-import td_game.model.map.GridMap;
-import td_game.model.map.TileBase;
 import td_game.model.modelnit.GameModel;
 import td_game.view.GameViewPanel;
 import td_game.model.GameObserver;
 import td_game.view.IGameMouseListener;
-import td_game.view.helper.MapViewData;
 
-public class GameController implements GameObserver {
+public class GameController implements GameObserver{
     private final GameModel model;
     private final GameViewPanel view;
     private IPlacementController placementController;
@@ -24,9 +21,7 @@ public class GameController implements GameObserver {
         this.gameUpdateController = new GameUpdateController(model, view);
 
         initGameMouseListener();
-
         gameUpdateController.handleTileUpdate();
-
     }
 
     private void initGameMouseListener() {
@@ -52,12 +47,5 @@ public class GameController implements GameObserver {
             case TOWER_UPDATE -> gameUpdateController.handleTowersUpdate();
         }
     }
-
-
-
-
-
-
-
 
 }

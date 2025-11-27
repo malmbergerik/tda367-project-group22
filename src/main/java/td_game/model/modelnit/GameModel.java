@@ -17,7 +17,7 @@ import td_game.model.projectile.Projectile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel implements GameObservable {
+public class GameModel implements GameObservable, IUpdatable {
 
 
     private final GridMap gridMap;
@@ -47,7 +47,6 @@ public class GameModel implements GameObservable {
         this.pathManager = new PathManager();
         this.currentPath = pathManager.getPathForMap(gridMap);
 
-
     }
 
     public int getX() {
@@ -75,25 +74,14 @@ public class GameModel implements GameObservable {
         // TODO
     }
 
-    public void gameTick() {
-        if (currentState == GameState.PLAYING) {
-            tickCounter++;
-
-            if (tickCounter == 10000) {
-                tickCounter = 0;
-                spawnEnemies();
-            }
-
-            updateEnemies();
-            /*
-            Här vill vi ha alla tower.update(),
-            */
-        }
+    //GameLoop calls this
+    public void update(){
+        updateEnemies();
     }
 
     public void updateEnemies () {
         //för varje enemy i activeEnemies
-        while (!activeEnemies.isEmpty()) {
+
             for (ABaseEnemy enemy : activeEnemies) {
                 System.out.println(enemy.getX());
                 enemy.move();
@@ -107,15 +95,15 @@ public class GameModel implements GameObservable {
                 // spawn enemies, move enemies, etc.
                 // TODO: Deduct lives if hasReachedEnd() is true
                 // TODO: Award gold if !enemy.isAlive() is true
+                notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
             }
-            notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
-        }
+
     }
 
     //one for now*
     public void spawnEnemies() {
         if (currentPath != null && currentPath.length() > 0) {
-            ABaseEnemy newEnemy = EnemyFactory.createEnemy(EnemyType.skeleton, 100, 1.0, currentPath);
+            ABaseEnemy newEnemy = EnemyFactory.createEnemy(EnemyType.skeleton, 100, 0.1, currentPath);
             activeEnemies.add(newEnemy);
             notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
         }
