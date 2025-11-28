@@ -53,13 +53,20 @@ public class Projectile {
         return this.x;
     }
 
+    public void checkTimerAlive(){
+        if ((this.timeAliveTicks <= 0) ) {
+            this.isAlive = false;
+        }
+    }
+    public void checkPierceAlive(){
+        if ((this.pierce <= 0) ) {
+            this.isAlive = false;
+        }
+    }
+
     public void hitEnemy()
     {
         ArrayList<ABaseEnemy> enemies = this.testEnemyList;
-        if ((this.timeAliveTicks <= 0) || (this.pierce <= 0)) {
-            this.isAlive = false;
-            return;
-        }
         for (ABaseEnemy e: enemies) {
             if ((CheckCollision.checkCollision(CreateHitbox.createHitboxEllipse( e.getX(), e.getY(),(double) e.getWidth(), (double) e.getHeight()), CreateHitbox.createHitboxRectangle( this.x, this.y, this.width, this.height))) && ( !enemiesHitThisFrame.contains(e))) {
                 e.takeDamage(this.damage);
@@ -85,6 +92,8 @@ public class Projectile {
         hitEnemy();
         this.enemiesHitThisFrame.clear();
         this.timeAliveTicks -= 1;
+        checkTimerAlive();
+        checkPierceAlive();
     }
 
 }
