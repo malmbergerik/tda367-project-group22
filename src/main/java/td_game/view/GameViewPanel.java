@@ -81,7 +81,7 @@ public class GameViewPanel extends JPanel {
             double x = enemy.getEnemyX() * SCALE;
             double y = enemy.getEnemyY() * SCALE;
 
-            BufferedImage image = tileViewManager.getTileImage("WATER");
+            BufferedImage image = tileViewManager.getTileImage("slime");
 
             g2.drawImage(image,(int) x  - 24 ,(int) y - 24 , 48, 48, null);
 

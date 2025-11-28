@@ -27,6 +27,8 @@ public class TileViewManager {
         tileImages.put("GRASS", loadImage("assets/tileset/underground/grass.png"));
         tileImages.put("PATH", loadImage("assets/tileset/underground/path.png"));
         tileImages.put("WATER", loadImage("assets/tileset/underground/water.png"));
+        tileImages.put("slime", loadImage("assets/enemies/slimeR.png"));
+
     }
 
     private BufferedImage loadImage(String path) {
