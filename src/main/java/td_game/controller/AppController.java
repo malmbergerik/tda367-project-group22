@@ -1,10 +1,13 @@
 package td_game.controller;
 
 import td_game.model.modelnit.GameModel;
+import td_game.model.modelnit.IGameLoop;
+
+import td_game.model.modelnit.PlayingState;
 import td_game.view.*;
 
 public class AppController {
-    public AppController(GameModel model, int width, int height) {
+    public AppController(GameModel model, IGameLoop gameLoop,  int width, int height) {
 
         ViewFactory viewFactory = new ViewFactory();
         WindowFrame windowFrame = new WindowFrame(width, height);
@@ -16,7 +19,11 @@ public class AppController {
         windowFrame.addView(gameView.getViewPanel(), "GAME_VIEW");
 
         if (menuView instanceof MenuPanel menu) {
-            menu.addPlayListener(e -> windowFrame.showView("GAME_VIEW"));
+            menu.addPlayListener(e -> {
+                windowFrame.showView("GAME_VIEW");
+                model.setGameState(new PlayingState(model));
+                gameLoop.start();
+            });
             menu.addExitListener(e -> System.exit(0));
         }
 
@@ -28,4 +35,6 @@ public class AppController {
         windowFrame.makeVisible();
 
     }
+
+
 }

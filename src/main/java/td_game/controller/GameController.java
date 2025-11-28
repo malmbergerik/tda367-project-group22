@@ -1,15 +1,12 @@
 package td_game.controller;
 
 import td_game.model.GameEventType;
-import td_game.model.map.GridMap;
-import td_game.model.map.TileBase;
 import td_game.model.modelnit.GameModel;
 import td_game.view.GameViewPanel;
-import td_game.model.GameObserver;
+import td_game.model.IGameObserver;
 import td_game.view.IGameMouseListener;
-import td_game.view.helper.MapViewData;
 
-public class GameController implements GameObserver {
+public class GameController implements IGameObserver {
     private final GameModel model;
     private final GameViewPanel view;
     private IPlacementController placementController;
@@ -40,12 +37,15 @@ public class GameController implements GameObserver {
             public void onMouseClicked(int posX, int posY) {
                 placementController.handleMouseClicked(posX,posY);
             }
+
+            @Override
+            public void onMouseDragged(int posX, int posY) {placementController.handleMouseDragged(posX,posY);}
         });
     }
 
 
     @Override
-    public void update(GameEventType eventType) {
+    public void onGameEvent(GameEventType eventType) {
         switch (eventType) {
             case TILES_UPDATE -> gameUpdateController.handleTileUpdate();
             case MOVING_OBJECTS_UPDATE -> gameUpdateController.handleMovingObjectsUpdate();

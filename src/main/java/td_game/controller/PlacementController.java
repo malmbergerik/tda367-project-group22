@@ -45,4 +45,9 @@ public class PlacementController implements IPlacementController {
         }
 
     }
+
+    @Override
+    public void handleMouseDragged(int posX, int posY){
+
+    }
 }
