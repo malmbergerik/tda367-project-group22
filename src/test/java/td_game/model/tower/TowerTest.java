@@ -4,8 +4,10 @@ package td_game.model.tower;
 
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.enemy.Skeleton;
+import td_game.model.modelnit.GameModel;
 import td_game.model.path.Path;
 import td_game.model.path.Waypoint;
 import td_game.model.projectile.ProjectileFactory;
@@ -16,14 +18,19 @@ import java.util.List;
 
 public class TowerTest {
 
+    private GameModel gameModel;
 
+    @BeforeEach
+    public void setup() {
+        gameModel = new GameModel(0, 0, 32);
+    }
 
     @org.junit.jupiter.api.Test
     public void testAngleAtEnemy()
     {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
-        ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50);
+        ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50, gameModel);
         Tower tower = new Tower(100,5,0,10,3, p);
 
         Assertions.assertEquals(180, tower.getAngleToEnemy(enemy));
@@ -35,7 +42,7 @@ public class TowerTest {
         ArrayList<ABaseEnemy> enemyList = new ArrayList<ABaseEnemy>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
         ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
-        ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50);
+        ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50, gameModel);
         Tower tower = new Tower(100,5,5,10,3, p);
 
         enemyList.add(enemy);
@@ -52,7 +59,7 @@ public class TowerTest {
     {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
-        ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50);
+        ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50, gameModel);
         Tower tower = new Tower(100,5,0,10,3, p);
 
         Assertions.assertEquals(5, tower.lenTooEnemy(enemy));
@@ -62,7 +69,7 @@ public class TowerTest {
     {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
-        ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50);
+        ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50, gameModel);
         Tower tower = new Tower(100,0,5,10,3, p);
 
         Assertions.assertEquals(5, tower.lenTooEnemy(enemy));

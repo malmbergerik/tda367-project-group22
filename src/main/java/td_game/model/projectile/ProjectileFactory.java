@@ -1,5 +1,11 @@
 package td_game.model.projectile;
 
+import td_game.model.enemy.ABaseEnemy;
+import td_game.model.enemy.EnemyManager;
+import td_game.model.modelnit.GameModel;
+
+import java.util.List;
+
 public class ProjectileFactory implements IProjectileFactory{
     private final int pixelsPerTick;
     private final int width;
@@ -7,6 +13,7 @@ public class ProjectileFactory implements IProjectileFactory{
     private final int damage;
     private final int pierce;
     private final int timeAliveTicks;
+    private final GameModel gameModel;
 
     public ProjectileFactory(
             int pixelsPerTick,
@@ -14,7 +21,8 @@ public class ProjectileFactory implements IProjectileFactory{
             int height,
             int damage,
             int pierce,
-            int timeAliveTicks
+            int timeAliveTicks,
+            GameModel gameModel
     ) {
         this.pixelsPerTick = pixelsPerTick;
         this.width = width;
@@ -22,6 +30,7 @@ public class ProjectileFactory implements IProjectileFactory{
         this.damage = damage;
         this.pierce = pierce;
         this.timeAliveTicks = timeAliveTicks;
+        this.gameModel = gameModel;
     }
 
     @Override
@@ -35,7 +44,11 @@ public class ProjectileFactory implements IProjectileFactory{
                 pierce,
                 timeAliveTicks,
                 x,
-                y
+                y,
+                gameModel
+
+
+
         );
     }
 }
