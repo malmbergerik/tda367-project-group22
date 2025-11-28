@@ -39,9 +39,9 @@ public class Projectile {
         testEnemyList.add(enemy);
     }
 
-    public void move(double angle){
-        int dX = (int) (this.pixelsPerTick * Math.cos(angle*(Math.PI / 180)));
-        int dY = (int) (this.pixelsPerTick * Math.sin(angle*(Math.PI / 180)));
+    public void move(){
+        int dX = (int) (this.pixelsPerTick * Math.cos(this.angle*(Math.PI / 180)));
+        int dY = (int) (this.pixelsPerTick * Math.sin(this.angle*(Math.PI / 180)));
 
         this.x = this.x + dX;
         this.y = this.y + dY;
@@ -98,7 +98,7 @@ public class Projectile {
     }
 
     public void update(){
-        move(this.angle);
+        move();
 
         collisionProjectileEnemy();
         this.enemiesHitThisFrame.clear();
