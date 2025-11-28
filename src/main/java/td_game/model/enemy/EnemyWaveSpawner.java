@@ -1,0 +1,75 @@
+package td_game.model.enemy;
+
+import td_game.model.modelnit.GameModel;
+
+public class EnemyWaveSpawner {
+    private final GameModel gameModel;
+    private  final EnemyFactory enemyFactory;
+
+    private int currentWave;
+    private int enemiesSpawnedInWave;
+    private int enemiesToSpawnInWave;
+    private long lastSpawnTime;
+    private long spawnInterval;
+
+    private boolean waveActive;
+    private boolean allEnemiesSpawned;
+
+    public EnemyWaveSpawner(GameModel model) {
+        this.gameModel = model;
+        this.enemyFactory = new EnemyFactory();
+        this.currentWave = 0;
+        this.spawnInterval = 2000; // 2 seconds
+        this.waveActive = false;
+    }
+
+    public void startNextWave() {
+        currentWave++;
+        enemiesSpawnedInWave = 0;
+        enemiesToSpawnInWave = currentWave * 5; // Example: increase enemies per wave
+        waveActive = true;
+        allEnemiesSpawned = false;
+        lastSpawnTime = System.currentTimeMillis();
+    }
+
+    public void update() {
+        if (!waveActive || allEnemiesSpawned) {
+            return;
+        }
+
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastSpawnTime >= spawnInterval) {
+            spawnEnemy();
+            lastSpawnTime = currentTime;
+            enemiesSpawnedInWave++;
+
+            if (enemiesSpawnedInWave >= enemiesToSpawnInWave) {
+                allEnemiesSpawned = true;
+            }
+        }
+    }
+
+    private void spawnEnemy() {
+        ABaseEnemy enemy = enemyFactory.createEnemy(currentWave);
+        gameModel.addEnemy(enemy);
+    }
+
+
+    public boolean isWaveComplete() {
+        return allEnemiesSpawned && gameModel.getEnemies().isEmpty();
+    }
+
+    public boolean isWaveActive() {
+        return waveActive;
+    }
+
+    public int getCurrentWave() {
+        return currentWave;
+    }
+
+    public void setWaveActive(boolean active) {
+        this.waveActive = active;
+    }
+
+
+}

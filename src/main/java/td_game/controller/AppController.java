@@ -1,6 +1,7 @@
 package td_game.controller;
 
 import td_game.model.modelnit.GameModel;
+import td_game.model.modelnit.PlayingState;
 import td_game.view.*;
 
 public class AppController {
@@ -16,12 +17,16 @@ public class AppController {
         windowFrame.addView(gameView.getViewPanel(), "GAME_VIEW");
 
         if (menuView instanceof MenuPanel menu) {
-            menu.addPlayListener(e -> windowFrame.showView("GAME_VIEW"));
+            menu.addPlayListener(e -> {
+                model.setGameState(new PlayingState(model));
+                windowFrame.showView("GAME_VIEW");
+            });
             menu.addExitListener(e -> System.exit(0));
         }
 
         if (gameView instanceof GamePanel game) {
             new GameController(model, game.getGameViewPanel());
+
         }
 
         windowFrame.showView("MENU_VIEW");

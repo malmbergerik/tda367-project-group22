@@ -1,8 +1,7 @@
 package td_game.model.modelnit;
 
 import td_game.model.GameEventType;
-import td_game.model.GameObserver;
-import td_game.model.GameState;
+import td_game.model.IGameObserver;
 import td_game.model.map.GridMap;
 import td_game.model.map.MapLoader;
 import td_game.model.map.TileBase;
@@ -16,8 +15,8 @@ public class GameModel implements GameObservable {
     private final GridMap gridMap;
     private int x;
     private int y;
-    private List<GameObserver> observers = new ArrayList<GameObserver>();
-    private GameState currentState = GameState.MENU;
+    private List<IGameObserver> observers = new ArrayList<IGameObserver>();
+    private IGameState currentState;
 
     /*
     Här vill vi ha listor för torn, enemies, pengar, spelaren...
@@ -32,6 +31,9 @@ public class GameModel implements GameObservable {
         this.gridMap = MapLoader.loadMap("levels/lvl1.txt", tileSize);
         this.x = x;
         this.y = y;
+
+        this.currentState = new MenuState(this);
+
 
     }
 
@@ -52,50 +54,30 @@ public class GameModel implements GameObservable {
         notifyObserver(GameEventType.TILES_UPDATE);
     }
 
-    public void setGameState(GameState gameState) {
-        // TODO
-    }
-
-    public void gameTick() {
-        if (currentState == GameState.PLAYING) {
-
-            /*
-            Här vill vi ha alla tower.update(), enemies.update()...
-
-            //för varje enemy i activeEnemies
-            for (int i = 0; i < activeEnemies.size(); i++) {
-                ABaseEnemy enemy = activeEnemies.get(i);
-                enemy.move();
-                if (!enemy.isAlive() || enemy.hasReachedEnd()) {
-                    activeEnemies.remove(i);
-                    i--;
-                // spawn enemies, move enemies, check collisions, etc.
-                // TODO: Deduct lives if hasReachedEnd() is true
-                // TODO: Award gold if !enemy.isAlive() is true
-            }
-
-
-
-
-            */
-            //notifyObserver();
+    public void setGameState(IGameState newState) {
+        if (currentState != null) {
+            currentState.exitState();
+        }
+        currentState = newState;
+        if (currentState != null) {
+            currentState.enterState();
         }
     }
 
     @Override
-    public void registerObserver(GameObserver observer) {
+    public void registerObserver(IGameObserver observer) {
         if(!observers.contains(observer))
             observers.add(observer);
     }
 
     @Override
-    public void unregisterObserver(GameObserver observer) {
+    public void unregisterObserver(IGameObserver observer) {
         observers.remove(observer);
     }
 
     @Override
     public void notifyObserver(GameEventType eventType) {
-        for (GameObserver observer: observers) {
+        for (IGameObserver observer: observers) {
             observer.update(eventType);
         }
     }
