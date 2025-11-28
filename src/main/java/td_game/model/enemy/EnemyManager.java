@@ -29,6 +29,10 @@ public class EnemyManager {
             return (!enemy.isAlive() || enemy.hasReachedEnd());
         });
         gameModel.notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
+
+        if (activeEnemies.isEmpty() && waveSpawner.isWaveComplete()) {
+            startNextWave();
+        }
     }
 
     public void startNextWave(){
