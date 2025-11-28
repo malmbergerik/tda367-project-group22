@@ -36,11 +36,10 @@ public class GameModel implements GameObservable,IUpdatable {
     private List<Projectiles> activeProjectiles = new ArrayList<>();
 
      */
-    public GameModel(int x, int y, int tileSize){
+    public GameModel(int tileSize){
 
         this.gridMap = MapLoader.loadMap("levels/lvl1.txt", tileSize);
-        this.x = x;
-        this.y = y;
+
 
         this.currentState = new MenuState(this);
         this.pathManager = new PathManager();
@@ -50,13 +49,6 @@ public class GameModel implements GameObservable,IUpdatable {
     }
     public Path getCurrentPath(){
         return currentPath;
-    }
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public GridMap getGridMap(){
