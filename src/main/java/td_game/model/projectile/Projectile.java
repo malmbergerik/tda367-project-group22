@@ -9,7 +9,7 @@ import java.security.spec.EllipticCurve;
 import java.util.ArrayList;
 
 public class Projectile {
-    private int pixelsPerMs;
+    private int pixelsPerTick;
     private int width;
     private int height;
     private int damage;
@@ -22,8 +22,8 @@ public class Projectile {
     private double angle;
     private ArrayList<ABaseEnemy> enemiesHitThisFrame;
 
-    public Projectile(double angle,int pixelsPerMs, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y) {
-        this.pixelsPerMs = pixelsPerMs;
+    public Projectile(double angle,int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y) {
+        this.pixelsPerTick = pixelsPerTick;
         this.width = width;
         this.height = height;
         this.damage = damage;
@@ -40,8 +40,8 @@ public class Projectile {
     }
 
     public void move(double angle){
-        int dX = (int) (this.pixelsPerMs * Math.cos(angle*(Math.PI / 180)));
-        int dY = (int) (this.pixelsPerMs * Math.sin(angle*(Math.PI / 180)));
+        int dX = (int) (this.pixelsPerTick * Math.cos(angle*(Math.PI / 180)));
+        int dY = (int) (this.pixelsPerTick * Math.sin(angle*(Math.PI / 180)));
 
         this.x = this.x + dX;
         this.y = this.y + dY;

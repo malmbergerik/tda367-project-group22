@@ -1,7 +1,7 @@
 package td_game.model.projectile;
 
 public class ProjectileFactory implements IProjectileFactory{
-    private final int pixelsPerMs;
+    private final int pixelsPerTick;
     private final int width;
     private final int height;
     private final int damage;
@@ -9,14 +9,14 @@ public class ProjectileFactory implements IProjectileFactory{
     private final int timeAliveTicks;
 
     public ProjectileFactory(
-            int pixelsPerMs,
+            int pixelsPerTick,
             int width,
             int height,
             int damage,
             int pierce,
             int timeAliveTicks
     ) {
-        this.pixelsPerMs = pixelsPerMs;
+        this.pixelsPerTick = pixelsPerTick;
         this.width = width;
         this.height = height;
         this.damage = damage;
@@ -28,7 +28,7 @@ public class ProjectileFactory implements IProjectileFactory{
     public Projectile create(double angle, int x, int y) {
         return new Projectile(
                 angle,
-                pixelsPerMs,
+                pixelsPerTick,
                 width,
                 height,
                 damage,
