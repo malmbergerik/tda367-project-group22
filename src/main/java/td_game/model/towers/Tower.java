@@ -1,8 +1,10 @@
 package td_game.model.towers;
 import td_game.model.enemy.ABaseEnemy;
+import td_game.model.modelnit.GameModel;
 import td_game.model.projectile.ProjectileFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tower{
     private int attackCooldown; //Millisekunder
@@ -11,27 +13,19 @@ public class Tower{
     private int attackRange;
     private long lastTimeSinceShoot = 0;
     private ArrayList<ABaseEnemy> enemyInRange;
-    private ArrayList<ABaseEnemy> testEnemyList; //Test lista för att kunna testa koden
     private int projectileAmount;
     private ProjectileFactory projectileFactory;
+    private GameModel gameModel;
 
-    public Tower( int attackCooldown, int x, int y, int attackRange, int projectileAmount, ProjectileFactory projectileFactory){ //kommer också ta en class Projectile så att man dynamiskt kan ändra projectile
+    public Tower( int attackCooldown, int x, int y, int attackRange, int projectileAmount, ProjectileFactory projectileFactory, GameModel gameModel ){ //kommer också ta en class Projectile så att man dynamiskt kan ändra projectile
         this.attackCooldown = attackCooldown;
         this.x = x;
         this.y = y;
         this.attackRange = attackRange;
-        this.testEnemyList = new ArrayList<ABaseEnemy>();
         this.enemyInRange = new ArrayList<ABaseEnemy>();
         this.projectileAmount = projectileAmount;
         this.projectileFactory = projectileFactory;
-    }
-    public void addEnemyInTestList(ABaseEnemy enemy) //Test lista för att kunna testa koden
-    {
-        testEnemyList.add(enemy);
-    }
-    public ArrayList<ABaseEnemy> getEnemyInTestList() //Test lista för att kunna testa koden
-    {
-        return testEnemyList;
+        this.gameModel = gameModel;
     }
     public void setPos(int positionY, int positionX)
     {
@@ -55,7 +49,7 @@ public class Tower{
         return  Math.atan2(enemy.getY()- (getY()), enemy.getX() - (getX())) * (180/Math.PI);
     }
 
-    public ArrayList<ABaseEnemy> getEnemyInRangeInOrder(ArrayList<ABaseEnemy> enemies)
+    public ArrayList<ABaseEnemy> getEnemyInRangeInOrder(List<ABaseEnemy> enemies)
     {
         if (enemies.isEmpty()) {return enemyInRange;}
 
@@ -75,7 +69,7 @@ public class Tower{
 
     public void shoot()
     {
-        ArrayList<ABaseEnemy> enemies = testEnemyList; //Listan med enemies som finns, det skapas en kopia för att listan inte ska kunna ändras medan den itereras i.
+        List<ABaseEnemy> enemies = gameModel.getActiveEnemies();
 
         if (enemies == null){return;}
         if (getEnemyInRangeInOrder(enemies).isEmpty()) {return;}

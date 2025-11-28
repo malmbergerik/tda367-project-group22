@@ -31,7 +31,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
         ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50, gameModel);
-        Tower tower = new Tower(100,5,0,10,3, p);
+        Tower tower = new Tower(100,5,0,10,3, p, gameModel);
 
         Assertions.assertEquals(180, tower.getAngleToEnemy(enemy));
     }
@@ -43,7 +43,7 @@ public class TowerTest {
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
         ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
         ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50, gameModel);
-        Tower tower = new Tower(100,5,5,10,3, p);
+        Tower tower = new Tower(100,5,5,10,3, p, gameModel);
 
         enemyList.add(enemy);
 
@@ -60,7 +60,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
         ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50, gameModel);
-        Tower tower = new Tower(100,5,0,10,3, p);
+        Tower tower = new Tower(100,5,0,10,3, p,gameModel);
 
         Assertions.assertEquals(5, tower.lenTooEnemy(enemy));
     }
@@ -70,7 +70,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
         ProjectileFactory p = new ProjectileFactory(2,10,10,5,3,50, gameModel);
-        Tower tower = new Tower(100,0,5,10,3, p);
+        Tower tower = new Tower(100,0,5,10,3, p, gameModel);
 
         Assertions.assertEquals(5, tower.lenTooEnemy(enemy));
     }
