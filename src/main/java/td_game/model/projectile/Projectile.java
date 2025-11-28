@@ -1,11 +1,10 @@
 package td_game.model.projectile;
 
-
+import td_game.model.collision.*;
 import td_game.model.enemy.ABaseEnemy;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.security.spec.EllipticCurve;
 import java.util.ArrayList;
 
 public class Projectile {
@@ -52,24 +51,7 @@ public class Projectile {
         return this.x;
     }
 
-    public Ellipse2D createHitboxEllipse(Double x, Double y,Double width, Double height){
-        //Rectangle hitbox = new Rectangle(x, y, width, height);
-            Ellipse2D hitbox = new Ellipse2D.Double(x, y, width, height);
-        return hitbox;
-    }
-    public Rectangle createHitboxRectangle(int x, int y,int width, int height){
-        Rectangle hitbox = new Rectangle(x, y, width, height);
-        return hitbox;
-    }
-
-    public Boolean checkCollision(Ellipse2D box1, Rectangle box2){
-        if  (box1.getBounds2D().intersects(box2.getBounds2D())){
-            return true;
-        }
-        return false;
-    }
-
-    public void collisionProjectileEnemy()
+    public void hitEnemy()
     {
         ArrayList<ABaseEnemy> enemies = this.testEnemyList;
         if ((this.starttimeAliveMs + this.timeAliveMs < System.currentTimeMillis()) || (this.pierce <= 0)) {
@@ -77,7 +59,7 @@ public class Projectile {
             return;
         }
         for (ABaseEnemy e: enemies) {
-            if ((checkCollision(createHitboxEllipse( e.getX(), e.getY(),(double) e.getWidth(), (double) e.getHeight()), createHitboxRectangle( this.x, this.y, this.width, this.height))) && ( !enemiesHitThisFrame.contains(e))) {
+            if ((CheckCollision.checkCollision(CreateHitbox.createHitboxEllipse( e.getX(), e.getY(),(double) e.getWidth(), (double) e.getHeight()), CreateHitbox.createHitboxRectangle( this.x, this.y, this.width, this.height))) && ( !enemiesHitThisFrame.contains(e))) {
                 e.takeDamage(this.damage);
                 pierce -= 1;
                 if (pierce <= 0){
@@ -98,7 +80,7 @@ public class Projectile {
     public void update(){
         move(this.angle);
 
-        collisionProjectileEnemy();
+        hitEnemy();
         this.enemiesHitThisFrame.clear();
     }
 
