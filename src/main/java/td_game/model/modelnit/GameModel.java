@@ -49,6 +49,10 @@ public class GameModel implements GameObservable {
         return gridMap;
     }
 
+    public void update(){
+        currentState.update();
+    }
+
     public void updateTile(int row, int col, TileBase tile){
         gridMap.setTile(row,col,tile);
         notifyObserver(GameEventType.TILES_UPDATE);
