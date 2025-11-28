@@ -36,6 +36,8 @@ public class PlayingState implements IGameState {
         if (gameModel.isWaveComplete()) {
             gameModel.startNextWave();
         }
+        */
+
     }
 
 

@@ -55,7 +55,7 @@ public class EnemyWaveSpawner {
 
 
     public boolean isWaveComplete() {
-        return allEnemiesSpawned && gameModel.getEnemies().isEmpty();
+        return allEnemiesSpawned && enemyManager.gameModel.getActiveEnemies().isEmpty();
     }
 
     public boolean isWaveActive() {

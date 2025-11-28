@@ -21,6 +21,7 @@ public class AppController {
         if (menuView instanceof MenuPanel menu) {
             menu.addPlayListener(e -> {
                 windowFrame.showView("GAME_VIEW");
+                model.setGameState(new PlayingState(model));
                 gameLoop.start();
             });
             menu.addExitListener(e -> System.exit(0));

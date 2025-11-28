@@ -45,7 +45,7 @@ public class GameController implements IGameObserver {
 
 
     @Override
-    public void update(GameEventType eventType) {
+    public void onGameEvent(GameEventType eventType) {
         switch (eventType) {
             case TILES_UPDATE -> gameUpdateController.handleTileUpdate();
             case MOVING_OBJECTS_UPDATE -> gameUpdateController.handleMovingObjectsUpdate();
