@@ -24,7 +24,7 @@ public class ProjectileTest {
     @org.junit.jupiter.api.Test
     public void testMoveProjectile()
     {
-        Projectile p = new Projectile(135,2,10,10,1,2,10000, 10 , 10, gameModel);
+        Projectile p = new Projectile(135,2,10,10,1,2,10000, 10 , 10, gameModel, true);
 
         p.update();
 
@@ -33,11 +33,22 @@ public class ProjectileTest {
     }
 
     @org.junit.jupiter.api.Test
-    public void testHitEnemy()
+    public void testHitEnemyEllipse()
     {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
-        Projectile p = new Projectile(90,2,10,10,1,2,10000,(int) enemy1.getX() ,(int) enemy1.getY(), gameModel);
+        Projectile p = new Projectile(90,2,10,10,1,2,10000,(int) enemy1.getX() ,(int) enemy1.getY(), gameModel, true);
+        gameModel.addEnemy(enemy1);
+        p.update();
+
+        Assertions.assertEquals(0, enemy1.getHealth() );
+    }
+    @org.junit.jupiter.api.Test
+    public void testHitEnemyRectangle()
+    {
+        List<Waypoint> pathList = new ArrayList<Waypoint>();
+        ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
+        Projectile p = new Projectile(90,2,10,10,1,2,10000,(int) enemy1.getX() ,(int) enemy1.getY(), gameModel, false);
         gameModel.addEnemy(enemy1);
         p.update();
 
@@ -45,12 +56,12 @@ public class ProjectileTest {
     }
 
     @org.junit.jupiter.api.Test
-    public void testPierceEnemy()
+    public void testDestroyedWhen0Pierce()
     {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
-        ABaseEnemy enemy2 = new Skeleton(2,1,new Path(pathList));
-        Projectile p = new Projectile(90,2,10,10,1,2,10000,(int) enemy1.getX() ,(int) enemy1.getY(), gameModel);
+        ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
+        Projectile p = new Projectile(90,2,10,10,1,1,10000,(int) enemy1.getX() ,(int) enemy1.getY(), gameModel, true);
 
         gameModel.addEnemy(enemy1);
         gameModel.addEnemy(enemy2);
@@ -61,11 +72,11 @@ public class ProjectileTest {
     }
 
     @org.junit.jupiter.api.Test
-    public void testMoveAndHit()
+    public void testHitBoxLocationUpdates()
     {
         List<Waypoint> pathList = new ArrayList<Waypoint>();
         ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
-        Projectile p = new Projectile(180,10,5,5,1,2,10000,(int) enemy1.getX()+ 25 ,(int) enemy1.getY(),gameModel );
+        Projectile p = new Projectile(180,10,5,5,1,2,10000,(int) enemy1.getX()+ 25 ,(int) enemy1.getY(),gameModel, true );
 
         gameModel.addEnemy(enemy1);
         Assertions.assertEquals(1, enemy1.getHealth());
@@ -78,12 +89,50 @@ public class ProjectileTest {
     @org.junit.jupiter.api.Test
     public void testDieAfterTime()
     {
-        Projectile z = new Projectile(180,10,5,5,1,2,1,5 ,5, gameModel);
+
+        Projectile z = new Projectile(180,10,5,5,1,2,1,5 ,5, gameModel, true);
+
 
         Assertions.assertEquals(true, z.getIsAlive());
         z.update();
         z.update();
 
         Assertions.assertEquals(false, z.getIsAlive());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testNotHitSameEnemySameFrame()
+    {
+        List<Waypoint> pathList = new ArrayList<Waypoint>();
+        Projectile p = new Projectile(180,0,50,50,1,20,100,5 ,5, gameModel, true);
+        ABaseEnemy enemy1 = new Skeleton(5,1,new Path(pathList));
+
+        gameModel.addEnemy(enemy1);
+
+        Assertions.assertEquals(5, enemy1.getHealth());
+        p.update();
+        Assertions.assertEquals(4, enemy1.getHealth());
+        p.update();
+        Assertions.assertEquals(3, enemy1.getHealth());
+    }
+    @org.junit.jupiter.api.Test
+    public void testCanHitSeveralEnemiesSameTime()
+    {
+        List<Waypoint> pathList = new ArrayList<Waypoint>();
+        Projectile p = new Projectile(180,0,50,50,1,20,100,5 ,5, gameModel, true);
+        ABaseEnemy enemy1 = new Skeleton(5,1,new Path(pathList));
+        ABaseEnemy enemy2 = new Skeleton(5,1,new Path(pathList));
+
+        gameModel.addEnemy(enemy2);
+        gameModel.addEnemy(enemy1);
+
+        Assertions.assertEquals(5, enemy1.getHealth());
+        Assertions.assertEquals(5, enemy2.getHealth());
+        p.update();
+        Assertions.assertEquals(4, enemy2.getHealth());
+        Assertions.assertEquals(4, enemy1.getHealth());
+        p.update();
+        Assertions.assertEquals(3, enemy1.getHealth());
+        Assertions.assertEquals(3, enemy2.getHealth());
     }
 }

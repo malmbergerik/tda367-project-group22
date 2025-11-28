@@ -7,6 +7,7 @@ import td_game.model.modelnit.GameModel;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +24,10 @@ public class Projectile {
     private double angle;
     private ArrayList<ABaseEnemy> enemiesHitThisFrame;
     private GameModel gameModel;
+    private RectangularShape projectileHitBox;
+    private final boolean hitBoxRound;
 
-    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, GameModel gameModel) {
+    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, GameModel gameModel, boolean hitBoxRound) {
         this.pixelsPerTick = pixelsPerTick;
         this.width = width;
         this.height = height;
@@ -36,6 +39,7 @@ public class Projectile {
         this.y = y;
         this.enemiesHitThisFrame = new ArrayList<ABaseEnemy>();
         this.gameModel = gameModel;
+        this.hitBoxRound = hitBoxRound;
     }
 
     public void move(){
@@ -63,12 +67,18 @@ public class Projectile {
             this.isAlive = false;
         }
     }
+    public void updateHitBox(){
+        if (this.hitBoxRound) {
+            this.projectileHitBox = CreateHitbox.createHitboxEllipse((double) this.x, (double) this.y, (double) this.width, (double) this.height);
+        }else {this.projectileHitBox = CreateHitbox.createHitboxEllipse((double) this.x, (double) this.y, (double) this.width, (double) this.height); }
+
+    }
 
     public void hitEnemy()
     {
         List<ABaseEnemy> enemies = gameModel.getActiveEnemies();
         for (ABaseEnemy e: enemies) {
-            if ((CheckCollision.checkCollision(CreateHitbox.createHitboxEllipse( e.getX(), e.getY(),(double) e.getWidth(), (double) e.getHeight()), CreateHitbox.createHitboxRectangle( this.x, this.y, this.width, this.height))) && ( !enemiesHitThisFrame.contains(e))) {
+            if ((CheckCollision.checkCollision(CreateHitbox.createHitboxEllipse( e.getX(), e.getY(),(double) e.getWidth(), (double) e.getHeight()), projectileHitBox)) && ( !enemiesHitThisFrame.contains(e))) {
                 e.takeDamage(this.damage);
                 this.pierce -= 1;
                 if (pierce <= 0){
@@ -88,6 +98,7 @@ public class Projectile {
 
     public void update(){
         move();
+        updateHitBox();
 
         hitEnemy();
         this.enemiesHitThisFrame.clear();
