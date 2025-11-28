@@ -1,8 +1,10 @@
 package td_game;
 
 import td_game.model.map.*;
+import td_game.model.modelnit.GameLoop;
 import td_game.model.modelnit.GameModel;
 import td_game.controller.AppController;
+import td_game.model.modelnit.IGameLoop;
 
 public class Main {
 
@@ -15,7 +17,12 @@ public class Main {
 
     public static void main(String[] args) {
         GameModel gameModel = new GameModel(GAME_WIDTH, GAME_HEIGHT, TILE_SIZE);
-        new AppController(gameModel, WINDOW_WIDTH, WINDOW_HEIGHT);
+        IGameLoop gameLoop = new GameLoop(gameModel);
+        new AppController(gameModel,gameLoop, WINDOW_WIDTH, WINDOW_HEIGHT);
+        gameModel.spawnEnemies();
+
+
+
     }
 }
 

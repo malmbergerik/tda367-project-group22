@@ -1,5 +1,7 @@
 package td_game.view;
 
+import td_game.model.enemy.ABaseEnemy;
+import td_game.view.helper.EnemyViewData;
 import td_game.view.helper.MapViewData;
 import td_game.view.helper.TileViewManager;
 
@@ -7,7 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Map;
 
 
 public class GameViewPanel extends JPanel {
@@ -16,7 +21,7 @@ public class GameViewPanel extends JPanel {
     private MapViewData currentMapViewData;
     private final int SCALE = 3;
     private BufferedImage tileLayer;
-
+    private List<EnemyViewData> activeEnemies;
     public GameViewPanel(int width, int height) {
         tileViewManager = new TileViewManager();
         setPreferredSize(new Dimension(width, height));
@@ -51,6 +56,12 @@ public class GameViewPanel extends JPanel {
         repaint();
     }
 
+
+    public void updateMovingObjects(List<EnemyViewData> enemies){
+        this.activeEnemies = enemies;
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -59,7 +70,24 @@ public class GameViewPanel extends JPanel {
         if (tileLayer != null)
             g.drawImage(tileLayer, 0, 0, null);
 
-        //TODO add enemy/projectile/towers drawing using g2 for smoothness
+        drawEnemies(g2);
+    }
+
+    private void drawEnemies(Graphics2D g2) {
+        if (activeEnemies == null) return;
+
+        for (EnemyViewData enemy: activeEnemies) {
+            String name = enemy.getEnemyName();
+            double x = enemy.getEnemyX() * SCALE;
+            double y = enemy.getEnemyY() * SCALE;
+
+            BufferedImage image = tileViewManager.getTileImage("WATER");
+
+            g2.drawImage(image,(int) x  - 24 ,(int) y - 24 , 48, 48, null);
+
+        }
+
+
 
     }
 
