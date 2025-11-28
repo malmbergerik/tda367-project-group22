@@ -3,7 +3,7 @@ package td_game.model.enemy;
 import td_game.model.modelnit.GameModel;
 
 public class EnemyWaveSpawner {
-    private final GameModel gameModel;
+    private final EnemyManager enemyManager;
     private  final EnemyFactory enemyFactory;
 
     private int currentWave;
@@ -15,10 +15,9 @@ public class EnemyWaveSpawner {
     private boolean waveActive;
     private boolean allEnemiesSpawned;
 
-    public EnemyWaveSpawner(GameModel model) {
-        this.gameModel = model;
+    public EnemyWaveSpawner(EnemyManager manager) {
+        this.enemyManager = manager;
         this.enemyFactory = new EnemyFactory();
-        this.currentWave = 0;
         this.spawnInterval = 2000; // 2 seconds
         this.waveActive = false;
     }
@@ -50,8 +49,8 @@ public class EnemyWaveSpawner {
     }
 
     private void spawnEnemy() {
-        ABaseEnemy enemy = enemyFactory.createEnemy(currentWave);
-        gameModel.addEnemy(enemy);
+        ABaseEnemy enemy = new Skeleton(1,0.2,enemyManager.gameModel.getCurrentPath());
+        enemyManager.addEnemy(enemy);
     }
 
 
@@ -69,6 +68,14 @@ public class EnemyWaveSpawner {
 
     public void setWaveActive(boolean active) {
         this.waveActive = active;
+    }
+
+    public void reset() {
+        currentWave = 0;
+        enemiesSpawnedInWave = 0;
+        enemiesToSpawnInWave = 0;
+        waveActive = false;
+        allEnemiesSpawned = false;
     }
 
 

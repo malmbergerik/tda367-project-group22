@@ -37,6 +37,9 @@ public class GameController implements IGameObserver {
             public void onMouseClicked(int posX, int posY) {
                 placementController.handleMouseClicked(posX,posY);
             }
+
+            @Override
+            public void onMouseDragged(int posX, int posY) {placementController.handleMouseDragged(posX,posY);}
         });
     }
 

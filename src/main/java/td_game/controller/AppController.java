@@ -3,6 +3,7 @@ package td_game.controller;
 import td_game.model.modelnit.GameModel;
 import td_game.model.modelnit.IGameLoop;
 
+import td_game.model.modelnit.PlayingState;
 import td_game.view.*;
 
 public class AppController {

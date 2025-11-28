@@ -50,7 +50,9 @@ public class GameModel implements GameObservable {
     }
 
     public void update(){
-        currentState.update();
+        if (currentState != null) {
+            currentState.update();
+        }
     }
 
     public void updateTile(int row, int col, TileBase tile){
