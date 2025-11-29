@@ -1,11 +1,7 @@
 package td_game.model.path;
 
 import org.junit.jupiter.api.Test;
-import td_game.model.map.GridMap;
-import td_game.model.map.PathTile;
-import td_game.model.map.PathType;
-import td_game.model.map.TileBase;
-import td_game.model.map.TileType;
+import td_game.model.map.*;
 
 import java.util.List;
 
@@ -24,7 +20,7 @@ public class PathTest {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 // anonymous TileBase implementing a non-path tile (GRASS)
-                map.setTile(r, c, new TileBase(TileType.GRASS) {});
+                map.setTile(r, c, new GrassTile() {});
             }
         }
         return map;
