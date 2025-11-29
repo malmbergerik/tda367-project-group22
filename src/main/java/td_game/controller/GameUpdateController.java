@@ -41,7 +41,7 @@ public class GameUpdateController implements IGameUpdateController{
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                tileKeys[row][col] = currentMap.getTile(row, col).getType().name();
+                tileKeys[row][col] = currentMap.getTile(row, col).getType();
             }
         }
 

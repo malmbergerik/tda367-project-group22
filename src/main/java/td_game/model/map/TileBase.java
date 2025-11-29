@@ -2,14 +2,14 @@ package td_game.model.map;
 
 public abstract class TileBase {
 
-    private final TileType type;
+    private final String type;
 
-    public TileBase(TileType type){
+    public TileBase(String type){
         this.type = type;
     }
 
     //Getter for a tile
-    public TileType getType(){return type;}
+    public String getType(){return type;}
 
 
 }

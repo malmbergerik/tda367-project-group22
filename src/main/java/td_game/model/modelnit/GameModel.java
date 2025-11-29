@@ -1,11 +1,12 @@
 package td_game.model.modelnit;
 
 import td_game.model.GameEventType;
-import td_game.model.GameObserver;
 import td_game.model.GameState;
 import td_game.model.map.GridMap;
 import td_game.model.map.MapLoader;
 import td_game.model.map.TileBase;
+import td_game.model.GameObserver;
+import td_game.model.map.TileFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class GameModel implements GameObservable {
     private final GridMap gridMap;
     private int x;
     private int y;
-    private List<GameObserver> observers = new ArrayList<GameObserver>();
+    private List<GameObserver> observers = new ArrayList<>();
     private GameState currentState = GameState.MENU;
 
     /*
@@ -28,8 +29,9 @@ public class GameModel implements GameObservable {
 
      */
     public GameModel(int x, int y, int tileSize){
-
-        this.gridMap = MapLoader.loadMap("levels/lvl1.txt", tileSize);
+        TileFactory tileFactory = new TileFactory();
+        MapLoader mapLoader = new MapLoader(tileFactory);
+        this.gridMap = mapLoader.loadMap("levels/lvl1.txt", tileSize);
         this.x = x;
         this.y = y;
 
