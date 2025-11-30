@@ -21,7 +21,9 @@ public class AppController {
         }
 
         if (gameView instanceof GamePanel game) {
-            new GameController(model, game.getGameViewPanel());
+            GameController gameController  = new GameController(model, game.getGameViewPanel());
+            ((GamePanel) gameView).addSideBarListener(gameController.getPlacementController());
+
         }
 
         windowFrame.showView("MENU_VIEW");

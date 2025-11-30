@@ -7,9 +7,13 @@ import td_game.model.map.MapLoader;
 import td_game.model.map.TileBase;
 import td_game.model.GameObserver;
 import td_game.model.map.TileFactory;
+import td_game.model.projectile.IProjectileFactory;
+import td_game.model.projectile.ProjectileFactory;
+import td_game.model.towers.Tower;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameModel implements GameObservable {
 
@@ -20,6 +24,7 @@ public class GameModel implements GameObservable {
     private List<GameObserver> observers = new ArrayList<>();
     private GameState currentState = GameState.MENU;
 
+    private Tower[][] placedTowerGrid;
     /*
     Här vill vi ha listor för torn, enemies, pengar, spelaren...
 
@@ -35,6 +40,7 @@ public class GameModel implements GameObservable {
         this.x = x;
         this.y = y;
 
+        placedTowerGrid = new Tower[gridMap.getRow()][gridMap.getCol()];
     }
 
     public int getX() {
@@ -52,6 +58,27 @@ public class GameModel implements GameObservable {
     public void updateTile(int row, int col, TileBase tile){
         gridMap.setTile(row,col,tile);
         notifyObserver(GameEventType.TILES_UPDATE);
+    }
+
+    public Boolean gridOccupied(int row, int col){
+        if(placedTowerGrid[row][col] != null)
+            return Boolean.TRUE;
+        return Boolean.FALSE;
+    }
+    public void placeTower(int row, int col, String tower){
+        if(gridOccupied(row,col)){
+            System.out.println("A tower is already placed here!");
+            return;
+        }
+
+        int tileSize = gridMap.getTileSize();
+        ProjectileFactory projectileFactory = new ProjectileFactory(10,10,10,10,10,10);
+        placedTowerGrid[row][col] = new Tower(1,col*tileSize,row*tileSize,10,10,projectileFactory);
+        notifyObserver(GameEventType.TOWER_UPDATE);
+    }
+
+    public Tower[][] getPlacedTowerGrid(){
+        return placedTowerGrid;
     }
 
     public void setGameState(GameState gameState) {
