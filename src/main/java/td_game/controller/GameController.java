@@ -6,14 +6,14 @@ import td_game.model.map.TileBase;
 import td_game.model.modelnit.GameModel;
 import td_game.view.GamePanel;
 import td_game.view.GameViewPanel;
-import td_game.model.GameObserver;
+import td_game.model.IGameObserver;
 import td_game.view.IGameMouseListener;
 import td_game.view.ITowerPlacementListener;
 import td_game.view.helper.MapViewData;
 
 import java.awt.event.MouseEvent;
 
-public class GameController implements GameObserver {
+public class GameController implements IGameObserver {
     private final GameModel model;
     private final GameViewPanel view;
     private PlacementController placementController;
@@ -54,7 +54,7 @@ public class GameController implements GameObserver {
 
 
     @Override
-    public void update(GameEventType eventType) {
+    public void onGameEvent(GameEventType eventType) {
         switch (eventType) {
             case TILES_UPDATE -> gameUpdateController.handleTileUpdate();
             case MOVING_OBJECTS_UPDATE -> gameUpdateController.handleMovingObjectsUpdate();

@@ -1,26 +1,29 @@
 package td_game.view;
 
 import td_game.model.towers.Tower;
-import td_game.view.helper.MapViewData;
-import td_game.view.helper.TileViewManager;
-import td_game.view.helper.TowerViewData;
-import td_game.view.helper.TowerViewManager;
+import td_game.view.helper.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
+import java.util.List;
+import java.util.Map;
+
 
 
 public class GameViewPanel extends JPanel {
     private IGameMouseListener mouseListener;
     private final TileViewManager tileViewManager;
     private final TowerViewManager towerViewManager;
+    private final EnemyViewManager enemyViewManager;
     private MapViewData currentMapViewData;
     private final int SCALE = 3;
     private BufferedImage tileLayer;
     private TowerViewData activeTowers;
+    private List<EnemyViewData> activeEnemies;
     private int hoverRow = -1;
     private int hoverCol = -1;
     private String selectedTower;
@@ -29,6 +32,7 @@ public class GameViewPanel extends JPanel {
     public GameViewPanel(int width, int height) {
         tileViewManager = new TileViewManager();
         towerViewManager = new TowerViewManager();
+        enemyViewManager = new EnemyViewManager();
         setPreferredSize(new Dimension(width, height));
         this.setDoubleBuffered(true);
 
@@ -72,6 +76,11 @@ public class GameViewPanel extends JPanel {
         this.placable = bool;
         repaint();
     }
+
+    public void updateMovingObjects(List<EnemyViewData> enemies){
+        this.activeEnemies = enemies;
+        repaint();
+    }
     public void updateTiles(MapViewData mapViewData){
         this.currentMapViewData = mapViewData;
         drawTiles();
@@ -88,6 +97,7 @@ public class GameViewPanel extends JPanel {
 
         drawTowers(g2);
         drawSelectedTower(g2);
+        drawEnemies(g2);
         //TODO add enemy/projectile/towers drawing using g2 for smoothness
     }
 
@@ -164,6 +174,22 @@ public class GameViewPanel extends JPanel {
             }
         }
     }
+
+    private void drawEnemies(Graphics2D g2) {
+        if (activeEnemies == null) return;
+
+        for (EnemyViewData enemy: activeEnemies) {
+            String name = enemy.getEnemyName();
+            double x = enemy.getEnemyX() * SCALE;
+            double y = enemy.getEnemyY() * SCALE;
+
+            BufferedImage image = enemyViewManager.getEnemyImage("Slime");
+
+            g2.drawImage(image,(int) x  - 24 ,(int) y - 24 , 48, 48, null);
+
+        }
+    }
+
     public void setGameMouseListener(IGameMouseListener listener){
         this.mouseListener = listener;
     }
