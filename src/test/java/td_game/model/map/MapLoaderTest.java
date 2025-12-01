@@ -8,7 +8,8 @@ class MapLoaderTest {
 
     @Test
     void loadMap() {
-        GridMap gridMap = MapLoader.loadMap("levels/testMap.txt",16);
+        MapLoader mapLoader = new MapLoader(new TileFactory());
+        GridMap gridMap = mapLoader.loadMap("levels/testMap.txt",16);
         TileBase tile1 = gridMap.getTile(2,4);
         WaterTile waterTile = new WaterTile();
         assertEquals(waterTile.getType(), tile1.getType());
@@ -21,7 +22,8 @@ class MapLoaderTest {
 
     @Test
     void loadMapStartEnd() {
-        GridMap gridMap = MapLoader.loadMap("levels/lvl1.txt",16);
+        MapLoader mapLoader = new MapLoader(new TileFactory());
+        GridMap gridMap = mapLoader.loadMap("levels/lvl1.txt",16);
         PathTile tile1 = (PathTile) gridMap.getTile(7,0);
         PathTile pathStart = new PathTile(PathType.START);
         assertEquals(pathStart.getPathType(), tile1.getPathType());
