@@ -44,8 +44,8 @@ public class SelectedTowerRenderer implements IRenderer {
 
         if (placeable != null){
             Color indicatorColor = placeable ?
-                    new Color(255, 0, 0, 128) :  // Red for not placeable
-                    new Color(0, 255, 0, 128); // Green for placeable
+                    new Color(0, 255, 0, 128) :  // Green for not placeable
+                    new Color(255, 0, 0, 128); // Red for placeable
             g2.setColor(indicatorColor);
             g2.fillRect(screen_x, screen_y, tileSize * scale, tileSize * scale);
         }

@@ -13,14 +13,15 @@ import java.util.List;
 public class GameViewPanel extends JPanel {
    private IGameMouseListener mouseListener;
    private final RenderingContext renderingContext;
+   private final ViewUpdateManager updateManager;
 
 
     public GameViewPanel(int width, int height, RenderingContext renderingContext) {
         this.renderingContext = renderingContext; // FIX: Use injected context
+        this.updateManager = new ViewUpdateManager(renderingContext);
 
         setPreferredSize(new Dimension(width, height));
-        this.setDoubleBuffered(true);
-
+        setDoubleBuffered(true);
         initMouseHandler();
 
     }
@@ -58,23 +59,22 @@ public class GameViewPanel extends JPanel {
     }
 
     public void updateTowers(TowerViewData towers) {
-        renderingContext.updateTowerViewData(towers);
+        updateManager.updateTowers(towers);
         repaint();
     }
 
     public void updateSelectedTowers(int row, int col, Boolean placeable, String selectedTower) {
-        renderingContext.updateSelectedTower(row, col, placeable, selectedTower);
+        updateManager.updateSelectedTower(row, col, placeable, selectedTower);
         repaint();
     }
 
     public void updateMovingObjects(List<EnemyViewData> enemies) {
-        renderingContext.updateEnemyViewData(enemies);
+        updateManager.updateEnemies(enemies);
         repaint();
     }
 
     public void updateTiles(MapViewData mapViewData) {
-        renderingContext.updateMapViewData(mapViewData);
-        // Invalidate tile cache if TileRenderer supports it
+        updateManager.updateMap(mapViewData);
         repaint();
     }
 
@@ -84,6 +84,10 @@ public class GameViewPanel extends JPanel {
 
     public RenderingContext getRenderingContext() {
         return renderingContext;
+    }
+
+    public ViewUpdateManager getUpdateManager() {
+        return updateManager;
     }
 
     public void setGameMouseListener(IGameMouseListener listener) {

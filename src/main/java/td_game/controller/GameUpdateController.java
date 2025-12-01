@@ -5,6 +5,7 @@ import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
 import td_game.model.towers.Tower;
 import td_game.view.GameViewPanel;
+import td_game.view.ViewUpdateManager;
 import td_game.view.helper.EnemyViewData;
 import td_game.view.helper.MapViewData;
 import td_game.view.helper.TowerViewData;
@@ -18,13 +19,13 @@ public class GameUpdateController implements IGameUpdateController {
 
     private final GameModel model;
     private final GameViewPanel view;
-    private final RenderingContext renderingContext;
+    private final ViewUpdateManager updateManager;
     private final List<EnemyViewData> enemyList;
 
     public GameUpdateController(GameModel model, GameViewPanel view) {
         this.model = model;
         this.view = view;
-        this.renderingContext = view.getRenderingContext();
+        this.updateManager = new ViewUpdateManager(view.getRenderingContext());
         this.enemyList = new ArrayList<>();
     }
 
@@ -55,7 +56,7 @@ public class GameUpdateController implements IGameUpdateController {
 
         TowerViewData towerViewData = new TowerViewData(towerKeys);
 
-        renderingContext.updateTowerViewData(towerViewData);
+        updateManager.updateTowers(towerViewData);
         view.repaint();
     }
 
@@ -74,7 +75,7 @@ public class GameUpdateController implements IGameUpdateController {
 
         MapViewData mapViewData = new MapViewData(tileKeys, tileSize);
 
-        renderingContext.updateMapViewData(mapViewData);
+        updateManager.updateMap(mapViewData);
         view.repaint();
     }
 
@@ -90,7 +91,7 @@ public class GameUpdateController implements IGameUpdateController {
             enemyList.add(enemyViewData);
         }
 
-        renderingContext.updateEnemyViewData(enemyList);
+        updateManager.updateEnemies(enemyList);
         view.repaint();
     }
 }
