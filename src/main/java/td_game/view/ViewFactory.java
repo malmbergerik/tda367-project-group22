@@ -1,16 +1,34 @@
 package td_game.view;
 
-import td_game.view.GamePanel;
-import td_game.view.IView;
-import td_game.view.MenuPanel;
-
-
+/**
+ * Simple ViewFactory using Strategy Pattern.
+ * Clean implementation without unnecessary complexity.
+ */
 public class ViewFactory {
+
+    private final ViewBuilderRegistry registry = new ViewBuilderRegistry();
+
+    public ViewFactory() {
+        // Register default builders
+        registry.registerBuilder(new MenuViewBuilder());
+        registry.registerBuilder(new GameViewBuilder());
+    }
+
+    /**
+     * Creates a view of the specified type.
+     */
     public IView createView(String viewType, int width, int height) {
-        return switch (viewType) {
-            case "MENU_VIEW" -> new MenuPanel(width, height);
-            case "GAME_VIEW" -> new GamePanel(width, height);
-            default -> throw new IllegalArgumentException("Unknown view type: " + viewType);
-        };
+        IViewBuilder builder = registry.getBuilder(viewType);
+        if (builder == null) {
+            throw new IllegalArgumentException("Unknown view type: " + viewType);
+        }
+        return builder.createView(width, height);
+    }
+
+    /**
+     * Registers a new view builder (for extension).
+     */
+    public void registerBuilder(IViewBuilder builder) {
+        registry.registerBuilder(builder);
     }
 }
