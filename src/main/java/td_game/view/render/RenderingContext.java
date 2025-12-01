@@ -16,7 +16,7 @@ public class RenderingContext {
     private int hoverRow = -1;
     private int hoverCol = -1;
     private String selectedTower;
-    private Boolean placable;
+    private Boolean placeable;
     private final int SCALE = 3;
 
     public RenderingContext() {
@@ -29,7 +29,7 @@ public class RenderingContext {
         renderers.sort(Comparator.comparingInt(IRenderer::getRenderPriority));
     }
 
-    public void remnoveRenderer(IRenderer renderer) {
+    public void removeRenderer(IRenderer renderer) {
         renderers.remove(renderer);
     }
 
@@ -47,17 +47,21 @@ public class RenderingContext {
         this.enemyViewData = new ArrayList<>(enemyViewDataList);
     }
 
-    public void updateSelectTower(int row, int col, Boolean placable, String towerType) {
+    public void updateTowerViewData(TowerViewData towers) {
+        this.towerViewData = towers;
+    }
+
+    public void updateSelectedTower(int row, int col, Boolean placeable, String towerType) {
         this.hoverRow = row;
         this.hoverCol = col;
-        this.placable = placable;
+        this.placeable = placeable;
         this.selectedTower = towerType;
     }
 
     public void clearSelectedTower() {
         this.hoverRow = -1;
         this.hoverCol = -1;
-        this.placable = null;
+        this.placeable = null;
         this.selectedTower = null;
     }
 
@@ -85,7 +89,13 @@ public class RenderingContext {
         return selectedTower;
     }
 
+    public Boolean getPlaceable(){
+        return placeable;
+    }
+
     public int getScale(){
         return SCALE;
     }
+
+
 }
