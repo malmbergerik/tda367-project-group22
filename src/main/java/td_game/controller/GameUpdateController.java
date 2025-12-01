@@ -8,20 +8,24 @@ import td_game.view.GameViewPanel;
 import td_game.view.helper.EnemyViewData;
 import td_game.view.helper.MapViewData;
 import td_game.view.helper.TowerViewData;
+import td_game.view.render.RenderingContext;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameUpdateController implements IGameUpdateController{
+
+public class GameUpdateController implements IGameUpdateController {
+
     private final GameModel model;
     private final GameViewPanel view;
-    private List<EnemyViewData> enemyList;
-    public GameUpdateController(GameModel model, GameViewPanel view){
+    private final RenderingContext renderingContext;
+    private final List<EnemyViewData> enemyList;
+
+    public GameUpdateController(GameModel model, GameViewPanel view) {
         this.model = model;
         this.view = view;
-        this.enemyList =  new ArrayList<>();
+        this.renderingContext = view.getRenderingContext();
+        this.enemyList = new ArrayList<>();
     }
 
     @Override
@@ -29,11 +33,11 @@ public class GameUpdateController implements IGameUpdateController{
         updateMapInView();
     }
 
-    public void handleMovingObjectsUpdate(){
+    public void handleMovingObjectsUpdate() {
         updateMovingObjects();
     }
 
-    public void handleTowersUpdate(){
+    public void handleTowersUpdate() {
         Tower[][] activeTowers = model.getPlacedTowerGrid();
 
         int rows = activeTowers.length;
@@ -42,13 +46,17 @@ public class GameUpdateController implements IGameUpdateController{
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                if(activeTowers[row][col] != null)
-                    //Change to tower name/type
+                if (activeTowers[row][col] != null) {
+                    // Change to tower name/type
                     towerKeys[row][col] = "Tower 1";
+                }
             }
         }
+
         TowerViewData towerViewData = new TowerViewData(towerKeys);
-        view.updateTowers(towerViewData);
+
+        renderingContext.updateTowerViewData(towerViewData);
+        view.repaint();
     }
 
     private void updateMapInView() {
@@ -65,20 +73,24 @@ public class GameUpdateController implements IGameUpdateController{
         }
 
         MapViewData mapViewData = new MapViewData(tileKeys, tileSize);
-        view.updateTiles(mapViewData);
+
+        renderingContext.updateMapViewData(mapViewData);
+        view.repaint();
     }
 
-    private void updateMovingObjects(){
+    private void updateMovingObjects() {
         List<ABaseEnemy> currentEnemies = model.getActiveEnemies();
         enemyList.clear();
-        for(ABaseEnemy enemy : currentEnemies){
-            Double enemyX = enemy.getX();
-            Double enemyY = enemy.getY();
-            String name = new String(String.valueOf(enemy));
+
+        for (ABaseEnemy enemy : currentEnemies) {
+            double enemyX = enemy.getX();
+            double enemyY = enemy.getY();
+            String name = String.valueOf(enemy);
             EnemyViewData enemyViewData = new EnemyViewData(name, enemyX, enemyY);
             enemyList.add(enemyViewData);
-
         }
-        view.updateMovingObjects(enemyList);
+
+        renderingContext.updateEnemyViewData(enemyList);
+        view.repaint();
     }
 }
