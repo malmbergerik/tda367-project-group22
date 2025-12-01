@@ -1,7 +1,6 @@
 
 package td_game.view.helper;
 import td_game.model.map.TileBase;
-import td_game.model.map.TileType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,9 +23,9 @@ public class TileViewManager {
 
     public void loadTileImages() {
 
-        tileImages.put("GRASS", loadImage("assets/tileset/underground/grass.png"));
-        tileImages.put("PATH", loadImage("assets/tileset/underground/path.png"));
-        tileImages.put("WATER", loadImage("assets/tileset/underground/water.png"));
+        tileImages.put("Grass", loadImage("assets/tileset/underground/grass.png"));
+        tileImages.put("Path", loadImage("assets/tileset/underground/path.png"));
+        tileImages.put("Water", loadImage("assets/tileset/underground/water.png"));
     }
 
     private BufferedImage loadImage(String path) {
