@@ -18,7 +18,7 @@ public class EnemyViewManager {
         }
 
         public void loadTileImages() {
-            enemyImages.put("Slime", loadImage("assets/enemies/SlimeR.png"));
+            enemyImages.put("Slime", loadImage("assets/enemies/slimeR.png"));
         }
 
         private BufferedImage loadImage(String path) {
