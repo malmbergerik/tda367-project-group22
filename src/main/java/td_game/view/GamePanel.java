@@ -7,9 +7,8 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements IView{
     private final GameViewPanel gameView;
-    private final JPanel sideBar; //This needs to be its own class later
     private final JPanel bottomBar; //This needs to be its own class later
-
+    private final SideBarPanel sideBar;
     public GamePanel(int width, int height) {
 
         setLayout(new BorderLayout());
@@ -25,9 +24,7 @@ public class GamePanel extends JPanel implements IView{
         leftPanel.add(gameView, BorderLayout.CENTER);
         leftPanel.add(bottomBar, BorderLayout.SOUTH);
 
-        sideBar = new JPanel(); // Replace with actual sidebar implementation
-        sideBar.setPreferredSize(new Dimension(304, 768));
-        sideBar.setBackground(Color.RED);
+        sideBar = new SideBarPanel(304,768);
 
         add(leftPanel, BorderLayout.CENTER);
         add(sideBar, BorderLayout.EAST);
@@ -40,5 +37,13 @@ public class GamePanel extends JPanel implements IView{
     @Override
     public JPanel getViewPanel() {
         return this;
+    }
+
+    public SideBarPanel getSideBar(){
+        return sideBar;
+    }
+
+    public void addSideBarListener(ITowerPlacementListener listener){
+        sideBar.setListener(listener);
     }
 }
