@@ -1,4 +1,4 @@
-package td_game.view.helper;
+package td_game.view.render;
 
 import java.awt.*;
 
