@@ -1,5 +1,6 @@
-package td_game.view;
+package td_game.view.panel;
 
+import td_game.view.listener.ITowerPlacementListener;
 import td_game.view.helper.TowerViewManager;
 
 import javax.swing.*;

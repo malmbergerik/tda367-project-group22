@@ -1,5 +1,4 @@
-package td_game.view;
-import javax.swing.JPanel;
+package td_game.view.listener;
 
 public interface IMenuView {
 

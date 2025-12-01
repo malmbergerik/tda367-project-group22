@@ -1,9 +1,12 @@
-package td_game.view;
+package td_game.view.panel;
+
+import td_game.view.listener.ITowerPlacementListener;
+import td_game.view.IView;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel extends JPanel implements IView{
+public class GamePanel extends JPanel implements IView {
     private final GameViewPanel gameView;
     private final SideBarPanel sideBar;
 

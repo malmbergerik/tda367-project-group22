@@ -1,4 +1,4 @@
-package td_game.view;
+package td_game.view.factory;
 
 import java.util.*;
 

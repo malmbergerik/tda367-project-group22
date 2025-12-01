@@ -4,12 +4,11 @@ import td_game.model.enemy.ABaseEnemy;
 import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
 import td_game.model.towers.Tower;
-import td_game.view.GameViewPanel;
-import td_game.view.ViewUpdateManager;
+import td_game.view.panel.GameViewPanel;
+import td_game.view.strategy.ViewUpdateManager;
 import td_game.view.helper.EnemyViewData;
 import td_game.view.helper.MapViewData;
 import td_game.view.helper.TowerViewData;
-import td_game.view.render.RenderingContext;
 
 import java.util.ArrayList;
 import java.util.List;

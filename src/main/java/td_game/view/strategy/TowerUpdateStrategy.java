@@ -1,4 +1,4 @@
-package td_game.view;
+package td_game.view.strategy;
 
 
 import td_game.view.helper.TowerViewData;

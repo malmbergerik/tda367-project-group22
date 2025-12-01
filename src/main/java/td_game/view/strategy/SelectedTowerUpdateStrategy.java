@@ -1,8 +1,8 @@
-package td_game.view;
+package td_game.view.strategy;
 
 import td_game.view.render.RenderingContext;
 
-public class SelectedTowerUpdateStrategy implements IViewUpdateStrategy{
+public class SelectedTowerUpdateStrategy implements IViewUpdateStrategy {
 
     public static final String STRATEGY_TYPE = "SELECTED_TOWER_UPDATE";
 

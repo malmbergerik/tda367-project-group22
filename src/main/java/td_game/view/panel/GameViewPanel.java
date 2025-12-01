@@ -1,8 +1,10 @@
-package td_game.view;
+package td_game.view.panel;
 
+import td_game.view.listener.IGameMouseListener;
 import td_game.view.helper.*;
 import td_game.view.render.RenderingContext;
 import td_game.view.render.RenderingContextFactory;
+import td_game.view.strategy.ViewUpdateManager;
 
 import javax.swing.*;
 import java.awt.*;

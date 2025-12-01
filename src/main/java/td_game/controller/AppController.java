@@ -5,6 +5,11 @@ import td_game.model.modelnit.IGameLoop;
 
 import td_game.model.modelnit.PlayingState;
 import td_game.view.*;
+import td_game.view.constants.ViewTypes;
+import td_game.view.factory.ViewFactory;
+import td_game.view.panel.GamePanel;
+import td_game.view.panel.MenuPanel;
+import td_game.view.panel.WindowFrame;
 
 public class AppController {
     public AppController(GameModel model, IGameLoop gameLoop,  int windowWidth, int windowHeight, int gameWidth, int gameHeight) {

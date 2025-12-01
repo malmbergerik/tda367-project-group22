@@ -1,4 +1,7 @@
-package td_game.view;
+package td_game.view.factory;
+
+import td_game.view.IView;
+import td_game.view.panel.MenuPanel;
 
 /**
  * Simple strategy for building Menu views.

@@ -1,6 +1,4 @@
-package td_game.view;
-
-import td_game.model.modelnit.GameModel;
+package td_game.view.panel;
 
 import java.awt.*;
 import javax.swing.*;

@@ -2,9 +2,9 @@ package td_game.controller;
 
 import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
-import td_game.view.GameViewPanel;
-import td_game.view.ITowerPlacementListener;
-import td_game.view.ViewUpdateManager;
+import td_game.view.panel.GameViewPanel;
+import td_game.view.listener.ITowerPlacementListener;
+import td_game.view.strategy.ViewUpdateManager;
 
 public class PlacementController implements IPlacementController, ITowerPlacementListener {
     private final GameViewPanel view;

@@ -1,4 +1,4 @@
-package td_game.view;
+package td_game.view.panel;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 

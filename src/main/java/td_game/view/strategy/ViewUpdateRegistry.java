@@ -1,4 +1,4 @@
-package td_game.view;
+package td_game.view.strategy;
 
 import java.util.HashMap;
 import java.util.Set;

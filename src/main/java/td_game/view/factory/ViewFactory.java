@@ -1,4 +1,6 @@
-package td_game.view;
+package td_game.view.factory;
+
+import td_game.view.IView;
 
 /**
  * Simple ViewFactory using Strategy Pattern.

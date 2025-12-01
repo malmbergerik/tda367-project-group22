@@ -1,4 +1,4 @@
-package td_game.view;
+package td_game.view.constants;
 
 /**
  * Simple constants for view types - no magic strings.

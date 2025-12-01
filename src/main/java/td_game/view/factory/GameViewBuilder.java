@@ -1,4 +1,7 @@
-package td_game.view;
+package td_game.view.factory;
+
+import td_game.view.panel.GamePanel;
+import td_game.view.IView;
 
 /**
  * Simple strategy for building Game views.

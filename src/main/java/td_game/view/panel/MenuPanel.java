@@ -1,4 +1,7 @@
-package td_game.view;
+package td_game.view.panel;
+
+import td_game.view.listener.IMenuView;
+import td_game.view.IView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
