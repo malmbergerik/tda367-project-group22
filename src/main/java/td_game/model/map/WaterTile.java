@@ -3,6 +3,6 @@ package td_game.model.map;
 public class WaterTile extends TileBase{
 
     public WaterTile(){
-        super(TileType.WATER);
+        super("Water");
     }
 }

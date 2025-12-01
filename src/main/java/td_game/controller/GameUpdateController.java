@@ -3,9 +3,11 @@ package td_game.controller;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
+import td_game.model.towers.Tower;
 import td_game.view.GameViewPanel;
 import td_game.view.helper.EnemyViewData;
 import td_game.view.helper.MapViewData;
+import td_game.view.helper.TowerViewData;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -32,10 +34,21 @@ public class GameUpdateController implements IGameUpdateController{
     }
 
     public void handleTowersUpdate(){
-        //TODO link to view with gets for towers from model
-        /*
-        Should link to a method like updateTiles, see in view
-         */
+        Tower[][] activeTowers = model.getPlacedTowerGrid();
+
+        int rows = activeTowers.length;
+        int cols = activeTowers[0].length;
+        String[][] towerKeys = new String[rows][cols];
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if(activeTowers[row][col] != null)
+                    //Change to tower name/type
+                    towerKeys[row][col] = "Tower 1";
+            }
+        }
+        TowerViewData towerViewData = new TowerViewData(towerKeys);
+        view.updateTowers(towerViewData);
     }
 
     private void updateMapInView() {
@@ -47,7 +60,7 @@ public class GameUpdateController implements IGameUpdateController{
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                tileKeys[row][col] = currentMap.getTile(row, col).getType().name();
+                tileKeys[row][col] = currentMap.getTile(row, col).getType();
             }
         }
 

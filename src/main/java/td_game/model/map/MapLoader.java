@@ -8,10 +8,14 @@ import java.util.List;
 
 public class MapLoader {
 
-    private TileType tileType;
+    private final TileFactory tileFactory;
 
+    public MapLoader(TileFactory tileFactory){
+        this.tileFactory = tileFactory;
+    }
 
-    public static GridMap loadMap (String filename, int tileSize) {
+    //Reads file and returns a gridmap
+    public  GridMap loadMap (String filename, int tileSize) {
         try (InputStream is = MapLoader.class.getClassLoader().getResourceAsStream(filename)) {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
 
@@ -36,7 +40,7 @@ public class MapLoader {
                     String currentLine = lines.get(row);
                     for (int col = 0; col < width; col ++) {
                         char currentChar = currentLine.charAt(col);
-                        map.setTile(row, col, charToTile(currentChar));
+                        map.setTile(row, col, tileFactory.create(currentChar));
                     }
                 }
 
@@ -47,17 +51,6 @@ public class MapLoader {
             throw new RuntimeException("Could not find input file," + filename, e);
         }
 
-    }
-
-    private static TileBase charToTile(char c) {
-        return switch (c) {
-            case 'S' -> new PathTile(PathType.START);
-            case 'E' -> new PathTile(PathType.END);
-            case '0' -> new PathTile(PathType.NORMAL);
-            case '1' -> new GrassTile();
-            case '2' -> new WaterTile();
-            default -> throw new IllegalArgumentException("Unknown character" + c);
-        };
     }
 
 }

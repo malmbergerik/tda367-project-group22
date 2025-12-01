@@ -5,7 +5,7 @@ public class PathTile extends TileBase{
     private final PathType pathType;
 
     public PathTile(PathType pathType){
-        super(TileType.PATH);
+        super("Path");
         this.pathType = pathType;
     }
 
