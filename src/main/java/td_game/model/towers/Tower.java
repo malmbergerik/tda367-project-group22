@@ -31,11 +31,11 @@ public class Tower{
     }
     public double getX()
     {
-        return x;
+        return x+8;
     }
     public double getY()
     {
-        return y;
+        return y+8;
     }
     public int getAttackRange()
     {
