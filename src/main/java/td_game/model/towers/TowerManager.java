@@ -10,15 +10,14 @@ import java.util.List;
 
 public class TowerManager {
     private List<Tower> activeTowers = new ArrayList<>();
-
-
-    private ProjectileFactory projectileFactory;
     private GameModel gameModel;
+    private ProjectileFactory projectileFactory;
 
     public TowerManager(ProjectileFactory projectileFactory, GameModel gameModel )
     {
-        this.projectileFactory = projectileFactory;
+
         this.gameModel = gameModel;
+        this.projectileFactory = projectileFactory;
     }
     public void addTower(Tower tower) {
         activeTowers.add(tower);

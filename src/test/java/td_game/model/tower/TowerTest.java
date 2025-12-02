@@ -8,6 +8,7 @@ import td_game.model.modelnit.GameModel;
 import td_game.model.path.Path;
 import td_game.model.path.Waypoint;
 import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.Tower;
 import td_game.model.towers.TowerManager;
 
@@ -24,6 +25,7 @@ public class TowerTest {
         gameModel = new GameModel(32);
 
         ProjectileFactory factory = new ProjectileFactory(2,10,10,5,3,50, true);
+
 
         manager = new TowerManager(factory, gameModel);
     }

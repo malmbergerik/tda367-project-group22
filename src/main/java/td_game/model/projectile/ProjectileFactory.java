@@ -1,12 +1,6 @@
 package td_game.model.projectile;
 
-import td_game.model.enemy.ABaseEnemy;
-import td_game.model.enemy.EnemyManager;
-import td_game.model.modelnit.GameModel;
-
-import java.util.List;
-
-public class ProjectileFactory implements IProjectileFactory{
+public class ProjectileFactory implements IProjectileFactory {
     private final int pixelsPerTick;
     private final int width;
     private final int height;
@@ -37,15 +31,15 @@ public class ProjectileFactory implements IProjectileFactory{
     public Projectile create(double angle, int x, int y) {
         return new Projectile(
                 angle,
-                pixelsPerTick,
-                width,
-                height,
-                damage,
-                pierce,
-                timeAliveTicks,
+                this.pixelsPerTick,
+                this.width,
+                this.height,
+                this.damage,
+                this.pierce,
+                this.timeAliveTicks,
                 x,
                 y,
-                hitBoxRound
+                this.hitBoxRound
         );
     }
 }

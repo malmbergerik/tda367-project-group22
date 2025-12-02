@@ -7,17 +7,14 @@ import td_game.model.modelnit.GameModel;
 
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ProjectileManager {
 
     private List<Projectile> activeProjectiles = new ArrayList<>();
-    private ProjectileFactory projectileFactory;
     private GameModel gameModel;
 
-    public ProjectileManager(ProjectileFactory projectileFactory, GameModel gameModel) {
-        this.projectileFactory = projectileFactory;
+    public ProjectileManager(GameModel gameModel) {
         this.gameModel = gameModel;
     }
     public void createProjectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, boolean hitBoxRound) {
@@ -41,8 +38,6 @@ public class ProjectileManager {
     {
         RectangularShape hitBox = getProjectileHitBox(p);
         List<ABaseEnemy> enemies = gameModel.getActiveEnemies();
-
-
         for (ABaseEnemy e: enemies) {
             RectangularShape enemyHitBox = CreateHitbox.createHitboxRectangle((int) e.getX(),(int) e.getY(), e.getWidth(), e.getHeight());
             if (!p.getEnemiesHitThisFrame().contains(e) && CheckCollision.checkCollision(hitBox, enemyHitBox)) {
