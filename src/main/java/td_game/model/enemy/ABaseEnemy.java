@@ -1,6 +1,7 @@
 package td_game.model.enemy;
 
-import td_game.model.path.Path;
+
+import java.lang.Math;
 
 public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable {
     protected int health;
@@ -10,23 +11,22 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
     protected int width;
     protected int height;
 
-    protected Path path;
-    protected int currentWaypointIndex = 0;
 
-    public abstract void takeDamage(int amount);
-
-    public boolean isAlive() {
-        return health > 0;
+    public ABaseEnemy (int health, double speed, int width, int height) {
+        this.health = health;
+        this.speed = speed;
+        this.width = width;
+        this.height = height;
     }
 
+    public abstract boolean hasReachedEnd();
 
-    public boolean hasReachedEnd() {
-        //if the enemy has no path, consider it has reached the end
-        if (path == null || path.length() == 0) {
-            return true;
-        }
+    @Override
+    public abstract void takeDamage(int amount);
 
-        return currentWaypointIndex >= path.length();
+    @Override
+    public boolean isAlive() {
+        return health > 0;
     }
 
     @Override
