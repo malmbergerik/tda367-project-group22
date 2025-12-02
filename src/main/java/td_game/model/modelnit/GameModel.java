@@ -49,7 +49,6 @@ public class GameModel implements GameObservable,IUpdatable {
         this.pathManager = new PathManager();
         this.currentPath = pathManager.getPathForMap(gridMap);
         this.enemyManager = new EnemyManager(this);
-
         placedTowerGrid = new Tower[gridMap.getRow()][gridMap.getCol()];
     }
 
@@ -93,9 +92,10 @@ public class GameModel implements GameObservable,IUpdatable {
         }
 
         int tileSize = gridMap.getTileSize();
-        ProjectileFactory projectileFactory = new ProjectileFactory(10,10,10,10,10,10);
-        placedTowerGrid[row][col] = new Tower(1,col*tileSize,row*tileSize,10,10,projectileFactory);
+        ProjectileFactory projectileFactory = new ProjectileFactory(10,10,10,10,10,10, enemyManager.gameModel, true);
+        placedTowerGrid[row][col] = new Tower(1,col*tileSize,row*tileSize,1000,10,projectileFactory, enemyManager.gameModel);
         notifyObserver(GameEventType.TOWER_UPDATE);
+
     }
 
     public Tower[][] getPlacedTowerGrid(){
