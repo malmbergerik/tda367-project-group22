@@ -9,23 +9,7 @@ public class Skeleton extends ABaseEnemy{
     private static final int ENEMY_HEIGHT = 8;
 
     public Skeleton(int health, double speed, Path path){
-        this.health = health;
-        this.speed = speed;
-        this.width = ENEMY_WIDTH;
-        this.height = ENEMY_HEIGHT;
-        this.path = path;
-
-        if (path != null && path.length() > 0) {
-            Waypoint firstWaypoint = path.get(0); // Get the first waypoint (starting position)
-            this.posX = firstWaypoint.getX();
-            this.posY = firstWaypoint.getY();
-
-            this.currentWaypointIndex = 1; // Set the next waypoint index
-        }
-        else {
-            this.posX = 0;
-            this.posY = 0;
-        }
+        super(health, speed, path, ENEMY_WIDTH, ENEMY_HEIGHT);
     }
 
 
