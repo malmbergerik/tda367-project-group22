@@ -1,9 +1,7 @@
 package td_game.model.enemy;
-
 import td_game.model.path.Path;
-import td_game.model.path.Waypoint;
 
-public class Skeleton extends ABaseEnemy{
+public class Skeleton extends PathFollowingEnemy {
     private static final int ENEMY_WIDTH = 8;
     private static final int ENEMY_HEIGHT = 8;
 
