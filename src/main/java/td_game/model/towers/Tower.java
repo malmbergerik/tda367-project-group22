@@ -1,5 +1,7 @@
 package td_game.model.towers;
 import td_game.model.enemy.ABaseEnemy;
+import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.ProjectileManager;
 
 import java.util.ArrayList;
 
@@ -11,15 +13,16 @@ public class Tower{
     private int projectileAmount;
     private int attackCooldownCounter;
     private ArrayList<ABaseEnemy> enemyInRange = new ArrayList<>();
+    private ProjectileFactory projectileFactory;
 
-
-    public Tower( int cooldownTicks, int x, int y, int attackRange, int projectileAmount){
+    public Tower(int cooldownTicks, int x, int y, int attackRange, int projectileAmount, ProjectileFactory  projectileFactory){
         this.cooldownTicks = cooldownTicks;
         this.x = x;
         this.y = y;
         this.attackRange = attackRange;
         this.projectileAmount = projectileAmount;
         this.attackCooldownCounter = 0;
+        this.projectileFactory = projectileFactory;
     }
     public void setPos(int positionY, int positionX)
     {
@@ -61,6 +64,5 @@ public class Tower{
         return enemyInRange;
     }
 
-
-
+    public ProjectileFactory getProjectileFactory() { return projectileFactory; }
 }

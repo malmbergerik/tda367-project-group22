@@ -23,11 +23,7 @@ public class TowerTest {
     @BeforeEach
     public void setup() {
         gameModel = new GameModel(32);
-
-        ProjectileFactory factory = new ProjectileFactory(2,10,10,5,3,50, true);
-
-
-        manager = new TowerManager(factory, gameModel);
+        manager = new TowerManager( gameModel);
     }
 
     @org.junit.jupiter.api.Test
@@ -36,7 +32,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,0,10,3);
+        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
 
         double angle = manager.getAngleToEnemy(tower, enemy);
 
@@ -52,7 +48,7 @@ public class TowerTest {
         ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
         ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,5,10,3);
+        Tower tower = new Tower(100,5,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
 
         enemyList.add(enemy1);
 
@@ -69,7 +65,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,0,10,3);
+        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
 
         Assertions.assertEquals(5, manager.lenTooEnemy(tower, enemy));
     }
@@ -80,7 +76,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,0,5,10,3);
+        Tower tower = new Tower(100,0,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
 
         Assertions.assertEquals(5, manager.lenTooEnemy(tower, enemy));
     }

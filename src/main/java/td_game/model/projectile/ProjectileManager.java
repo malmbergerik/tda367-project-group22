@@ -6,16 +6,16 @@ import td_game.model.enemy.ABaseEnemy;
 import td_game.model.modelnit.GameModel;
 
 import java.awt.geom.RectangularShape;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectileManager {
 
-    private List<Projectile> activeProjectiles = new ArrayList<>();
+    private List<Projectile> activeProjectiles;
     private GameModel gameModel;
 
     public ProjectileManager(GameModel gameModel) {
         this.gameModel = gameModel;
+        this.activeProjectiles = gameModel.getActiveProjectiles();
     }
     public void createProjectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, boolean hitBoxRound) {
         Projectile p = new Projectile(angle, pixelsPerTick, width, height,  damage, pierce, timeAliveTicks,  x, y, hitBoxRound);

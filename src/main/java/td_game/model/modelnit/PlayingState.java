@@ -27,6 +27,8 @@ public class PlayingState implements IGameState {
     @Override
     public void update() {
         gameModel.updateEnemies();
+        gameModel.updateProjectile();
+        gameModel.updateTower();
 
         /*
         if (gameModel.getLives() <= 0) {

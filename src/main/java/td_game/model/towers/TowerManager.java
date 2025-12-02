@@ -2,7 +2,9 @@ package td_game.model.towers;
 
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.modelnit.GameModel;
+import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.ProjectileManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +13,11 @@ import java.util.List;
 public class TowerManager {
     private List<Tower> activeTowers = new ArrayList<>();
     private GameModel gameModel;
-    private ProjectileFactory projectileFactory;
 
-    public TowerManager(ProjectileFactory projectileFactory, GameModel gameModel )
+    public TowerManager(GameModel gameModel )
     {
 
         this.gameModel = gameModel;
-        this.projectileFactory = projectileFactory;
     }
     public void addTower(Tower tower) {
         activeTowers.add(tower);
@@ -53,13 +53,15 @@ public class TowerManager {
         }
         return list;
     }
-
     public void shoot(Tower t, ABaseEnemy target)
     {
+        ProjectileFactory factory = t.getProjectileFactory();
         for (int i=0; i<= t.getProjectileAmount(); i++) {
-            projectileFactory.create((getAngleToEnemy(t,(target )) - 15*Math.round(0.5*t.getProjectileAmount()) + 15*i),(int) t.getX(),(int) t.getY());
+            Projectile p = factory.create(getAngleToEnemy(t, target),(int) t.getX(),(int) t.getY());
+            gameModel.addProjectile(p);
         }
     }
+
 
     public void update(){
         List<ABaseEnemy> enemies = gameModel.getActiveEnemies();
