@@ -16,8 +16,8 @@ public class TowerManager {
 
     public TowerManager(GameModel gameModel )
     {
-
         this.gameModel = gameModel;
+        this.activeTowers = gameModel.getActiveTowers();
     }
     public void addTower(Tower tower) {
         activeTowers.add(tower);

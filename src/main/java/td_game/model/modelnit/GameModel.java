@@ -30,6 +30,7 @@ public class GameModel implements GameObservable,IUpdatable {
     private Path currentPath;
     private List<ABaseEnemy> activeEnemies = new ArrayList<>();
     private List<Projectile> activeProjectiles = new ArrayList<>();
+    private List<Tower> activeTowers = new ArrayList<>();
     private List<IGameObserver> observers = new ArrayList<>();
     private EnemyManager enemyManager;
     private TowerManager towerManager;
@@ -66,9 +67,13 @@ public class GameModel implements GameObservable,IUpdatable {
 
     public List<ABaseEnemy> getActiveEnemies() {return activeEnemies;}
     public List<Projectile> getActiveProjectiles() {return activeProjectiles;}
+    public List<Tower> getActiveTowers(){ return activeTowers;}
 
     public void addProjectile(Projectile projectile){
         activeProjectiles.add(projectile);
+    }
+    public void addTower(Tower tower){
+        activeTowers.add(tower);
     }
     public void addEnemy(ABaseEnemy enemy){
         activeEnemies.add(enemy);
@@ -109,7 +114,7 @@ public class GameModel implements GameObservable,IUpdatable {
         int tileSize = gridMap.getTileSize();
         Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true));
         placedTowerGrid[row][col] = t;
-        towerManager.addTower(t);
+        addTower(t);
         notifyObserver(GameEventType.TOWER_UPDATE);
     }
 
