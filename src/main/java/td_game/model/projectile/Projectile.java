@@ -2,12 +2,8 @@ package td_game.model.projectile;
 
 import td_game.model.collision.*;
 import td_game.model.enemy.ABaseEnemy;
-import td_game.model.enemy.EnemyManager;
-import td_game.model.modelnit.GameModel;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +13,16 @@ public class Projectile {
     private int height;
     private int damage;
     private int pierce;
-    public int timeAliveTicks;
-    private int x;
-    private int y;
-    private boolean isAlive = true;
+    private int timeAliveTicks;
+    private double x;
+    private double y;
     private double angle;
-    private ArrayList<ABaseEnemy> enemiesHitThisFrame;
-    private GameModel gameModel;
-    private RectangularShape projectileHitBox;
+    private boolean alive = true;
+    private List<ABaseEnemy> enemiesHitThisFrame = new ArrayList<>();
+
     private final boolean hitBoxRound;
 
-    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, GameModel gameModel, boolean hitBoxRound) {
+    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, boolean hitBoxRound) {
         this.pixelsPerTick = pixelsPerTick;
         this.width = width;
         this.height = height;
@@ -37,74 +32,46 @@ public class Projectile {
         this.angle = angle;
         this.x = x;
         this.y = y;
-        this.enemiesHitThisFrame = new ArrayList<ABaseEnemy>();
-        this.gameModel = gameModel;
+
         this.hitBoxRound = hitBoxRound;
     }
 
     public void move(){
-        int dX = (int) (this.pixelsPerTick * Math.cos(this.angle*(Math.PI / 180)));
-        int dY = (int) (this.pixelsPerTick * Math.sin(this.angle*(Math.PI / 180)));
-
-        this.x = this.x + dX;
-        this.y = this.y + dY;
+        x += pixelsPerTick * Math.cos(angle * Math.PI / 180);
+        y += pixelsPerTick * Math.sin(angle * Math.PI / 180);
     }
 
-    public double getY(){
-        return this.y;
-    }
-    public double getX(){
-        return this.x;
+    public int getX() { return (int) Math.round(x); }
+    public int getY() { return (int) Math.round(y); }
+    public int getDamage() { return damage; }
+    public int getPierce() { return pierce; }
+    public int getTimeAliveTicks() { return timeAliveTicks; }
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
+    public double getAngle() { return angle; }
+    public boolean getHitBoxRound() { return hitBoxRound; }
+
+    public void setAlive(boolean alive){
+        this.alive = alive;
     }
 
-    public void checkTimerAlive(){
-        if ((this.timeAliveTicks <= 0) ) {
-            this.isAlive = false;
-        }
-    }
-    public void checkPierceAlive(){
-        if ((this.pierce <= 0) ) {
-            this.isAlive = false;
-        }
-    }
-    public void updateHitBox(){
-        if (this.hitBoxRound) {
-            this.projectileHitBox = CreateHitbox.createHitboxEllipse((double) this.x, (double) this.y, (double) this.width, (double) this.height);
-        }else {this.projectileHitBox = CreateHitbox.createHitboxEllipse((double) this.x, (double) this.y, (double) this.width, (double) this.height); }
-
+    public boolean getIsAlive() {
+        return (pierce > 0 && timeAliveTicks > 0 && this.alive);
     }
 
-    public void hitEnemy()
-    {
-        List<ABaseEnemy> enemies = gameModel.getActiveEnemies();
-        for (ABaseEnemy e: enemies) {
-            if ((CheckCollision.checkCollision(CreateHitbox.createHitboxEllipse( e.getX(), e.getY(),(double) e.getWidth(), (double) e.getHeight()), projectileHitBox)) && ( !enemiesHitThisFrame.contains(e))) {
-                e.takeDamage(this.damage);
-                this.pierce -= 1;
-                if (pierce <= 0){
-                    this.isAlive = false;
-                    break;
-                }
-                if (e.isAlive()){
-                    enemiesHitThisFrame.add(e);
-                }
-            }
-        }
+    public List<ABaseEnemy> getEnemiesHitThisFrame() {
+        return enemiesHitThisFrame;
     }
 
-    public boolean getIsAlive(){
-        return isAlive;
+    public void addEnemyHit(ABaseEnemy e) {
+        enemiesHitThisFrame.add(e);
     }
 
-    public void update(){
-        move();
-        updateHitBox();
-
-        hitEnemy();
-        this.enemiesHitThisFrame.clear();
-        this.timeAliveTicks -= 1;
-        checkTimerAlive();
-        checkPierceAlive();
+    public void clearEnemiesHitThisFrame() {
+        enemiesHitThisFrame.clear();
     }
+    public void reducePierce() { pierce--; }
+    public void reduceTimeAlive() { timeAliveTicks--; }
+
 
 }

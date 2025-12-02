@@ -13,7 +13,6 @@ public class ProjectileFactory implements IProjectileFactory{
     private final int damage;
     private final int pierce;
     private final int timeAliveTicks;
-    private final GameModel gameModel;
     private final boolean hitBoxRound;
 
     public ProjectileFactory(
@@ -23,7 +22,6 @@ public class ProjectileFactory implements IProjectileFactory{
             int damage,
             int pierce,
             int timeAliveTicks,
-            GameModel gameModel,
             boolean hitBoxRound
     ) {
         this.pixelsPerTick = pixelsPerTick;
@@ -32,7 +30,6 @@ public class ProjectileFactory implements IProjectileFactory{
         this.damage = damage;
         this.pierce = pierce;
         this.timeAliveTicks = timeAliveTicks;
-        this.gameModel = gameModel;
         this.hitBoxRound = hitBoxRound;
     }
 
@@ -48,11 +45,7 @@ public class ProjectileFactory implements IProjectileFactory{
                 timeAliveTicks,
                 x,
                 y,
-                gameModel,
                 hitBoxRound
-
-
-
         );
     }
 }

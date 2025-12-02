@@ -14,7 +14,8 @@ public class Tower{
     private int y;
     private int attackRange;
     private int projectileAmount;
-    private int attatCooldownCounter;
+    private int attackCooldownCounter;
+    private ArrayList<ABaseEnemy> enemyInRange = new ArrayList<>();
 
 
     public Tower( int cooldownTicks, int x, int y, int attackRange, int projectileAmount){
@@ -23,7 +24,7 @@ public class Tower{
         this.y = y;
         this.attackRange = attackRange;
         this.projectileAmount = projectileAmount;
-        this.attatCooldownCounter = attatCooldownCounter;
+        this.attackCooldownCounter = 0;
     }
     public void setPos(int positionY, int positionX)
     {
@@ -48,19 +49,22 @@ public class Tower{
     }
     public void attackCooldownCounterTick()
     {
-        this.attatCooldownCounter++;
+        this.attackCooldownCounter++;
     }
     public int getAttackCooldownCounter(){
-        return this.attatCooldownCounter;
+        return this.attackCooldownCounter;
     }
     public void resetCooldown()
     {
-        this.attatCooldownCounter = 0;
+        this.attackCooldownCounter = 0;
     }
     public boolean checkIfCanShoot(){
-        return this.attatCooldownCounter >= this.cooldownTicks;
+        return this.attackCooldownCounter >= this.cooldownTicks;
     }
 
+    public ArrayList<ABaseEnemy> getEnemiesInRange() {
+        return enemyInRange;
+    }
 
 
 
