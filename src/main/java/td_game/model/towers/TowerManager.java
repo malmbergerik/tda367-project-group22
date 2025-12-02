@@ -34,29 +34,25 @@ public class TowerManager {
     }
 
 
-    public ArrayList<ABaseEnemy> getEnemyInRangeInOrder(Tower t,List<ABaseEnemy> enemies)
-    {
-        ArrayList<ABaseEnemy> list = t.getEnemiesInRange();
+    public ArrayList<ABaseEnemy> getEnemyInRangeInOrder(Tower t, List<ABaseEnemy> enemies) {
+        ArrayList<ABaseEnemy> list = new ArrayList<>();
 
-        if (enemies.isEmpty()) {return list;}
-
-        for (ABaseEnemy e: enemies)
-        {
-            if ((lenTooEnemy(t,e) <= t.getAttackRange()) && !list.contains(e))
-            {
+        for (ABaseEnemy e : enemies) {
+            if (lenTooEnemy(t, e) <= t.getAttackRange()) {
                 list.add(e);
             }
-            if ((lenTooEnemy(t,e) > t.getAttackRange()) && list.contains(e))
-            {
-                list.remove(e);
-            }
         }
+
+        t.getEnemiesInRange().clear();
+        t.getEnemiesInRange().addAll(list);
+
         return list;
     }
+
     public void shoot(Tower t, ABaseEnemy target)
     {
         ProjectileFactory factory = t.getProjectileFactory();
-        for (int i=0; i<= t.getProjectileAmount(); i++) {
+        for (int i = 0; i < t.getProjectileAmount(); i++) {
             Projectile p = factory.create(getAngleToEnemy(t, target),(int) t.getX(),(int) t.getY());
             gameModel.addProjectile(p);
         }
@@ -65,7 +61,7 @@ public class TowerManager {
 
     public void update(){
         List<ABaseEnemy> enemies = gameModel.getActiveEnemies();
-        if (enemies == null){return;}
+        if (enemies.isEmpty()){return;}
         for (Tower t: activeTowers)
         {
             t.attackCooldownCounterTick();
