@@ -15,9 +15,9 @@ public class EnemyWaveSpawner {
     private boolean waveActive;
     private boolean allEnemiesSpawned;
 
-    public EnemyWaveSpawner(EnemyManager manager) {
+    public EnemyWaveSpawner(EnemyManager manager, EnemyFactory enemyFactory) {
         this.enemyManager = manager;
-        this.enemyFactory = new EnemyFactory();
+        this.enemyFactory = enemyFactory;
         this.spawnInterval = 2000; // 2 seconds
         this.waveActive = false;
     }
@@ -49,7 +49,7 @@ public class EnemyWaveSpawner {
     }
 
     private void spawnEnemy() {
-        ABaseEnemy enemy = new Skeleton(1,0.2,enemyManager.gameModel.getCurrentPath());
+        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", 1, 0.2, enemyManager.gameModel.getCurrentPath());
         enemyManager.addEnemy(enemy);
     }
 

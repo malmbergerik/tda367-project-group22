@@ -13,6 +13,7 @@ import td_game.model.path.PathManager;
 import td_game.model.projectile.IProjectileFactory;
 import td_game.model.projectile.ProjectileFactory;
 import td_game.model.towers.Tower;
+import td_game.model.enemy.EnemyFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,9 @@ public class GameModel implements GameObservable,IUpdatable {
         this.currentState = new MenuState(this);
         this.pathManager = new PathManager();
         this.currentPath = pathManager.getPathForMap(gridMap);
-        this.enemyManager = new EnemyManager(this);
+
+        EnemyFactory enemyFactory = new EnemyFactory();
+        this.enemyManager = new EnemyManager(this, enemyFactory);
 
         placedTowerGrid = new Tower[gridMap.getRow()][gridMap.getCol()];
     }

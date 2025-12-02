@@ -8,8 +8,13 @@ import td_game.model.enemy.IEnemyFactory;
 public class EnemyFactory {
     private static final Map<String, IEnemyFactory> enemyFactories = new HashMap<>();
 
-    public registerFactory(String enemyType, IENemyFactory factory) {
-        enemyFactories.put(enemyType, factory);
+    public EnemyFactory () {
+        // Register default enemy types
+        registerFactory("Skeleton", new SkeletonFactory());
+    }
+
+    public void registerFactory(String name, IEnemyFactory factory) {
+        enemyFactories.put(name, factory);
     }
 
     public ABaseEnemy createEnemy(String name, int health, double speed, Path path) {

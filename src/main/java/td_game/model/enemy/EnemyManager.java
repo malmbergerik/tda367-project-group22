@@ -14,8 +14,8 @@ public class EnemyManager {
     private EnemyWaveSpawner waveSpawner;
     public GameModel gameModel;
 
-    public EnemyManager(GameModel gameModel) {
-        this.waveSpawner = new EnemyWaveSpawner(this);
+    public EnemyManager(GameModel gameModel, EnemyFactory enemyFactory) {
+        this.waveSpawner = new EnemyWaveSpawner(this, enemyFactory);
         this.gameModel = gameModel;
         this.activeEnemies = gameModel.getActiveEnemies();
         startNextWave();
