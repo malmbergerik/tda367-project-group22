@@ -10,13 +10,14 @@ import td_game.model.IGameObserver;
 import td_game.model.map.TileFactory;
 import td_game.model.path.Path;
 import td_game.model.path.PathManager;
-import td_game.model.projectile.IProjectileFactory;
+import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.Tower;
+import td_game.model.towers.TowerManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameModel implements GameObservable,IUpdatable {
 
@@ -28,10 +29,12 @@ public class GameModel implements GameObservable,IUpdatable {
     private final PathManager pathManager;
     private Path currentPath;
     private List<ABaseEnemy> activeEnemies = new ArrayList<>();
+    private List<Projectile> activeProjectiles = new ArrayList<>();
+    private List<Tower> activeTowers = new ArrayList<>();
     private List<IGameObserver> observers = new ArrayList<>();
     private EnemyManager enemyManager;
-
-
+    private TowerManager towerManager;
+    private ProjectileManager projectileManager;
     private Tower[][] placedTowerGrid;
     /*
     Här vill vi ha listor för torn, enemies, pengar, spelaren...
@@ -49,7 +52,8 @@ public class GameModel implements GameObservable,IUpdatable {
         this.pathManager = new PathManager();
         this.currentPath = pathManager.getPathForMap(gridMap);
         this.enemyManager = new EnemyManager(this);
-
+        this.towerManager = new TowerManager( this);
+        this.projectileManager = new ProjectileManager(this);
         placedTowerGrid = new Tower[gridMap.getRow()][gridMap.getCol()];
     }
 
@@ -62,12 +66,27 @@ public class GameModel implements GameObservable,IUpdatable {
     }
 
     public List<ABaseEnemy> getActiveEnemies() {return activeEnemies;}
+    public List<Projectile> getActiveProjectiles() {return activeProjectiles;}
+    public List<Tower> getActiveTowers(){ return activeTowers;}
 
+    public void addProjectile(Projectile projectile){
+        activeProjectiles.add(projectile);
+    }
+    public void addTower(Tower tower){
+        activeTowers.add(tower);
+    }
     public void addEnemy(ABaseEnemy enemy){
         activeEnemies.add(enemy);
     }
+
     public void updateEnemies(){
         enemyManager.update();
+    }
+    public void updateProjectile(){
+        projectileManager.update();
+    }
+    public void updateTower(){
+        towerManager.update();
     }
     public void update(){
         if (currentState != null) {
@@ -93,8 +112,9 @@ public class GameModel implements GameObservable,IUpdatable {
         }
 
         int tileSize = gridMap.getTileSize();
-        ProjectileFactory projectileFactory = new ProjectileFactory(10,10,10,10,10,10);
-        placedTowerGrid[row][col] = new Tower(1,col*tileSize,row*tileSize,10,10,projectileFactory);
+        Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true));
+        placedTowerGrid[row][col] = t;
+        addTower(t);
         notifyObserver(GameEventType.TOWER_UPDATE);
     }
 

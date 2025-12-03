@@ -1,41 +1,45 @@
 package td_game.model.projectile;
 
-public class ProjectileFactory implements IProjectileFactory{
-    private final int pixelsPerMs;
+public class ProjectileFactory implements IProjectileFactory {
+    private final int pixelsPerTick;
     private final int width;
     private final int height;
     private final int damage;
     private final int pierce;
-    private final int timeAliveMs;
+    private final int timeAliveTicks;
+    private final boolean hitBoxRound;
 
     public ProjectileFactory(
-            int pixelsPerMs,
+            int pixelsPerTick,
             int width,
             int height,
             int damage,
             int pierce,
-            int timeAliveMs
+            int timeAliveTicks,
+            boolean hitBoxRound
     ) {
-        this.pixelsPerMs = pixelsPerMs;
+        this.pixelsPerTick = pixelsPerTick;
         this.width = width;
         this.height = height;
         this.damage = damage;
         this.pierce = pierce;
-        this.timeAliveMs = timeAliveMs;
+        this.timeAliveTicks = timeAliveTicks;
+        this.hitBoxRound = hitBoxRound;
     }
 
     @Override
     public Projectile create(double angle, int x, int y) {
         return new Projectile(
                 angle,
-                pixelsPerMs,
-                width,
-                height,
-                damage,
-                pierce,
-                timeAliveMs,
+                this.pixelsPerTick,
+                this.width,
+                this.height,
+                this.damage,
+                this.pierce,
+                this.timeAliveTicks,
                 x,
-                y
+                y,
+                this.hitBoxRound
         );
     }
 }

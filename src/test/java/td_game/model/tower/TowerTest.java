@@ -1,46 +1,83 @@
 package td_game.model.tower;
 
-//import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import td_game.model.enemy.ABaseEnemy;
+import td_game.model.enemy.Skeleton;
+import td_game.model.modelnit.GameModel;
+import td_game.model.path.Path;
+import td_game.model.path.Waypoint;
+import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.ProjectileManager;
+import td_game.model.towers.Tower;
+import td_game.model.towers.TowerManager;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class TowerTest {
 
+    private GameModel gameModel;
+    private TowerManager manager;
 
-    /*
-    @org.junit.jupiter.api.Test
-    public void testShoot()
-    {
-        ABaseEnemy enemy = new Skeleton(1,1,new Path());
-
-        Tower tower = new Tower(100,5,5,10,3);
-        tower.addEnemyInTestList(enemy);
-        tower.shoot();
-    }
-    @org.junit.jupiter.api.Test
-    public void testAngleTooEnemy()
-    {
-        ABaseEnemy enemy = new Skeleton(1,1,10,10);
-
-        Tower tower = new Tower(100,5,5,10);
-        tower.addEnemyInTestList(enemy);
-        System.out.println(tower.getAngleToEnemy(enemy));
-        tower.getAngleToEnemy(enemy);
+    @BeforeEach
+    public void setup() {
+        gameModel = new GameModel(32);
+        manager = new TowerManager( gameModel);
     }
 
     @org.junit.jupiter.api.Test
-    public void testFirstTooAngleTooEnemy()
+    public void testAngleAtEnemy()
     {
-        ABaseEnemy enemy = new Skeleton(1,1,10,10);
-        ABaseEnemy enemy3 = new Skeleton(1,1,7,7);
+        List<Waypoint> pathList = new ArrayList<>();
+        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,5,4);
-        tower.addEnemyInTestList(enemy);
-        tower.addEnemyInTestList(enemy3);
+        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
 
-        ArrayList<ABaseEnemy> enemiesInRange = tower.getEnemyInRangeInOrder(tower.getEnemyInTestList());
+        double angle = manager.getAngleToEnemy(tower, enemy);
 
-        tower.getAngleToEnemy(enemiesInRange.get(0));
+        Assertions.assertEquals(180, angle);
     }
-    */
 
+    @org.junit.jupiter.api.Test
+    public void testEnemyInRange()
+    {
+        List<Waypoint> pathList = new ArrayList<>();
+        ArrayList<ABaseEnemy> enemyList = new ArrayList<>();
+
+        ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
+        ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
+
+        Tower tower = new Tower(100,5,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
+
+        enemyList.add(enemy1);
+
+        Assertions.assertEquals(1, manager.getEnemyInRangeInOrder(tower, enemyList).size());
+
+        enemyList.add(enemy2);
+
+        Assertions.assertEquals(2, manager.getEnemyInRangeInOrder(tower, enemyList).size());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLenToEnemyX()
+    {
+        List<Waypoint> pathList = new ArrayList<>();
+        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
+
+        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
+
+        Assertions.assertEquals(5, manager.lenTooEnemy(tower, enemy));
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLenToEnemyY()
+    {
+        List<Waypoint> pathList = new ArrayList<>();
+        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
+
+        Tower tower = new Tower(100,0,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
+
+        Assertions.assertEquals(5, manager.lenTooEnemy(tower, enemy));
+    }
 }
