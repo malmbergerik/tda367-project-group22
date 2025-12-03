@@ -12,4 +12,9 @@ public class PathTile extends TileBase{
     public PathType getPathType() {
         return pathType;
     }
+
+    @Override
+    public boolean isPathTile() {
+        return true;
+    }
 }

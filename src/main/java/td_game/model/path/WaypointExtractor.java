@@ -13,9 +13,9 @@ import java.util.List;
  * from START -> ... -> END.
  *
  * Assumptions:
- *  - Path tiles are instances of PathTile (TileType.PATH)
- *  - Exactly one START and one END exist
- *  - Path is a single connected non-branching sequence (4-neighbour connectivity)
+ * - Path tiles implement isPathTile() == true
+ * - Exactly one START and one END exist
+ * - Path is a single connected non-branching sequence (4-neighbour connectivity)
  */
 public class WaypointExtractor {
 
@@ -33,7 +33,10 @@ public class WaypointExtractor {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 TileBase tile = map.getTile(r, c);
-                if (tile instanceof PathTile) {
+
+                // Use isPathTile() for the check
+                if (tile.isPathTile()) {
+                    // Safe cast is now possible if needed, but we check PathType directly
                     PathTile pt = (PathTile) tile;
                     if (pt.getPathType() == PathType.START) {
                         startR = r;
@@ -61,7 +64,9 @@ public class WaypointExtractor {
         while (!reachedEnd) {
             // check if current is END
             TileBase curTile = map.getTile(curR, curC);
-            if (curTile instanceof PathTile && ((PathTile) curTile).getPathType() == PathType.END) {
+
+            // Check if current tile is END (requires checking isPathTile() first)
+            if (curTile.isPathTile() && ((PathTile) curTile).getPathType() == PathType.END) {
                 reachedEnd = true;
                 break;
             }
@@ -79,8 +84,11 @@ public class WaypointExtractor {
                 int nr = n[0], nc = n[1];
                 if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
                 if (visited[nr][nc]) continue;
+
                 TileBase t = map.getTile(nr, nc);
-                if (t instanceof PathTile) {
+
+                // Polymorphic check: Does the tile claim to be a path?
+                if (t.isPathTile()) {
                     // append and move
                     visited[nr][nc] = true;
                     ordered.add(new int[]{nr, nc});
