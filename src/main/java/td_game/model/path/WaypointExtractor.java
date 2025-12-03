@@ -48,6 +48,7 @@ public class WaypointExtractor {
             if (startR != -1) break;
         }
 
+
         if (startR == -1) {
             throw new IllegalArgumentException("No START tile found on the map");
         }
