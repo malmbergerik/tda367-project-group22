@@ -10,14 +10,21 @@ import td_game.model.IGameObserver;
 import td_game.model.map.TileFactory;
 import td_game.model.path.Path;
 import td_game.model.path.PathManager;
+
 import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileFactory;
-import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.Tower;
 import td_game.model.towers.TowerManager;
+import td_game.model.projectile.ProjectileManager;
+
+import td_game.model.enemy.EnemyFactory;
+import td_game.model.enemy.Skeleton;
+import td_game.model.enemy.Slime;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameModel implements GameObservable,IUpdatable {
 
@@ -35,6 +42,7 @@ public class GameModel implements GameObservable,IUpdatable {
     private EnemyManager enemyManager;
     private TowerManager towerManager;
     private ProjectileManager projectileManager;
+
     private Tower[][] placedTowerGrid;
     /*
     Här vill vi ha listor för torn, enemies, pengar, spelaren...
@@ -51,7 +59,11 @@ public class GameModel implements GameObservable,IUpdatable {
         this.currentState = new MenuState(this);
         this.pathManager = new PathManager();
         this.currentPath = pathManager.getPathForMap(gridMap);
-        this.enemyManager = new EnemyManager(this);
+
+        EnemyFactory enemyFactory = new EnemyFactory();
+        enemyFactory.registerFactory("Slime", Slime::new);
+        this.enemyManager = new EnemyManager(this, enemyFactory);
+
         this.towerManager = new TowerManager( this);
         this.projectileManager = new ProjectileManager(this);
         placedTowerGrid = new Tower[gridMap.getRow()][gridMap.getCol()];
@@ -66,6 +78,7 @@ public class GameModel implements GameObservable,IUpdatable {
     }
 
     public List<ABaseEnemy> getActiveEnemies() {return activeEnemies;}
+
     public List<Projectile> getActiveProjectiles() {return activeProjectiles;}
     public List<Tower> getActiveTowers(){ return activeTowers;}
 
@@ -75,19 +88,21 @@ public class GameModel implements GameObservable,IUpdatable {
     public void addTower(Tower tower){
         activeTowers.add(tower);
     }
+
     public void addEnemy(ABaseEnemy enemy){
         activeEnemies.add(enemy);
     }
-
     public void updateEnemies(){
         enemyManager.update();
     }
+
     public void updateProjectile(){
         projectileManager.update();
     }
     public void updateTower(){
         towerManager.update();
     }
+
     public void update(){
         if (currentState != null) {
             currentState.update();
