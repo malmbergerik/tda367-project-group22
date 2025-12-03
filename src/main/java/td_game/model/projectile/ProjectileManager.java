@@ -56,7 +56,6 @@ public class ProjectileManager {
     public void update() {
         for (int i = activeProjectiles.size() - 1; i >= 0; i--) {
             Projectile p = activeProjectiles.get(i);
-            p.clearEnemiesHitThisFrame();
             p.move();
             hitEnemy(p);
             p.reduceTimeAlive();
