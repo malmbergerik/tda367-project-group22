@@ -89,3 +89,4 @@ public class EnemyMovementTest {
         assertEquals(3, enemy.currentWaypointIndex, "Index should be equal to path length (3).");
     }
 }
+

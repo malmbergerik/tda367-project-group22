@@ -124,9 +124,21 @@ public class GameModel implements GameObservable,IUpdatable {
         return Boolean.FALSE;
     }
 
+    public Boolean canBePlaced(int row, int col, String tower){
+        //TODO Break this out so it is not dependent on creating new towers in check
+        int tileSize = gridMap.getTileSize();
+        Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true));
+        return t.canBePlaced(gridMap.getTile(row,col));
+    }
+
     public void placeTower(int row, int col, String tower){
         if(gridOccupied(row,col)){
             System.out.println("A tower is already placed here!");
+            return;
+        }
+
+        if(!canBePlaced(row, col, tower)){
+            System.out.println("Tower cant be placed here");
             return;
         }
 

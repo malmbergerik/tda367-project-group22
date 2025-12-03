@@ -28,8 +28,9 @@ public class PlacementController implements IPlacementController, ITowerPlacemen
 
         if(selectedTower != null){
             boolean occupied = model.gridOccupied(row,col);
-
-            updateManager.updateSelectedTower(row, col, !occupied, selectedTower);
+            boolean placable = model.canBePlaced(row,col,selectedTower);
+            boolean canPlace = !occupied && placable;
+            updateManager.updateSelectedTower(row, col, canPlace, selectedTower);
             view.repaint();
         }
 
