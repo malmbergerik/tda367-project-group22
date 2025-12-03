@@ -1,12 +1,9 @@
 package td_game.model.enemy;
 
-import td_game.model.GameEventType;
+import td_game.model.events.MovingObjectUpdateEvent;
 import td_game.model.modelnit.GameModel;
-import td_game.model.enemy.ABaseEnemy;
-import java.util.ArrayList;
-import java.util.List;
 
-import java.awt.*;
+import java.util.List;
 
 public class EnemyManager {
 
@@ -28,7 +25,7 @@ public class EnemyManager {
             enemy.move();
             return (!enemy.isAlive() || enemy.hasReachedEnd());
         });
-        gameModel.notifyObserver(GameEventType.MOVING_OBJECTS_UPDATE);
+        gameModel.notifyObserver(new MovingObjectUpdateEvent());
 
         if(activeEnemies.isEmpty() && waveSpawner.isWaveComplete()){
             startNextWave();

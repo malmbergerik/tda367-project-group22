@@ -2,18 +2,22 @@ package td_game.controller;
 
 import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
-import td_game.view.GameViewPanel;
-import td_game.view.ITowerPlacementListener;
+import td_game.view.panel.GameViewPanel;
+import td_game.view.listener.ITowerPlacementListener;
+import td_game.view.strategy.ViewUpdateManager;
 
 public class PlacementController implements IPlacementController, ITowerPlacementListener {
     private final GameViewPanel view;
     private final GameModel model;
+    private final ViewUpdateManager updateManager;
     private int selectedRow=-1;
     private int selectedCol=-1;
     private String selectedTower;
+
     public PlacementController(GameModel model, GameViewPanel view){
         this.model = model;
         this.view = view;
+        this.updateManager = new ViewUpdateManager(view.getRenderingContext());
     }
 
     @Override
@@ -23,7 +27,11 @@ public class PlacementController implements IPlacementController, ITowerPlacemen
         int col = posX / tileSize;
 
         if(selectedTower != null){
-            view.updateSelectedTowers(row,col,model.gridOccupied(row,col),selectedTower);
+            boolean occupied = model.gridOccupied(row,col);
+            boolean placable = model.canBePlaced(row,col,selectedTower);
+            boolean canPlace = !occupied && placable;
+            updateManager.updateSelectedTower(row, col, canPlace, selectedTower);
+            view.repaint();
         }
 
     }
@@ -35,10 +43,10 @@ public class PlacementController implements IPlacementController, ITowerPlacemen
         int row = posY / tileSize;
         int col = posX / tileSize;
 
-        model.placeTower(row,col,selectedTower);
-        //This exists right now for testing purposes
-        //TODO replace with input to model
-        System.out.println("Clicked at x:" + col + " and y:" + row + selectedTower);
+        if (selectedTower != null) {
+            model.placeTower(row, col, selectedTower);
+            System.out.println("Placed tower at x:" + col + " and y:" + row + " - " + selectedTower);
+        }
 
         if(row<=currentGridMap.getRow() && row>=0 && col>=0 &&col<=currentGridMap.getCol()){
             selectedRow = row;
@@ -57,16 +65,18 @@ public class PlacementController implements IPlacementController, ITowerPlacemen
     public void handleMouseExit(){
         selectedCol =-1;
         selectedRow =-1;
-        view.updateSelectedTowers(-1,-1,false,selectedTower);
+        updateManager.clearSelectedTower();
+        view.repaint();
     }
 
     @Override
     public void onTowerSelection(String name) {
-        if(selectedTower == name){
+        if (selectedTower != null && selectedTower.equals(name)) {
             selectedTower = null;
-        }
-        else{
+            updateManager.clearSelectedTower();
+        } else {
             selectedTower = name;
         }
+        view.repaint();
     }
 }

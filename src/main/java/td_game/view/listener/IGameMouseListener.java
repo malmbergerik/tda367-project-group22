@@ -1,4 +1,4 @@
-package td_game.view;
+package td_game.view.listener;
 
 public interface IGameMouseListener {
     void onMouseMoved(int posX, int posY);

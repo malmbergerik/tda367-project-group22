@@ -1,21 +1,21 @@
-package td_game.view;
+package td_game.view.panel;
 
-import td_game.model.modelnit.GameModel;
+import td_game.view.listener.ITowerPlacementListener;
+import td_game.view.IView;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel extends JPanel implements IView{
+public class GamePanel extends JPanel implements IView {
     private final GameViewPanel gameView;
-    private final JPanel bottomBar; //This needs to be its own class later
     private final SideBarPanel sideBar;
-    public GamePanel(int width, int height) {
 
+    public GamePanel(int width, int height) {
         setLayout(new BorderLayout());
 
         gameView = new GameViewPanel(width, height);
 
-        bottomBar = new JPanel(); // Replace with actual bottom bar implementation
+        JPanel bottomBar = new JPanel(); // Replace with actual bottom bar implementation
         bottomBar.setPreferredSize(new Dimension(720, 192));
         bottomBar.setBackground(Color.BLUE);
 
@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements IView{
         leftPanel.add(gameView, BorderLayout.CENTER);
         leftPanel.add(bottomBar, BorderLayout.SOUTH);
 
-        sideBar = new SideBarPanel(304,768);
+        sideBar = new SideBarPanel(304, 768);
 
         add(leftPanel, BorderLayout.CENTER);
         add(sideBar, BorderLayout.EAST);

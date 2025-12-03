@@ -1,11 +1,13 @@
 package td_game.model.towers;
 import td_game.model.enemy.ABaseEnemy;
+import td_game.model.map.GrassTile;
+import td_game.model.map.TileBase;
 import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
 
 import java.util.ArrayList;
 
-public class Tower{
+public class Tower implements IPlacementRule{
     private int cooldownTicks; //Ticks
     private int x;
     private int y;
@@ -65,4 +67,9 @@ public class Tower{
     }
 
     public ProjectileFactory getProjectileFactory() { return projectileFactory; }
+
+    @Override
+    public boolean canBePlaced(TileBase tile) {
+        return (tile instanceof GrassTile);
+    }
 }

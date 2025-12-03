@@ -1,17 +1,9 @@
 package td_game.controller;
 
-import td_game.model.GameEventType;
-import td_game.model.map.GridMap;
-import td_game.model.map.TileBase;
+import td_game.model.events.*;
 import td_game.model.modelnit.GameModel;
-import td_game.view.GamePanel;
-import td_game.view.GameViewPanel;
-import td_game.model.IGameObserver;
-import td_game.view.IGameMouseListener;
-import td_game.view.ITowerPlacementListener;
-import td_game.view.helper.MapViewData;
-
-import java.awt.event.MouseEvent;
+import td_game.view.panel.GameViewPanel;
+import td_game.view.listener.IGameMouseListener;
 
 public class GameController implements IGameObserver {
     private final GameModel model;
@@ -52,15 +44,26 @@ public class GameController implements IGameObserver {
         });
     }
 
+    @Override
+    public void onTileUpdate(TileUpdateEvent event) {
+        gameUpdateController.handleTileUpdate();
+    }
 
     @Override
-    public void onGameEvent(GameEventType eventType) {
-        switch (eventType) {
-            case TILES_UPDATE -> gameUpdateController.handleTileUpdate();
-            case MOVING_OBJECTS_UPDATE -> gameUpdateController.handleMovingObjectsUpdate();
-            case TOWER_UPDATE -> gameUpdateController.handleTowersUpdate();
-        }
+    public void onTowersUpdate(TowersUpdateEvent event) {
+        gameUpdateController.handleTowersUpdate();
     }
+
+    @Override
+    public void onMovingObjectsUpdate(MovingObjectUpdateEvent event) {
+        gameUpdateController.handleMovingObjectsUpdate();
+    }
+
+    @Override
+    public void onProjectileUpdate(ProjectileUpdateEvent event) {
+        gameUpdateController.handleProjectilesUpdate();
+    }
+
 
     public PlacementController getPlacementController(){
         return placementController;

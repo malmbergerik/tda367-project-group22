@@ -1,10 +1,6 @@
 package td_game.model.modelnit;
 
-import td_game.model.GameEventType;
-import td_game.model.enemy.ABaseEnemy;
-
-import java.util.ArrayList;
-import java.util.List;
+import td_game.model.events.TileUpdateEvent;
 
 public class PlayingState implements IGameState {
     private final GameModel gameModel;
@@ -15,7 +11,7 @@ public class PlayingState implements IGameState {
 
     @Override
     public void enterState() {
-        gameModel.notifyObserver(GameEventType.TILES_UPDATE);
+        gameModel.notifyObserver(new TileUpdateEvent());
         // Code to initialize the playing state
     }
 

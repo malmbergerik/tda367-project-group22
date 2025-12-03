@@ -1,5 +1,6 @@
-package td_game.view;
+package td_game.view.panel;
 
+import td_game.view.listener.ITowerPlacementListener;
 import td_game.view.helper.TowerViewManager;
 
 import javax.swing.*;
@@ -20,9 +21,9 @@ public class SideBarPanel extends JPanel {
 
 
         addToPanel(createTowerButton("Tower 1"));
-        addToPanel(createTowerButton("Tower 2"));
-        addToPanel(createTowerButton("Tower 3"));
-        addToPanel(createTowerButton("Tower 4"));
+        //addToPanel(createTowerButton("Tower 2"));
+        //addToPanel(createTowerButton("Tower 3"));
+        //addToPanel(createTowerButton("Tower 4"));
 
         fillPanel();
 

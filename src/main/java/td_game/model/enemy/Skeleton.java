@@ -20,4 +20,5 @@ public class Skeleton extends PathFollowingEnemy {
         health -= amount;
     }
 
+
 }
