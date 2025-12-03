@@ -53,7 +53,7 @@ public class TowerManager {
     {
         ProjectileFactory factory = t.getProjectileFactory();
         for (int i = 0; i < t.getProjectileAmount(); i++) {
-            Projectile p = factory.create(getAngleToEnemy(t, target),(int) t.getX(),(int) t.getY());
+            Projectile p = factory.create((getAngleToEnemy(t, (target )) - 15*Math.round(0.5*t.getProjectileAmount()) + 15*i),(int) t.getX(),(int) t.getY());
             gameModel.addProjectile(p);
         }
     }
