@@ -50,7 +50,10 @@ public class EnemyWaveSpawner {
 
     private void spawnEnemy() {
         ABaseEnemy enemy = enemyFactory.createEnemy("Slime", 1, 0.2, enemyManager.gameModel.getCurrentPath());
+        ABaseEnemy enemy2 = enemyFactory.createEnemy("Skeleton", 1, 0.4, enemyManager.gameModel.getCurrentPath());
+
         enemyManager.addEnemy(enemy);
+        enemyManager.addEnemy(enemy2);
     }
 
 

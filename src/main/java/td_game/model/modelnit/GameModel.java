@@ -64,6 +64,7 @@ public class GameModel implements GameObservable,IUpdatable {
 
         EnemyFactory enemyFactory = new EnemyFactory();
         enemyFactory.registerFactory("Slime", Slime::new);
+        enemyFactory.registerFactory("Skeleton", Skeleton::new);
         this.enemyManager = new EnemyManager(this, enemyFactory);
 
         this.towerManager = new TowerManager( this);

@@ -5,7 +5,7 @@ import td_game.model.projectile.ProjectileManager;
 
 import java.util.ArrayList;
 
-public class Tower{
+public class Tower {
     private int cooldownTicks; //Ticks
     private int x;
     private int y;
