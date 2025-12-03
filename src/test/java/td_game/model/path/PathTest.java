@@ -1,7 +1,7 @@
 package td_game.model.path;
 
 import org.junit.jupiter.api.Test;
-import td_game.model.map.*; // Import all map dependencies
+import td_game.model.map.*;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ public class PathTest {
 
     /**
      * Helper: create a GridMap pre-filled with non-path TileBase instances
-     * so extractor won't see nulls.
+     * (GrassTile) so the extractor won't see nulls.
      */
     private GridMap makeEmptyMap(int rows, int cols) {
         GridMap map = new GridMap(rows, cols, TILE_SIZE);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                // Use the GrassTile implementation
+                // GrassTile must now correctly implement isPathTile() == false
                 map.setTile(r, c, new GrassTile());
             }
         }
@@ -32,7 +32,7 @@ public class PathTest {
 
     @Test
     public void testExtractSimpleLinearPath() {
-        // Path: (0,0) -> (0,4)
+        // Path: (0,0) START -> (0,4) END
         GridMap map = makeEmptyMap(1, 5);
         map.setTile(0, 0, new PathTile(PathType.START));
         map.setTile(0, 1, new PathTile(PathType.NORMAL));
@@ -78,7 +78,7 @@ public class PathTest {
 
     @Test
     public void testExtractorThrowsOnDeadEnd() {
-        // Path: (0,0) START -> (0,1) NORMAL -> END
+        // Path: (0,0) START -> (0,1) NORMAL. (1,1) is END but unreachable.
         GridMap map = makeEmptyMap(2, 2);
         map.setTile(0, 0, new PathTile(PathType.START));
         map.setTile(0, 1, new PathTile(PathType.NORMAL)); // Dead end
@@ -93,13 +93,11 @@ public class PathTest {
 
     @Test
     public void testPathFactoryCreatesWaypointsWithCorrectWorldCoordinates() {
-        // Path: (0,0) START -> (1,1) END
+        // Path: S(0,0) -> N(0,1) -> E(1,1) (3 tiles)
         GridMap map = makeEmptyMap(2, 2);
         map.setTile(0, 0, new PathTile(PathType.START));
-        map.setTile(1, 1, new PathTile(PathType.END)); // This requires the path to be connected
-
-        // To make it connect: S (0,0) -> N (0,1) -> E (1,1)
         map.setTile(0, 1, new PathTile(PathType.NORMAL));
+        map.setTile(1, 1, new PathTile(PathType.END));
 
         PathFactory factory = new PathFactory();
         Path path = factory.buildPathForMap(map);
