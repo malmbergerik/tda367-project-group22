@@ -16,7 +16,7 @@ public class ProjectileViewManager {
     }
 
     private void loadProjectileImages() {
-        projectileImages.put("Projectile", loadImage("assets/projectiles/Projectile.png"));
+        projectileImages.put("Projectile", loadImage("assets/projectiles/Bullet.png"));
         projectileImages.put("Bullet", loadImage("assets/projectiles/Bullet.png"));
         projectileImages.put("Fireball", loadImage("assets/projectiles/Fireball.png"));
         // Lägg till fler projektiltyper här

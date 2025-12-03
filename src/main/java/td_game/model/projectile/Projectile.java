@@ -75,7 +75,7 @@ public class Projectile {
 
     // Fix later
     public String getName() {
-        return "Projectile";
+        return "Bullet";
     }
 
 
