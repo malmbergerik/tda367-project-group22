@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class TowerManager {
-    private List<Tower> activeTowers = new ArrayList<>();
+    private List<ATower> activeTowers = new ArrayList<>();
     private GameModel gameModel;
 
     public TowerManager(GameModel gameModel )

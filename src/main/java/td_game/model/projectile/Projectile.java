@@ -22,7 +22,7 @@ public class Projectile {
 
     private final boolean hitBoxRound;
 
-    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, boolean hitBoxRound) {
+    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, double x, double y, boolean hitBoxRound) {
         this.pixelsPerTick = pixelsPerTick;
         this.width = width;
         this.height = height;

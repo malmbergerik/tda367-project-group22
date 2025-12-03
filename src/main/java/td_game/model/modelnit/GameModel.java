@@ -15,7 +15,9 @@ import td_game.model.path.PathManager;
 
 import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileFactory;
+import td_game.model.towers.ATower;
 import td_game.model.towers.Tower;
+
 import td_game.model.towers.TowerManager;
 import td_game.model.projectile.ProjectileManager;
 
@@ -83,12 +85,12 @@ public class GameModel implements GameObservable,IUpdatable {
     public List<ABaseEnemy> getActiveEnemies() {return activeEnemies;}
 
     public List<Projectile> getActiveProjectiles() {return activeProjectiles;}
-    public List<Tower> getActiveTowers(){ return activeTowers;}
+    public List<ATower> getActiveTowers(){ return activeTowers;}
 
     public void addProjectile(Projectile projectile){
         activeProjectiles.add(projectile);
     }
-    public void addTower(Tower tower){
+    public void addTower(ATower tower){
         activeTowers.add(tower);
     }
 
