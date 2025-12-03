@@ -49,7 +49,7 @@ public class EnemyWaveSpawner {
     }
 
     private void spawnEnemy() {
-        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", 1, 0.2, enemyManager.gameModel.getCurrentPath());
+        ABaseEnemy enemy = enemyFactory.createEnemy("Slime", 1, 0.2, enemyManager.gameModel.getCurrentPath());
         enemyManager.addEnemy(enemy);
     }
 

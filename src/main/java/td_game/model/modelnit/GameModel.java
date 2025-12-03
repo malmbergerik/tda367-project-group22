@@ -15,6 +15,7 @@ import td_game.model.projectile.ProjectileFactory;
 import td_game.model.towers.Tower;
 import td_game.model.enemy.EnemyFactory;
 import td_game.model.enemy.Skeleton;
+import td_game.model.enemy.Slime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class GameModel implements GameObservable,IUpdatable {
         this.currentPath = pathManager.getPathForMap(gridMap);
 
         EnemyFactory enemyFactory = new EnemyFactory();
-        enemyFactory.registerFactory("Skeleton", Skeleton::new);
+        enemyFactory.registerFactory("Slime", Slime::new);
 
         this.enemyManager = new EnemyManager(this, enemyFactory);
 

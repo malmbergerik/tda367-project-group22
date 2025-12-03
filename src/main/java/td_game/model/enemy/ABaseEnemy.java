@@ -3,7 +3,7 @@ package td_game.model.enemy;
 
 import java.lang.Math;
 
-public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable {
+public abstract class ABaseEnemy implements IMoveable, IDamageable {
     protected int health;
     protected double speed;
     protected double posX;
@@ -29,24 +29,24 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
         return health > 0;
     }
 
-    @Override
+
     public double getX() {
         return posX;
     }
 
-    @Override
+
     public double getY() {
         return posY;
     }
 
-    @Override
     public int getWidth() {return width;}
 
-    @Override
     public int getHeight() {return height;}
 
     public int getHealth() {return  health;}
 
     @Override
     public abstract void move();
+
+    public abstract String getName();
 }
