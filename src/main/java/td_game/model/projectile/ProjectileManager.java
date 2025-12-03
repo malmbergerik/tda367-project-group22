@@ -1,9 +1,9 @@
 package td_game.model.projectile;
 
-import td_game.model.GameEventType;
 import td_game.model.collision.CheckCollision;
 import td_game.model.collision.CreateHitbox;
 import td_game.model.enemy.ABaseEnemy;
+import td_game.model.events.ProjectileUpdateEvent;
 import td_game.model.modelnit.GameModel;
 
 import java.awt.geom.RectangularShape;
@@ -66,7 +66,7 @@ public class ProjectileManager {
                 activeProjectiles.remove(i);
             }
 
-            gameModel.notifyObserver(GameEventType.PROJECTILES_UPDATE);
+            gameModel.notifyObserver(new ProjectileUpdateEvent());
 
 
         }

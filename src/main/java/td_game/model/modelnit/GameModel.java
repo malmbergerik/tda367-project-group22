@@ -1,12 +1,14 @@
 package td_game.model.modelnit;
 
-import td_game.model.GameEventType;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.enemy.EnemyManager;
+import td_game.model.events.IGameEvent;
+import td_game.model.events.TileUpdateEvent;
+import td_game.model.events.TowersUpdateEvent;
 import td_game.model.map.GridMap;
 import td_game.model.map.MapLoader;
 import td_game.model.map.TileBase;
-import td_game.model.IGameObserver;
+import td_game.model.events.IGameObserver;
 import td_game.model.map.TileFactory;
 import td_game.model.path.Path;
 import td_game.model.path.PathManager;
@@ -97,7 +99,7 @@ public class GameModel implements GameObservable,IUpdatable {
 
     public void updateTile(int row, int col, TileBase tile){
         gridMap.setTile(row,col,tile);
-        notifyObserver(GameEventType.TILES_UPDATE);
+        notifyObserver(new TileUpdateEvent());
     }
 
     public Boolean gridOccupied(int row, int col){
@@ -116,7 +118,7 @@ public class GameModel implements GameObservable,IUpdatable {
         Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true));
         placedTowerGrid[row][col] = t;
         addTower(t);
-        notifyObserver(GameEventType.TOWER_UPDATE);
+        notifyObserver(new TowersUpdateEvent());
     }
 
     public Tower[][] getPlacedTowerGrid(){
@@ -146,9 +148,9 @@ public class GameModel implements GameObservable,IUpdatable {
     }
 
     @Override
-    public void notifyObserver(GameEventType eventType) {
+    public void notifyObserver(IGameEvent event) {
         for (IGameObserver observer: observers) {
-            observer.onGameEvent(eventType);
+            event.dispatch(observer);
         }
     }
 }
