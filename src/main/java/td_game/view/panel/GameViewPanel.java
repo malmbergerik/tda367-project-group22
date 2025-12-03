@@ -60,26 +60,6 @@ public class GameViewPanel extends JPanel {
         renderingContext.renderAll((Graphics2D) g);
     }
 
-    public void updateTowers(TowerViewData towers) {
-        updateManager.updateTowers(towers);
-        repaint();
-    }
-
-    public void updateSelectedTowers(int row, int col, Boolean placeable, String selectedTower) {
-        updateManager.updateSelectedTower(row, col, placeable, selectedTower);
-        repaint();
-    }
-
-    public void updateMovingObjects(List<EnemyViewData> enemies) {
-        updateManager.updateEnemies(enemies);
-        repaint();
-    }
-
-    public void updateTiles(MapViewData mapViewData) {
-        updateManager.updateMap(mapViewData);
-        repaint();
-    }
-
     public int getSCALE() {
         return renderingContext.getScale();
     }

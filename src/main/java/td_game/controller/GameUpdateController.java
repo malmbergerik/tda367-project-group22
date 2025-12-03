@@ -3,7 +3,9 @@ package td_game.controller;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
+import td_game.model.projectile.Projectile;
 import td_game.model.towers.Tower;
+import td_game.view.helper.ProjectileViewData;
 import td_game.view.panel.GameViewPanel;
 import td_game.view.strategy.ViewUpdateManager;
 import td_game.view.helper.EnemyViewData;
@@ -20,12 +22,14 @@ public class GameUpdateController implements IGameUpdateController {
     private final GameViewPanel view;
     private final ViewUpdateManager updateManager;
     private final List<EnemyViewData> enemyList;
+    private final List<ProjectileViewData> projectileList;
 
     public GameUpdateController(GameModel model, GameViewPanel view) {
         this.model = model;
         this.view = view;
         this.updateManager = new ViewUpdateManager(view.getRenderingContext());
         this.enemyList = new ArrayList<>();
+        this.projectileList = new ArrayList<>();
     }
 
     @Override
@@ -35,6 +39,10 @@ public class GameUpdateController implements IGameUpdateController {
 
     public void handleMovingObjectsUpdate() {
         updateMovingObjects();
+    }
+
+    public void handleProjectilesUpdate() {
+        updateProjectiles();
     }
 
     public void handleTowersUpdate() {
@@ -85,7 +93,7 @@ public class GameUpdateController implements IGameUpdateController {
         for (ABaseEnemy enemy : currentEnemies) {
             double enemyX = enemy.getX();
             double enemyY = enemy.getY();
-            String name = String.valueOf(enemy);
+            String name = enemy.getName();
             EnemyViewData enemyViewData = new EnemyViewData(name, enemyX, enemyY);
             enemyList.add(enemyViewData);
         }
@@ -93,4 +101,22 @@ public class GameUpdateController implements IGameUpdateController {
         updateManager.updateEnemies(enemyList);
         view.repaint();
     }
+
+    private void updateProjectiles() {
+        List <Projectile> currentProjectiles = model.getActiveProjectiles();
+        projectileList.clear();
+
+        for (Projectile projectile : currentProjectiles) {
+            double projectileX = projectile.getX();
+            double projectileY = projectile.getY();
+            String name = projectile.getName();
+
+            ProjectileViewData projectileViewData = new ProjectileViewData(name, projectileX, projectileY);
+            projectileList.add(projectileViewData);
+        }
+
+        updateManager.updateProjectiles(projectileList);
+        view.repaint();
+    }
+
 }

@@ -51,6 +51,7 @@ public class GameController implements IGameObserver {
         switch (eventType) {
             case TILES_UPDATE -> gameUpdateController.handleTileUpdate();
             case MOVING_OBJECTS_UPDATE -> gameUpdateController.handleMovingObjectsUpdate();
+            case PROJECTILES_UPDATE -> gameUpdateController.handleProjectilesUpdate();
             case TOWER_UPDATE -> gameUpdateController.handleTowersUpdate();
         }
     }

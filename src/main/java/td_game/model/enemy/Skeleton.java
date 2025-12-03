@@ -15,4 +15,8 @@ public class Skeleton extends PathFollowingEnemy {
         health -= amount;
     }
 
+    public String getName() {
+        return "Skeleton";
+    }
+
 }

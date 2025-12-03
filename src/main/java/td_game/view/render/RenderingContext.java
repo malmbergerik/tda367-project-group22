@@ -13,6 +13,7 @@ public class RenderingContext {
     private MapViewData mapViewData;
     private TowerViewData towerViewData;
     private List<EnemyViewData> enemyViewData;
+    private List<ProjectileViewData> projectileViewData;
     private int hoverRow = -1;
     private int hoverCol = -1;
     private String selectedTower;
@@ -58,6 +59,10 @@ public class RenderingContext {
         this.selectedTower = towerType;
     }
 
+    public void updateProjectileViewData(List<ProjectileViewData> projectileViewDataList) {
+        this.projectileViewData = new ArrayList<>(projectileViewDataList);
+    }
+
     public void clearSelectedTower() {
         this.hoverRow = -1;
         this.hoverCol = -1;
@@ -75,6 +80,10 @@ public class RenderingContext {
 
     public List<EnemyViewData> getEnemyViewData() {
         return enemyViewData;
+    }
+
+    public List<ProjectileViewData> getProjectileViewData() {
+        return projectileViewData;
     }
 
     public int getHoverRow() {

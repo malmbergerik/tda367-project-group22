@@ -31,6 +31,7 @@ public class EnemyRenderer implements IRenderer {
             double y = enemyData.getEnemyY();
 
             BufferedImage enemyImage = enemyViewManager.getEnemyImage(name);
+            System.out.println("Rendering enemy: " + name + " at (" + x + ", " + y + ")");
 
             if (enemyImage != null) {
                 int scaledX = (int) (x * scale) - 24;

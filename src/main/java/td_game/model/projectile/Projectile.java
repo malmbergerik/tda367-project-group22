@@ -73,5 +73,10 @@ public class Projectile {
     public void reducePierce() { pierce--; }
     public void reduceTimeAlive() { timeAliveTicks--; }
 
+    // Fix later
+    public String getName() {
+        return "Projectile";
+    }
+
 
 }

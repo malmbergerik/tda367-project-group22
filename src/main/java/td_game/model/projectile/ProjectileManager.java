@@ -1,5 +1,6 @@
 package td_game.model.projectile;
 
+import td_game.model.GameEventType;
 import td_game.model.collision.CheckCollision;
 import td_game.model.collision.CreateHitbox;
 import td_game.model.enemy.ABaseEnemy;
@@ -64,6 +65,10 @@ public class ProjectileManager {
             if (!p.getIsAlive()) {
                 activeProjectiles.remove(i);
             }
+
+            gameModel.notifyObserver(GameEventType.PROJECTILES_UPDATE);
+
+
         }
     }
 }

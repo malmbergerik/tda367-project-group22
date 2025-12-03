@@ -49,4 +49,6 @@ public abstract class ABaseEnemy implements ITargetable, IMoveable, IDamageable 
 
     @Override
     public abstract void move();
+
+    public abstract String getName();
 }

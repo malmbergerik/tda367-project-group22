@@ -85,6 +85,7 @@ public class GameModel implements GameObservable,IUpdatable {
     public void updateProjectile(){
         projectileManager.update();
     }
+
     public void updateTower(){
         towerManager.update();
     }

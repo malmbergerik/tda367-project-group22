@@ -44,6 +44,10 @@ public class ViewUpdateManager {
         updateView(SelectedTowerUpdateStrategy.STRATEGY_TYPE, selectedData);
     }
 
+    public void updateProjectiles(Object projectileData) {
+        updateView(ProjectileUpdateStrategy.STRATEGY_TYPE, projectileData);
+    }
+
     public void clearSelectedTower() {
         renderingContext.clearSelectedTower();
     }
@@ -53,6 +57,7 @@ public class ViewUpdateManager {
         registry.registerStrategy(new EnemyUpdateStrategy());
         registry.registerStrategy(new MapUpdateStrategy());
         registry.registerStrategy(new SelectedTowerUpdateStrategy());
+        registry.registerStrategy(new ProjectileUpdateStrategy());
     }
 
 }
