@@ -1,12 +1,12 @@
 package td_game.model.enemy;
 import td_game.model.path.Path;
 
-public class Skeleton extends PathFollowingEnemy {
+public class Slime extends PathFollowingEnemy {
     private static final int ENEMY_WIDTH = 8;
     private static final int ENEMY_HEIGHT = 8;
-    private static final String NAME = "Skeleton";
+    private static final String NAME = "Slime";
 
-    public Skeleton(int health, double speed, Path path){
+    public Slime(int health, double speed, Path path){
         super(health, speed, path, ENEMY_WIDTH, ENEMY_HEIGHT);
     }
 
@@ -18,10 +18,6 @@ public class Skeleton extends PathFollowingEnemy {
     @Override
     public void takeDamage(int amount) {
         health -= amount;
-    }
-
-    public String getName() {
-        return "Skeleton";
     }
 
 }
