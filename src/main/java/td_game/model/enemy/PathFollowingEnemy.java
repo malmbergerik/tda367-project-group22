@@ -18,6 +18,7 @@ public abstract class PathFollowingEnemy extends ABaseEnemy {
             Waypoint startingWaypoint = path.get(0);
             this.posX = startingWaypoint.getX();
             this.posY = startingWaypoint.getY();
+            this.currentWaypointIndex = 1;
         }
     }
 

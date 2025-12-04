@@ -2,21 +2,15 @@ package td_game.model.enemy;
 
 import td_game.model.path.Path;
 import td_game.model.path.Waypoint;
-
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EnemyMovementTest {
-    // Helper method to create a simple path for testing
-    private Path createTestPath() {
-        // Path consists of three waypoints (centers of 32x32 tiles):
-        // 1. (16.0, 16.0) - Start (0,0)
-        // 2. (48.0, 16.0) - to the right (0,1)
-        // 3. (48.0, 48.0) - Corner (1,1)
 
+    private Path createTestPath() {
+        // Path has 3 waypoints: Indices 0, 1, 2
         List<Waypoint> waypoints = Arrays.asList(
                 new Waypoint(16.0, 16.0, 0, 0),
                 new Waypoint(48.0, 16.0, 0, 1),
@@ -25,68 +19,81 @@ public class EnemyMovementTest {
         return new Path(waypoints);
     }
 
+    private EnemyFactory getEnemyFactory() {
+        EnemyFactory enemyFactory = new EnemyFactory();
+        enemyFactory.registerFactory("Skeleton", Skeleton::new);
+        return enemyFactory;
+    }
+
     private static final double DELTA = 0.0001;
 
     @Test
-    void testEnemyInitialization (){
+    void testEnemyInitialization() {
         Path path = createTestPath();
-        int initialHealth = 100;
-        double speed = 2.0;
-
-        ABaseEnemy enemy = EnemyFactory.createEnemy(EnemyType.skeleton, initialHealth, speed, path);
+        EnemyFactory enemyFactory = getEnemyFactory();
+        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", 1, 0.5, path);
 
         assertNotNull(enemy, "Factory should create an enemy.");
-        assertEquals(16.0, enemy.getX(), DELTA, "Enemy should start at the first waypoint X.");
-        assertEquals(16.0, enemy.getY(), DELTA, "Enemy should start at the first waypoint Y.");
-        assertEquals(1, enemy.currentWaypointIndex, "Enemy should target the second waypoint (index 1).");
+        assertEquals(16.0, enemy.getX(), DELTA);
+        assertEquals(16.0, enemy.getY(), DELTA);
+
+        // CAST to access protected field
+        PathFollowingEnemy pathEnemy = (PathFollowingEnemy) enemy;
+
+        // Assert using pathEnemy
+        assertEquals(1, pathEnemy.currentWaypointIndex, "Enemy should target the second waypoint (index 1) immediately.");
     }
 
     @Test
     void TestMovementTowardsWaypoint() {
         Path path = createTestPath();
         double speed = 4.0;
-        ABaseEnemy enemy = EnemyFactory.createEnemy(EnemyType.skeleton, 100, speed, path); // Speed set to 4 pixels per tick
+        EnemyFactory enemyFactory = getEnemyFactory();
+        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", 1, speed, path);
 
-        assertNotNull(enemy, "Factory should create an enemy.");
-
-        // Target: (48.0, 16.0). Distance: 32.0 units (48 - 16).
-        // It should take 32 / 4 = 8 moves.
-
-        // After 1 move
+        // Move 1 tick (4 pixels)
         enemy.move();
 
-        // Since the target is straight right, only X changes by speed (4.0)
         assertEquals(20.0, enemy.getX(), DELTA);
         assertEquals(16.0, enemy.getY(), DELTA);
-        assertEquals(1, enemy.currentWaypointIndex);
 
-        // Move 7 more times to reach the waypoint
+        PathFollowingEnemy pathEnemy = (PathFollowingEnemy) enemy;
+
+        // Assert using pathEnemy (NOT enemy)
+        assertEquals(1, pathEnemy.currentWaypointIndex);
+
+        // Move 7 more times (Total 8 moves * 4 speed = 32 pixels)
         for (int i = 0; i < 7; i++) {
             enemy.move();
         }
 
-        assertEquals(48.0, enemy.getX(), DELTA, "X should be 48.0 after reaching W2.");
-        assertEquals(16.0, enemy.getY(), DELTA, "Y should be 16.0 after reaching W2.");
-        assertEquals(2, enemy.currentWaypointIndex, "Enemy should be targeting the third waypoint (index 2).");
+        // Reached Waypoint 1 (48, 16)
+        assertEquals(48.0, enemy.getX(), DELTA);
+        assertEquals(16.0, enemy.getY(), DELTA);
+
+        // Assert using pathEnemy (NOT enemy)
+        assertEquals(2, pathEnemy.currentWaypointIndex);
     }
 
     @Test
     void TestReachingEndOfPath() {
         Path path = createTestPath();
-        //increase speed to reach the end quickly
         double speed = 8.0;
-        ABaseEnemy enemy = EnemyFactory.createEnemy(EnemyType.skeleton, 100, speed, path);
+        EnemyFactory enemyFactory = getEnemyFactory();
+        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", 1, speed, path);
 
-        assertNotNull(enemy, "Factory should create an enemy.");
+        PathFollowingEnemy pathEnemy = (PathFollowingEnemy) enemy;
 
-        // Move until the enemy reaches the end
-        while (!enemy.hasReachedEnd()) {
-            enemy.move();
+        // Move until end
+        while (!pathEnemy.hasReachedEnd()) {
+            pathEnemy.move();
         }
-        assertTrue(enemy.hasReachedEnd(), "Enemy should have reached the end of the path.");
-        assertEquals(48.0, enemy.getX(), DELTA, "X should be 48.0 at the end.");
-        assertEquals(48.0, enemy.getY(), DELTA, "Y should be 48.0 at the end.");
-        assertEquals(3, enemy.currentWaypointIndex, "Index should be equal to path length (3).");
+
+        assertTrue(pathEnemy.hasReachedEnd());
+        assertEquals(48.0, enemy.getX(), DELTA);
+        assertEquals(48.0, enemy.getY(), DELTA);
+
+
+        assertEquals(3, pathEnemy.currentWaypointIndex, "Final index should match path length (3).");
     }
 }
-
