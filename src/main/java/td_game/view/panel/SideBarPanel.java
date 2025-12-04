@@ -11,30 +11,29 @@ public class SideBarPanel extends JPanel {
     private ITowerPlacementListener listener;
     private int row = 0;
     private int col = 0;
-    private TowerViewManager towerViewManager;
-    public SideBarPanel(int width, int height){
-        this.towerViewManager = new TowerViewManager();
+
+    private final TowerViewManager towerViewManager;
+
+    public SideBarPanel(int width, int height, TowerViewManager towerViewManager){
+        this.towerViewManager = towerViewManager;
+
         setPreferredSize(new Dimension(304,768));
         setBackground(Color.RED);
 
         setLayout(new GridBagLayout());
 
-
         addToPanel(createTowerButton("Tower 1"));
-        //addToPanel(createTowerButton("Tower 2"));
-        //addToPanel(createTowerButton("Tower 3"));
-        //addToPanel(createTowerButton("Tower 4"));
 
         fillPanel();
 
     }
 
     private JButton createTowerButton(String name){
-        System.out.println(name);
         JButton button = new JButton(name);
         button.setPreferredSize(new Dimension(96,96));
         button.setMaximumSize(new Dimension(96,96));
         button.setMinimumSize(new Dimension(96,96));
+
         if( towerViewManager.getTowerImage(name) != null) {
             BufferedImage towerImage = towerViewManager.getTowerImage(name);
             Image scaledImage = towerImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH);

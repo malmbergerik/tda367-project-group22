@@ -14,6 +14,8 @@ public class RenderingContext {
     private TowerViewData towerViewData;
     private List<EnemyViewData> enemyViewData;
     private List<ProjectileViewData> projectileViewData;
+
+    // UI state
     private int hoverRow = -1;
     private int hoverCol = -1;
     private String selectedTower;
@@ -23,15 +25,12 @@ public class RenderingContext {
     public RenderingContext() {
         this.renderers = new ArrayList<>();
         this.enemyViewData = new ArrayList<>();
+        this.projectileViewData = new ArrayList<>();
     }
 
     public void addRenderer(IRenderer renderer) {
         renderers.add(renderer);
         renderers.sort(Comparator.comparingInt(IRenderer::getRenderPriority));
-    }
-
-    public void removeRenderer(IRenderer renderer) {
-        renderers.remove(renderer);
     }
 
     public void renderAll(Graphics2D g2) {
@@ -40,71 +39,56 @@ public class RenderingContext {
         }
     }
 
-    public void updateMapViewData(MapViewData mapViewData) {
+    public synchronized void updateMapViewData(MapViewData mapViewData) {
         this.mapViewData = mapViewData;
     }
 
-    public void updateEnemyViewData(List<EnemyViewData> enemyViewDataList) {
-        this.enemyViewData = new ArrayList<>(enemyViewDataList);
-    }
-
-    public void updateTowerViewData(TowerViewData towers) {
+    public synchronized void updateTowerViewData(TowerViewData towers) {
         this.towerViewData = towers;
     }
 
-    public void updateSelectedTower(int row, int col, Boolean placeable, String towerType) {
+    public synchronized void updateEnemyViewData(List<EnemyViewData> enemyViewDataList) {
+        this.enemyViewData = new ArrayList<>(enemyViewDataList);
+    }
+
+    public synchronized void updateProjectileViewData(List<ProjectileViewData> projectileViewDataList) {
+        this.projectileViewData = new ArrayList<>(projectileViewDataList);
+    }
+
+    public synchronized void updateSelectedTower(int row, int col, Boolean placeable, String towerType) {
         this.hoverRow = row;
         this.hoverCol = col;
         this.placeable = placeable;
         this.selectedTower = towerType;
     }
 
-    public void updateProjectileViewData(List<ProjectileViewData> projectileViewDataList) {
-        this.projectileViewData = new ArrayList<>(projectileViewDataList);
-    }
-
-    public void clearSelectedTower() {
+    public synchronized void clearSelectedTower() {
         this.hoverRow = -1;
         this.hoverCol = -1;
         this.placeable = null;
         this.selectedTower = null;
     }
 
-    public MapViewData getMapViewData() {
+    public synchronized MapViewData getMapViewData() {
         return mapViewData;
     }
 
-    public TowerViewData getTowerViewData() {
+    public synchronized TowerViewData getTowerViewData() {
         return towerViewData;
     }
 
-    public List<EnemyViewData> getEnemyViewData() {
+    public synchronized List<EnemyViewData> getEnemyViewData() {
         return enemyViewData;
     }
 
-    public List<ProjectileViewData> getProjectileViewData() {
+    public synchronized List<ProjectileViewData> getProjectileViewData() {
         return projectileViewData;
     }
 
-    public int getHoverRow() {
-        return hoverRow;
-    }
+    public synchronized int getHoverRow() { return hoverRow; }
+    public synchronized int getHoverCol() { return hoverCol; }
+    public synchronized String getSelectedTower(){ return selectedTower; }
+    public synchronized Boolean getPlaceable(){ return placeable; }
 
-    public int getHoverCol() {
-        return hoverCol;
-    }
-
-    public String getSelectedTower(){
-        return selectedTower;
-    }
-
-    public Boolean getPlaceable(){
-        return placeable;
-    }
-
-    public int getScale(){
-        return SCALE;
-    }
-
-
+    public int getScale(){ return SCALE; }
 }
