@@ -6,37 +6,47 @@ import td_game.model.modelnit.IGameLoop;
 import td_game.model.modelnit.PlayingState;
 import td_game.view.*;
 import td_game.view.constants.ViewTypes;
-import td_game.view.factory.ViewFactory;
+import td_game.view.helper.*;
 import td_game.view.panel.GamePanel;
 import td_game.view.panel.MenuPanel;
 import td_game.view.panel.WindowFrame;
+import td_game.view.render.RenderingContext;
+import td_game.view.render.RenderingContextFactory;
 
 public class AppController {
     public AppController(GameModel model, IGameLoop gameLoop,  int windowWidth, int windowHeight, int gameWidth, int gameHeight) {
 
-        ViewFactory viewFactory = new ViewFactory();
+        TileViewManager tileManager = new TileViewManager();
+        TowerViewManager towerManager = new TowerViewManager();
+        EnemyViewManager enemyManager = new EnemyViewManager();
+        ProjectileViewManager projectileManager = new ProjectileViewManager();
+
+        RenderingContext renderingContext = RenderingContextFactory.createRenderingContext(
+                tileManager,
+                towerManager,
+                enemyManager,
+                projectileManager
+        );
+
         WindowFrame windowFrame = new WindowFrame(windowWidth, windowHeight);
 
-        IView menuView = viewFactory.createView(ViewTypes.MENU_VIEW, windowWidth, windowHeight);
-        IView gameView = viewFactory.createView(ViewTypes.GAME_VIEW, gameWidth, gameHeight);
+        MenuPanel menuView = new MenuPanel(windowWidth, windowHeight);
+        GamePanel gameView = new GamePanel(gameWidth, gameHeight, renderingContext, towerManager);
 
-        windowFrame.addView(menuView.getViewPanel(), ViewTypes.MENU_VIEW);
-        windowFrame.addView(gameView.getViewPanel(), ViewTypes.GAME_VIEW);
 
-        if (menuView instanceof MenuPanel menu) {
-            menu.addPlayListener(e -> {
-                windowFrame.showView(ViewTypes.GAME_VIEW);
-                model.setGameState(new PlayingState(model));
-                gameLoop.start();
-            });
-            menu.addExitListener(e -> System.exit(0));
-        }
+        windowFrame.addView(menuView, ViewTypes.MENU_VIEW);
+        windowFrame.addView(gameView, ViewTypes.GAME_VIEW);
 
-        if (gameView instanceof GamePanel game) {
-            GameController gameController  = new GameController(model, game.getGameViewPanel());
-            ((GamePanel) gameView).addSideBarListener(gameController.getPlacementController());
+        menuView.addPlayListener(e -> {
+            windowFrame.showView(ViewTypes.GAME_VIEW);
+            model.setGameState(new PlayingState(model));
+            gameLoop.start();
+        });
 
-        }
+        menuView.addExitListener(e -> System.exit(0));
+
+        GameController gameController = new GameController(model, gameView.getGameViewPanel());
+        gameView.addSideBarListener(gameController.getPlacementController());
 
         windowFrame.showView(ViewTypes.MENU_VIEW);
         windowFrame.makeVisible();

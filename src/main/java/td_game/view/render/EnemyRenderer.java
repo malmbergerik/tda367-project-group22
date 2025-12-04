@@ -8,14 +8,13 @@ import java.awt.image.BufferedImage;
 
 import java.util.List;
 
-public class EnemyRenderer implements IRenderer {
+public class EnemyRenderer extends ABaseRenderer {
 
     private final EnemyViewManager enemyViewManager;
-    private final RenderingContext context;
 
     public EnemyRenderer(EnemyViewManager enemyViewManager, RenderingContext context) {
+        super(context);
         this.enemyViewManager = enemyViewManager;
-        this.context = context;
     }
 
     @Override
@@ -23,20 +22,12 @@ public class EnemyRenderer implements IRenderer {
         List<EnemyViewData> enemyViewData = context.getEnemyViewData();
         if (enemyViewData == null) return;
 
-        int scale = context.getScale();
 
-        for (EnemyViewData enemyData : enemyViewData) {
-            String name = enemyData.getEnemyName();
-            double x = enemyData.getEnemyX();
-            double y = enemyData.getEnemyY();
-
-            BufferedImage enemyImage = enemyViewManager.getEnemyImage(name);
-            System.out.println("Rendering enemy: " + name + " at (" + x + ", " + y + ")");
+        for (EnemyViewData data : enemyViewData) {
+            BufferedImage enemyImage = enemyViewManager.getEnemyImage(data.getEnemyName());
 
             if (enemyImage != null) {
-                int scaledX = (int) (x * scale) - 24;
-                int scaledY = (int) (y * scale) - 24;
-                g2.drawImage(enemyImage, scaledX, scaledY, 48, 48, null);
+                drawCenteredImage(g2, enemyImage, data.getEnemyX(), data.getEnemyY(), 16, 16);
             }
         }
 

@@ -6,15 +6,15 @@ import td_game.view.helper.TileViewManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class TileRenderer implements IRenderer{
+// Extend BaseRenderer!
+public class TileRenderer extends ABaseRenderer {
 
     private final TileViewManager tileViewManager;
-    private final RenderingContext context;
     private BufferedImage tileLayer;
 
     public TileRenderer(TileViewManager tileViewManager, RenderingContext context) {
+        super(context);
         this.tileViewManager = tileViewManager;
-        this.context = context;
     }
 
     @Override
@@ -25,14 +25,10 @@ public class TileRenderer implements IRenderer{
         if (tileLayer == null) {
             buildTileLayer(mapViewData);
         }
+
         if (tileLayer != null) {
             g2.drawImage(tileLayer, 0, 0, null);
         }
-    }
-
-    @Override
-    public int getRenderPriority() {
-        return 0;
     }
 
     private void buildTileLayer(MapViewData mapData) {
@@ -40,10 +36,9 @@ public class TileRenderer implements IRenderer{
         int tileSize = mapData.getTileSize();
         int rows = tileKeys.length;
         int cols = tileKeys[0].length;
-        int scale = context.getScale();
 
-        int width = cols * tileSize * scale;
-        int height = rows * tileSize * scale;
+        int width = scale(cols * tileSize);
+        int height = scale(rows * tileSize);
 
         tileLayer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = tileLayer.createGraphics();
@@ -52,10 +47,9 @@ public class TileRenderer implements IRenderer{
             for (int col = 0; col < cols; col++) {
                 String tileKey = tileKeys[row][col];
                 BufferedImage tileImage = tileViewManager.getTileImage(tileKey);
+
                 if (tileImage != null) {
-                    int screen_x = col * tileSize * scale;
-                    int screen_y = row * tileSize * scale;
-                    g2.drawImage(tileImage, screen_x, screen_y, tileSize * scale, tileSize * scale, null);
+                    drawAtTile(g2, tileImage, row, col, tileSize);
                 }
             }
         }
@@ -63,8 +57,8 @@ public class TileRenderer implements IRenderer{
         g2.dispose();
     }
 
-    public void invalidCache() {
-        this.tileLayer = null;
+    @Override
+    public int getRenderPriority() {
+        return 0; //
     }
-
 }

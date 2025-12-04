@@ -23,11 +23,6 @@ public class GameViewPanel extends JPanel {
         setDoubleBuffered(true);
     }
 
-    // Constructor for backwards compatibility
-    public GameViewPanel(int width, int height) {
-        this(width, height, RenderingContextFactory.createRenderingContext());
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
