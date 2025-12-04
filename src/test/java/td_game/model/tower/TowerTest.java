@@ -9,6 +9,7 @@ import td_game.model.path.Path;
 import td_game.model.path.Waypoint;
 import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
+import td_game.model.towers.GrassOnlyPlacementRule;
 import td_game.model.towers.Tower;
 import td_game.model.towers.TowerManager;
 
@@ -32,7 +33,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
+        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true),new GrassOnlyPlacementRule());
 
         double angle = manager.getAngleToEnemy(tower, enemy);
 
@@ -48,7 +49,7 @@ public class TowerTest {
         ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
         ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
+        Tower tower = new Tower(100,5,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true), new GrassOnlyPlacementRule());
 
         enemyList.add(enemy1);
 
@@ -65,7 +66,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
+        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true), new GrassOnlyPlacementRule());
 
         Assertions.assertEquals(5, manager.lenTooEnemy(tower, enemy));
     }
@@ -76,7 +77,7 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,0,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true));
+        Tower tower = new Tower(100,0,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true), new GrassOnlyPlacementRule());
 
         Assertions.assertEquals(5, manager.lenTooEnemy(tower, enemy));
     }

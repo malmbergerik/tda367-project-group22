@@ -7,14 +7,16 @@ import td_game.model.events.TileUpdateEvent;
 import td_game.model.events.TowersUpdateEvent;
 import td_game.model.map.GridMap;
 import td_game.model.map.MapLoader;
-import td_game.model.map.TileBase;
 import td_game.model.events.IGameObserver;
+import td_game.model.map.Tile;
 import td_game.model.map.TileFactory;
 import td_game.model.path.Path;
 import td_game.model.path.PathManager;
 
 import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileFactory;
+import td_game.model.towers.GrassOnlyPlacementRule;
+import td_game.model.towers.IPlacementRule;
 import td_game.model.towers.Tower;
 import td_game.model.towers.TowerManager;
 import td_game.model.projectile.ProjectileManager;
@@ -113,7 +115,7 @@ public class GameModel implements GameObservable,IUpdatable {
         }
     }
 
-    public void updateTile(int row, int col, TileBase tile){
+    public void updateTile(int row, int col, Tile tile){
         gridMap.setTile(row,col,tile);
         notifyObserver(new TileUpdateEvent());
     }
@@ -127,8 +129,9 @@ public class GameModel implements GameObservable,IUpdatable {
     public Boolean canBePlaced(int row, int col, String tower){
         //TODO Break this out so it is not dependent on creating new towers in check
         int tileSize = gridMap.getTileSize();
-        Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true));
-        return t.canBePlaced(gridMap.getTile(row,col));
+        Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true),new GrassOnlyPlacementRule());
+        IPlacementRule placementRule = t.getPlacementRule();
+        return placementRule.canBePlaced(gridMap.getTile(row, col));
     }
 
     public void placeTower(int row, int col, String tower){
@@ -143,7 +146,7 @@ public class GameModel implements GameObservable,IUpdatable {
         }
 
         int tileSize = gridMap.getTileSize();
-        Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true));
+        Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true), new GrassOnlyPlacementRule());
         placedTowerGrid[row][col] = t;
         addTower(t);
         notifyObserver(new TowersUpdateEvent());

@@ -1,7 +1,7 @@
 package td_game.model.towers;
 
-import td_game.model.map.TileBase;
+import td_game.model.map.Tile;
 
 public interface IPlacementRule {
-    boolean canBePlaced(TileBase tile);
+    boolean canBePlaced(Tile tile);
 }
