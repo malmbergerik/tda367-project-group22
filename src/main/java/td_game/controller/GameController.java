@@ -5,6 +5,9 @@ import td_game.model.modelnit.GameModel;
 import td_game.view.panel.GameViewPanel;
 import td_game.view.listener.IGameMouseListener;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class GameController implements IGameObserver {
     private final GameModel model;
     private final GameViewPanel view;
@@ -26,22 +29,26 @@ public class GameController implements IGameObserver {
     }
 
     private void initGameMouseListener() {
-        view.setGameMouseListener(new IGameMouseListener() {
+        MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
-            public void onMouseMoved(int posX, int posY) {
-                placementController.handleMouseMoved(posX,posY);
+            public void mouseMoved(MouseEvent e) {
+                placementController.handleMouseMoved(e.getX(),e.getY());
             }
 
             @Override
-            public void onMouseClicked(int posX, int posY) {
-                placementController.handleMouseClicked(posX,posY);
+            public void mouseClicked(MouseEvent e) {
+                placementController.handleMouseClicked(e.getX(),e.getY());
             }
 
             @Override
-            public void onMouseExit() {
+            public void mouseExited(MouseEvent e) {
                 placementController.handleMouseExit();
             }
-        });
+        };
+
+        view.addGameMouseListener(mouseAdapter);
+        view.addGameMouseMotionListener(mouseAdapter);
+
     }
 
     @Override

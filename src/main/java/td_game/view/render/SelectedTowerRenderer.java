@@ -6,14 +6,13 @@ import td_game.view.helper.TowerViewManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class SelectedTowerRenderer implements IRenderer {
+public class SelectedTowerRenderer extends ABaseRenderer {
 
     private final TowerViewManager towerViewManager;
-    private final RenderingContext context;
 
     public SelectedTowerRenderer(TowerViewManager towerViewManager, RenderingContext context) {
+        super(context);
         this.towerViewManager = towerViewManager;
-        this.context = context;
     }
 
     @Override
@@ -22,32 +21,25 @@ public class SelectedTowerRenderer implements IRenderer {
         int hoverRow = context.getHoverRow();
         int hoverCol = context.getHoverCol();
         Boolean placeable = context.getPlaceable();
-
-        if (selectedTower == null || hoverRow < 0 || hoverCol < 0) return;
-
-        BufferedImage towerIamge = towerViewManager.getTowerImage(selectedTower);
-        if (towerIamge == null) return;
-
         MapViewData mapViewData = context.getMapViewData();
-        if (mapViewData == null) return;
 
-        int tileSize = mapViewData.getTileSize();
-        int scale = context.getScale();
-        int screen_x = hoverCol * tileSize * scale;
-        int screen_y = hoverRow * tileSize * scale;
+        if (selectedTower == null || hoverRow < 0 || hoverCol < 0 || mapViewData == null) return;
+
+        BufferedImage towerImage = towerViewManager.getTowerImage(selectedTower);
+        if (towerImage == null) return;
 
         Composite originalComposite = g2.getComposite();
 
-        AlphaComposite alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-        g2.setComposite(alpha);
-        g2.drawImage(towerIamge, screen_x, screen_y, tileSize * scale, tileSize * scale, null);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+
+        drawAtTile(g2, towerImage, hoverRow, hoverCol, mapViewData.getTileSize());
 
         if (placeable != null){
             Color indicatorColor = placeable ?
                     new Color(0, 255, 0, 128) :  // Green for not placeable
                     new Color(255, 0, 0, 128); // Red for placeable
-            g2.setColor(indicatorColor);
-            g2.fillRect(screen_x, screen_y, tileSize * scale, tileSize * scale);
+
+            fillTile(g2, indicatorColor, hoverRow, hoverCol, mapViewData.getTileSize());
         }
 
         g2.setComposite(originalComposite);

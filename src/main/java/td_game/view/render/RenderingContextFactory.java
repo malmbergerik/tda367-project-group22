@@ -4,16 +4,14 @@ import td_game.view.helper.*;
 
 public class RenderingContextFactory {
 
-    public static RenderingContext createRenderingContext() {
+    public static RenderingContext createRenderingContext(
+            TileViewManager tileViewManager,
+            TowerViewManager towerViewManager,
+            EnemyViewManager enemyViewManager,
+            ProjectileViewManager projectileViewManager
+    ) {
 
         RenderingContext context = new RenderingContext();
-
-        TileViewManager tileViewManager = new TileViewManager();
-        TowerViewManager towerViewManager = new TowerViewManager();
-        EnemyViewManager enemyViewManager = new EnemyViewManager();
-        ProjectileViewManager projectileViewManager = new ProjectileViewManager();
-
-
 
         context.addRenderer(new TileRenderer(tileViewManager, context));
         context.addRenderer(new TowerRenderer(towerViewManager, context));

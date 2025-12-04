@@ -7,27 +7,28 @@ import td_game.model.projectile.Projectile;
 import td_game.model.towers.Tower;
 import td_game.view.helper.ProjectileViewData;
 import td_game.view.panel.GameViewPanel;
-import td_game.view.strategy.ViewUpdateManager;
 import td_game.view.helper.EnemyViewData;
 import td_game.view.helper.MapViewData;
 import td_game.view.helper.TowerViewData;
+import td_game.view.render.RenderingContext;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class GameUpdateController implements IGameUpdateController {
 
     private final GameModel model;
     private final GameViewPanel view;
-    private final ViewUpdateManager updateManager;
+    private final RenderingContext renderingContext;
+
     private final List<EnemyViewData> enemyList;
     private final List<ProjectileViewData> projectileList;
 
     public GameUpdateController(GameModel model, GameViewPanel view) {
         this.model = model;
         this.view = view;
-        this.updateManager = new ViewUpdateManager(view.getRenderingContext());
+        this.renderingContext = view.getRenderingContext();
+
         this.enemyList = new ArrayList<>();
         this.projectileList = new ArrayList<>();
     }
@@ -37,17 +38,18 @@ public class GameUpdateController implements IGameUpdateController {
         updateMapInView();
     }
 
+    @Override
     public void handleMovingObjectsUpdate() {
         updateMovingObjects();
     }
 
+    @Override
     public void handleProjectilesUpdate() {
         updateProjectiles();
     }
 
     public void handleTowersUpdate() {
         Tower[][] activeTowers = model.getPlacedTowerGrid();
-
         int rows = activeTowers.length;
         int cols = activeTowers[0].length;
         String[][] towerKeys = new String[rows][cols];
@@ -55,15 +57,12 @@ public class GameUpdateController implements IGameUpdateController {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 if (activeTowers[row][col] != null) {
-                    // Change to tower name/type
-                    towerKeys[row][col] = "Tower 1";
+                    towerKeys[row][col] = "Tower 1"; // TODO: change for activeTowers[row][col].getType() later
                 }
             }
         }
 
-        TowerViewData towerViewData = new TowerViewData(towerKeys);
-
-        updateManager.updateTowers(towerViewData);
+        renderingContext.updateTowerViewData(new TowerViewData(towerKeys));
         view.repaint();
     }
 
@@ -80,9 +79,7 @@ public class GameUpdateController implements IGameUpdateController {
             }
         }
 
-        MapViewData mapViewData = new MapViewData(tileKeys, tileSize);
-
-        updateManager.updateMap(mapViewData);
+        renderingContext.updateMapViewData(new MapViewData(tileKeys, tileSize));
         view.repaint();
     }
 
@@ -91,32 +88,22 @@ public class GameUpdateController implements IGameUpdateController {
         enemyList.clear();
 
         for (ABaseEnemy enemy : currentEnemies) {
-            double enemyX = enemy.getX();
-            double enemyY = enemy.getY();
-            String name = enemy.getName();
-            EnemyViewData enemyViewData = new EnemyViewData(name, enemyX, enemyY);
-            enemyList.add(enemyViewData);
+            enemyList.add(new EnemyViewData(enemy.getName(), enemy.getX(), enemy.getY()));
         }
 
-        updateManager.updateEnemies(enemyList);
+        renderingContext.updateEnemyViewData(enemyList);
         view.repaint();
     }
 
     private void updateProjectiles() {
-        List <Projectile> currentProjectiles = model.getActiveProjectiles();
+        List<Projectile> currentProjectiles = model.getActiveProjectiles();
         projectileList.clear();
 
         for (Projectile projectile : currentProjectiles) {
-            double projectileX = projectile.getX();
-            double projectileY = projectile.getY();
-            String name = projectile.getName();
-
-            ProjectileViewData projectileViewData = new ProjectileViewData(name, projectileX, projectileY);
-            projectileList.add(projectileViewData);
+            projectileList.add(new ProjectileViewData(projectile.getName(), projectile.getX(), projectile.getY()));
         }
 
-        updateManager.updateProjectiles(projectileList);
+        renderingContext.updateProjectileViewData(projectileList);
         view.repaint();
     }
-
 }
