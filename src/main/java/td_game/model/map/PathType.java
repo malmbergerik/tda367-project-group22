@@ -4,4 +4,5 @@ public enum PathType {
     START,
     NORMAL,
     END,
+    NONE,
 }

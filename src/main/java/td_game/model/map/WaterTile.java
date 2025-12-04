@@ -10,4 +10,8 @@ public class WaterTile extends TileBase{
     public boolean isTraversable() {
         return false;
     }
+
+    public PathType getPathRole() {
+        return PathType.NONE;
+    }
 }

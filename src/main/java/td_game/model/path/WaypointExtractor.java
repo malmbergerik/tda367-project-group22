@@ -1,7 +1,6 @@
 package td_game.model.path;
 
 import td_game.model.map.IMap;
-import td_game.model.map.PathTile;
 import td_game.model.map.PathType;
 import td_game.model.map.TileBase;
 
@@ -13,9 +12,11 @@ import java.util.List;
  * from START -> ... -> END.
  *
  * Assumptions:
- * - Path tiles implement isPathTile() == true
+ * - Path tiles implement isTraversable() == true
  * - Exactly one START and one END exist
  * - Path is a single connected non-branching sequence (4-neighbour connectivity)
+ * * NOTE: This implementation relies on IMap having getRow() and getCol() and
+ * TileBase having isTraversable() and getPathRole() methods.
  */
 public class WaypointExtractor {
 
@@ -25,8 +26,9 @@ public class WaypointExtractor {
      * @throws IllegalArgumentException if no path or malformed path found
      */
     public List<int[]> extractTilePath(IMap map) {
-        int rows = map instanceof td_game.model.map.GridMap ? ((td_game.model.map.GridMap) map).getRow() : map.getHeight() / map.getTileSize();
-        int cols = map instanceof td_game.model.map.GridMap ? ((td_game.model.map.GridMap) map).getCol() : map.getWidth() / map.getTileSize();
+        // CLEANER ABSTRACTION: Assuming IMap now has getRow/getCol (removed instanceof GridMap)
+        int rows = map.getRow();
+        int cols = map.getCol();
 
         // find start
         int startR = -1, startC = -1;
@@ -34,15 +36,11 @@ public class WaypointExtractor {
             for (int c = 0; c < cols; c++) {
                 TileBase tile = map.getTile(r, c);
 
-                // Use isPathTile() for the check
-                if (tile.isTraversable()) {
-                    // Safe cast is now possible if needed, but we check PathType directly
-                    PathTile pt = (PathTile) tile;
-                    if (pt.getPathType() == PathType.START) {
-                        startR = r;
-                        startC = c;
-                        break;
-                    }
+                // Use getPathRole() to find the starting point state
+                if (tile.getPathRole() == PathType.START) {
+                    startR = r;
+                    startC = c;
+                    break;
                 }
             }
             if (startR != -1) break;
@@ -66,8 +64,8 @@ public class WaypointExtractor {
             // check if current is END
             TileBase curTile = map.getTile(curR, curC);
 
-            // Check if current tile is END (requires checking isPathTile() first)
-            if (curTile.isTraversable() && ((PathTile) curTile).getPathType() == PathType.END) {
+            // Use getPathRole() to identify the END state
+            if (curTile.getPathRole() == PathType.END) {
                 reachedEnd = true;
                 break;
             }
@@ -88,15 +86,23 @@ public class WaypointExtractor {
 
                 TileBase t = map.getTile(nr, nc);
 
-                // Polymorphic check: Does the tile claim to be a path?
+                // Polymorphic check: Is the tile traversable by the entity?
                 if (t.isTraversable()) {
-                    // append and move
-                    visited[nr][nc] = true;
-                    ordered.add(new int[]{nr, nc});
-                    curR = nr;
-                    curC = nc;
-                    foundNext = true;
-                    break;
+                    // We must also ensure it's not a non-path traversable tile (like a river)
+                    // AND it must not be the START tile which has already been visited.
+                    // The simplest check for this specific sequential pathfinding is to ensure
+                    // it is either NORMAL or END.
+
+                    PathType role = t.getPathRole();
+                    if (role == PathType.NORMAL || role == PathType.END) {
+                        // append and move
+                        visited[nr][nc] = true;
+                        ordered.add(new int[]{nr, nc});
+                        curR = nr;
+                        curC = nc;
+                        foundNext = true;
+                        break;
+                    }
                 }
             }
 

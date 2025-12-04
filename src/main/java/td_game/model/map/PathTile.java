@@ -17,4 +17,8 @@ public class PathTile extends TileBase{
     public boolean isTraversable() {
         return true;
     }
+
+    public PathType getPathRole() {
+        return  pathType;
+    }
 }

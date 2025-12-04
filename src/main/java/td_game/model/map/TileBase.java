@@ -17,4 +17,6 @@ public abstract class TileBase {
      */
     public abstract boolean isTraversable();
 
+    public abstract PathType getPathRole();
+
 }
