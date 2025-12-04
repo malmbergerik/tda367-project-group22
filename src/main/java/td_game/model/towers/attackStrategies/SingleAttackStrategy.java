@@ -18,16 +18,16 @@ public class SingleAttackStrategy implements IAttackStrategy{
         this.projectileManager = projectileManager;
     }
 
-    @Override
-    public void attack(ATower tower, List<ABaseEnemy> targets) {
-        if(targets.isEmpty()) return;
 
-        ABaseEnemy enemy = targets.get(0);
+    public void attack(ATower tower, ABaseEnemy... targets) {
+        if(targets == null || targets.length ==0) return;
+
+        ABaseEnemy enemy = targets[0];
         Projectile projectile = projectileFactory.create(
                 Math.atan2(
                         enemy.getY() - tower.getY(),
                         enemy.getX() - tower.getX()
-                ),
+                )*(180/Math.PI),
                 tower.getX(),
                 tower.getY()
         );

@@ -6,8 +6,7 @@ import td_game.model.towers.ATower;
 import java.util.List;
 
 public interface IAttackStrategy {
-    void attack(ATower tower, List<ABaseEnemy> targets);
-    void attack(ATower tower, ABaseEnemy target);
+    void attack(ATower tower, ABaseEnemy... targets);
     int getProjectileAmount(ATower tower);
 
 }

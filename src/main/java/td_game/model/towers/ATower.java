@@ -8,13 +8,14 @@ import td_game.model.towers.rangeStrategies.IRangeStrategy;
 import td_game.model.towers.targetStrategy.ITargetStrategy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public abstract class ATower implements IPositionable, IPlacementRule {
 
     private int x;
     private int y;
-    private List<ABaseEnemy> enemiesInRange = new ArrayList<>();
+    protected List<ABaseEnemy> enemiesInRange = new ArrayList<>();
     protected IAttackStrategy attackStrategy;
     protected IRangeStrategy rangeStrategy;
     protected ICooldownStrategy cooldownStrategy;
@@ -58,7 +59,7 @@ public abstract class ATower implements IPositionable, IPlacementRule {
     @Override
     public abstract boolean canBePlaced(TileBase tile);
 
-    public void update(List<ABaseEnemy> activeEnemies){
+    public void update(Collection<ABaseEnemy> activeEnemies){
         enemiesInRange.clear();
         for(ABaseEnemy enemy : activeEnemies){
             if(rangeStrategy.isInRange(this, enemy.getX(), enemy.getY())){
@@ -68,10 +69,9 @@ public abstract class ATower implements IPositionable, IPlacementRule {
         cooldownStrategy.tick();
 
         if (cooldownStrategy.canShoot(cooldownStrategy.getCoolDownTicks(), this)){
-            attackStrategy.attack(this, targetStrategy.selectTarget(this, enemiesInRange));
+            targetStrategy.selectTarget(this, enemiesInRange)
+                    .ifPresent(target -> attackStrategy.attack(this,target));
             cooldownStrategy.reset();
-        } else {
-            cooldownStrategy.tick();
         }
 
     }

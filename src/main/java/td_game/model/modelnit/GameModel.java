@@ -16,6 +16,7 @@ import td_game.model.path.PathManager;
 import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileFactory;
 import td_game.model.towers.ATower;
+import td_game.model.towers.CanonTower;
 import td_game.model.towers.Tower;
 
 import td_game.model.towers.TowerManager;
@@ -41,13 +42,13 @@ public class GameModel implements GameObservable,IUpdatable {
     private Path currentPath;
     private List<ABaseEnemy> activeEnemies = new ArrayList<>();
     private List<Projectile> activeProjectiles = new ArrayList<>();
-    private List<Tower> activeTowers = new ArrayList<>();
+    private List<ATower> activeTowers = new ArrayList<>();
     private List<IGameObserver> observers = new ArrayList<>();
     private EnemyManager enemyManager;
     private TowerManager towerManager;
     private ProjectileManager projectileManager;
 
-    private Tower[][] placedTowerGrid;
+    private ATower[][] placedTowerGrid;
     /*
     Här vill vi ha listor för torn, enemies, pengar, spelaren...
 
@@ -71,7 +72,7 @@ public class GameModel implements GameObservable,IUpdatable {
 
         this.towerManager = new TowerManager( this);
         this.projectileManager = new ProjectileManager(this);
-        placedTowerGrid = new Tower[gridMap.getRow()][gridMap.getCol()];
+        placedTowerGrid = new ATower[gridMap.getRow()][gridMap.getCol()];
     }
 
     public Path getCurrentPath(){
@@ -129,7 +130,7 @@ public class GameModel implements GameObservable,IUpdatable {
     public Boolean canBePlaced(int row, int col, String tower){
         //TODO Break this out so it is not dependent on creating new towers in check
         int tileSize = gridMap.getTileSize();
-        Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true));
+        ATower t = new CanonTower(col *tileSize, row * tileSize, projectileManager);
         return t.canBePlaced(gridMap.getTile(row,col));
     }
 
@@ -145,13 +146,13 @@ public class GameModel implements GameObservable,IUpdatable {
         }
 
         int tileSize = gridMap.getTileSize();
-        Tower t = new Tower(320,col*tileSize,row*tileSize,30,1, new ProjectileFactory(1,8,8,1,1,60,true));
+        ATower t = new CanonTower(col *tileSize, row * tileSize,projectileManager);
         placedTowerGrid[row][col] = t;
         addTower(t);
         notifyObserver(new TowersUpdateEvent());
     }
 
-    public Tower[][] getPlacedTowerGrid(){
+    public ATower[][] getPlacedTowerGrid(){
         return placedTowerGrid;
     }
 
