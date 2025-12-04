@@ -15,13 +15,13 @@ public class PathTest {
 
     /**
      * Helper: create a GridMap pre-filled with non-path TileBase instances
-     * (GrassTile) so the extractor won't see nulls.
+     * (GrassTile). This requires GrassTile to implement isTraversable() and getPathRole().
      */
     private GridMap makeEmptyMap(int rows, int cols) {
         GridMap map = new GridMap(rows, cols, TILE_SIZE);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                // GrassTile must now correctly implement isPathTile() == false
+                // Skapar GrassTile som har isTraversable() == false och getPathRole() == NONE
                 map.setTile(r, c, new GrassTile());
             }
         }
