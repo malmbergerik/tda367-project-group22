@@ -15,6 +15,6 @@ public abstract class TileBase {
      * Determines if this tile is intended to be part of the path route.
      * Replaces the need for "instanceof PathTile".
      */
-    public abstract boolean isPathTile();
+    public abstract boolean isTraversable();
 
 }

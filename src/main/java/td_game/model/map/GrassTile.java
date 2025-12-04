@@ -7,7 +7,7 @@ public class GrassTile extends TileBase{
     }
 
     @Override
-    public boolean isPathTile(){
+    public boolean isTraversable(){
         return false; // Not part of the path route
     }
 }

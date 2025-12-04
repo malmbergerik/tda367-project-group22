@@ -35,7 +35,7 @@ public class WaypointExtractor {
                 TileBase tile = map.getTile(r, c);
 
                 // Use isPathTile() for the check
-                if (tile.isPathTile()) {
+                if (tile.isTraversable()) {
                     // Safe cast is now possible if needed, but we check PathType directly
                     PathTile pt = (PathTile) tile;
                     if (pt.getPathType() == PathType.START) {
@@ -67,7 +67,7 @@ public class WaypointExtractor {
             TileBase curTile = map.getTile(curR, curC);
 
             // Check if current tile is END (requires checking isPathTile() first)
-            if (curTile.isPathTile() && ((PathTile) curTile).getPathType() == PathType.END) {
+            if (curTile.isTraversable() && ((PathTile) curTile).getPathType() == PathType.END) {
                 reachedEnd = true;
                 break;
             }
@@ -89,7 +89,7 @@ public class WaypointExtractor {
                 TileBase t = map.getTile(nr, nc);
 
                 // Polymorphic check: Does the tile claim to be a path?
-                if (t.isPathTile()) {
+                if (t.isTraversable()) {
                     // append and move
                     visited[nr][nc] = true;
                     ordered.add(new int[]{nr, nc});

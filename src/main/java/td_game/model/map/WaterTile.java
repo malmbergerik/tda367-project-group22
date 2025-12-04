@@ -7,7 +7,7 @@ public class WaterTile extends TileBase{
     }
 
     @Override
-    public boolean isPathTile() {
+    public boolean isTraversable() {
         return false;
     }
 }

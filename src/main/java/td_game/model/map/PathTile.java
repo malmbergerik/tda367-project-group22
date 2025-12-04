@@ -14,7 +14,7 @@ public class PathTile extends TileBase{
     }
 
     @Override
-    public boolean isPathTile() {
+    public boolean isTraversable() {
         return true;
     }
 }
