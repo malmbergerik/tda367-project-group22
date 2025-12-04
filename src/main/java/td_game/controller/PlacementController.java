@@ -45,6 +45,8 @@ public class PlacementController implements IPlacementController, ITowerPlacemen
 
         if (selectedTower != null) {
             model.placeTower(row, col, selectedTower);
+            selectedTower = null;
+            updateManager.clearSelectedTower();
             System.out.println("Placed tower at x:" + col + " and y:" + row + " - " + selectedTower);
         }
 
