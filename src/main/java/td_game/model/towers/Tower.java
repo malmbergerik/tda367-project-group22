@@ -1,13 +1,11 @@
 package td_game.model.towers;
 import td_game.model.enemy.ABaseEnemy;
-import td_game.model.map.GrassTile;
-import td_game.model.map.TileBase;
 import td_game.model.projectile.ProjectileFactory;
-import td_game.model.projectile.ProjectileManager;
+import td_game.model.towers.placementRules.IPlacementRule;
 
 import java.util.ArrayList;
 
-public class Tower implements IPlacementRule{
+public class Tower{
     private int cooldownTicks; //Ticks
     private int x;
     private int y;
@@ -16,8 +14,9 @@ public class Tower implements IPlacementRule{
     private int attackCooldownCounter;
     private ArrayList<ABaseEnemy> enemyInRange = new ArrayList<>();
     private ProjectileFactory projectileFactory;
+    private IPlacementRule placementRule;
 
-    public Tower(int cooldownTicks, int x, int y, int attackRange, int projectileAmount, ProjectileFactory  projectileFactory){
+    public Tower(int cooldownTicks, int x, int y, int attackRange, int projectileAmount, ProjectileFactory  projectileFactory, IPlacementRule placementRule){
         this.cooldownTicks = cooldownTicks;
         this.x = x;
         this.y = y;
@@ -25,6 +24,7 @@ public class Tower implements IPlacementRule{
         this.projectileAmount = projectileAmount;
         this.attackCooldownCounter = 0;
         this.projectileFactory = projectileFactory;
+        this.placementRule = placementRule;
     }
     public void setPos(int positionY, int positionX)
     {
@@ -68,8 +68,5 @@ public class Tower implements IPlacementRule{
 
     public ProjectileFactory getProjectileFactory() { return projectileFactory; }
 
-    @Override
-    public boolean canBePlaced(TileBase tile) {
-        return (tile instanceof GrassTile);
-    }
+    public IPlacementRule getPlacementRule() {return placementRule;}
 }

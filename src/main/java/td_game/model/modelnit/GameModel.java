@@ -7,7 +7,7 @@ import td_game.model.events.TileUpdateEvent;
 import td_game.model.events.TowersUpdateEvent;
 import td_game.model.map.GridMap;
 import td_game.model.map.MapLoader;
-import td_game.model.map.TileBase;
+import td_game.model.map.Tile;
 import td_game.model.events.IGameObserver;
 import td_game.model.map.TileFactory;
 import td_game.model.path.Path;
@@ -115,7 +115,7 @@ public class GameModel implements GameObservable,IUpdatable {
         }
     }
 
-    public void updateTile(int row, int col, TileBase tile){
+    public void updateTile(int row, int col, Tile tile){
         gridMap.setTile(row,col,tile);
         notifyObserver(new TileUpdateEvent());
     }

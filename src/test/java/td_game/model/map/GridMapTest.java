@@ -31,7 +31,7 @@ class GridMapTest {
     @Test
     void getMap() {
         GridMap gridMap = new GridMap(10,12,16);
-        TileBase[][] map = gridMap.getMap();
+        Tile[][] map = gridMap.getMap();
         assertNotNull(map);
         assertEquals(10, map.length);
         assertEquals(12, map[0].length);
@@ -40,14 +40,14 @@ class GridMapTest {
     @Test
     void setAndGetTile() {
         GridMap gridMap = new GridMap(10,12,16);
-        TileBase tileBase = new GrassTile();
+        Tile tileBase = new Tile("Grass");
         gridMap.setTile(9,9, tileBase);
         assertEquals(tileBase, gridMap.getTile(9,9));
     }
     @Test
     void setTileOutOfBounce() {
         GridMap gridMap = new GridMap(10,12,16);
-        TileBase tileBase = new GrassTile();
+        Tile tileBase = new Tile("Grass");
         assertThrows(IndexOutOfBoundsException.class,() ->
                 { gridMap.setTile(13,13, tileBase);
                 });

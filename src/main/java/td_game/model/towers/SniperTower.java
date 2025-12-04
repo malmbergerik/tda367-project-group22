@@ -1,12 +1,12 @@
 package td_game.model.towers;
 
 import td_game.model.enemy.ABaseEnemy;
-import td_game.model.map.GrassTile;
-import td_game.model.map.TileBase;
+import td_game.model.map.Tile;
 import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.attackStrategies.SingleAttackStrategy;
 import td_game.model.towers.cooldownStrategies.BasicCooldownStrategy;
+import td_game.model.towers.placementRules.GrassOnlyPlacementRule;
 import td_game.model.towers.rangeStrategies.NormalCircularRangeStrategy;
 import td_game.model.towers.targetStrategy.TargetingFirst;
 
@@ -23,12 +23,14 @@ public class SniperTower extends ATower{
                 ),
                 new NormalCircularRangeStrategy(200),
                 new BasicCooldownStrategy(400),
-                new TargetingFirst());
+                new TargetingFirst(),
+                new GrassOnlyPlacementRule());
     }
 
+
     @Override
-    public boolean canBePlaced(TileBase tile) {
-        return (tile instanceof GrassTile);
+    public boolean canBePlaced(Tile tile) {
+        return placementRule.canBePlaced(tile);
     }
 
     public void update(Collection<ABaseEnemy> activeEnemies){
