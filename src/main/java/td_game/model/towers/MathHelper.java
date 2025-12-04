@@ -13,8 +13,8 @@ public class MathHelper {
 
     // Beräknar vinkel till målet i grader
     public static double getAngleToTarget(ATower source, ABaseEnemy target) {
-        double dx = target.getX() - source.getX();
-        double dy = target.getY() - source.getY();
-        return Math.toDegrees(Math.atan2(dy, dx));
+        double dx = (target.getX() - target.getWidth() / 2.0) - source.getX() - 16/ 2.0;
+        double dy = (target.getY() - target.getHeight() / 2.0) - source.getY() - 16 /2.0;
+        return Math.atan2(dy, dx)*(180/Math.PI);
     }
 }

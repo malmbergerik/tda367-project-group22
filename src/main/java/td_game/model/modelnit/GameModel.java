@@ -25,6 +25,7 @@ import td_game.model.projectile.ProjectileManager;
 import td_game.model.enemy.EnemyFactory;
 import td_game.model.enemy.Skeleton;
 import td_game.model.enemy.Slime;
+import td_game.model.towers.factory.TowerFactory;
 
 
 import java.util.ArrayList;
@@ -35,28 +36,24 @@ public class GameModel implements GameObservable,IUpdatable {
 
 
     private final GridMap gridMap;
-    private int x;
-    private int y;
     private IGameState currentState;
     private final PathManager pathManager;
     private Path currentPath;
+
+    // Enteties
     private List<ABaseEnemy> activeEnemies = new ArrayList<>();
     private List<Projectile> activeProjectiles = new ArrayList<>();
     private List<ATower> activeTowers = new ArrayList<>();
-    private List<IGameObserver> observers = new ArrayList<>();
+
+    // Managers
     private EnemyManager enemyManager;
     private TowerManager towerManager;
     private ProjectileManager projectileManager;
+    private TowerFactory towerFactory;
 
+    private List<IGameObserver> observers = new ArrayList<>();
     private ATower[][] placedTowerGrid;
-    /*
-    Här vill vi ha listor för torn, enemies, pengar, spelaren...
 
-    private List<ABaseEnemy> activeEnemies = new ArrayList<>();
-    private List<Tower> placedTowers = new ArrayList<>();
-    private List<Projectiles> activeProjectiles = new ArrayList<>();
-
-     */
     public GameModel( int tileSize){
         TileFactory tileFactory = new TileFactory();
         MapLoader mapLoader = new MapLoader(tileFactory);
@@ -72,6 +69,8 @@ public class GameModel implements GameObservable,IUpdatable {
 
         this.towerManager = new TowerManager( this);
         this.projectileManager = new ProjectileManager(this);
+        this.towerFactory = new TowerFactory(projectileManager);
+
         placedTowerGrid = new ATower[gridMap.getRow()][gridMap.getCol()];
     }
 
@@ -128,9 +127,14 @@ public class GameModel implements GameObservable,IUpdatable {
     }
 
     public Boolean canBePlaced(int row, int col, String tower){
-        //TODO Break this out so it is not dependent on creating new towers in check
+
+        if (!towerFactory.isValidTower(tower)) return false;
+
         int tileSize = gridMap.getTileSize();
-        ATower t = new CanonTower(col *tileSize, row * tileSize, projectileManager);
+
+        ATower t = towerFactory.createTower(tower, col * tileSize, row * tileSize);
+
+        if (t == null) return false;
         return t.canBePlaced(gridMap.getTile(row,col));
     }
 
@@ -146,10 +150,15 @@ public class GameModel implements GameObservable,IUpdatable {
         }
 
         int tileSize = gridMap.getTileSize();
-        ATower t = new CanonTower(col *tileSize, row * tileSize,projectileManager);
-        placedTowerGrid[row][col] = t;
-        addTower(t);
-        notifyObserver(new TowersUpdateEvent());
+
+        ATower t = towerFactory.createTower(tower, col * tileSize, row * tileSize);
+
+        if (t != null) {
+            placedTowerGrid[row][col] = t;
+            addTower(t);
+            notifyObserver(new TowersUpdateEvent());
+        }
+
     }
 
     public ATower[][] getPlacedTowerGrid(){

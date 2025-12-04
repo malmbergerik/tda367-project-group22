@@ -5,6 +5,7 @@ import td_game.model.projectile.IProjectileFactory;
 import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.ATower;
+import td_game.model.towers.MathHelper;
 
 import java.util.List;
 
@@ -23,16 +24,15 @@ public class SingleAttackStrategy implements IAttackStrategy{
         if(targets == null || targets.length ==0) return;
 
         ABaseEnemy enemy = targets[0];
-        Projectile projectile = projectileFactory.create(
-                Math.atan2(
-                        enemy.getY() - tower.getY(),
-                        enemy.getX() - tower.getX()
-                )*(180/Math.PI),
-                tower.getX(),
-                tower.getY()
-        );
+        for (int i = 0; i < getProjectileAmount(tower); i++) {
+            Projectile projectile = projectileFactory.create(
+                    MathHelper.getAngleToTarget(tower, enemy),
+                    tower.getX(),
+                    tower.getY()
+            );
+            projectileManager.addProjectile(projectile);
+        }
 
-        projectileManager.addProjectile(projectile);
     }
 
     @Override

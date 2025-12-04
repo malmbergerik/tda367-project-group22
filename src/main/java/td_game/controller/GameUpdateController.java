@@ -58,7 +58,7 @@ public class GameUpdateController implements IGameUpdateController {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 if (activeTowers[row][col] != null) {
-                    towerKeys[row][col] = "Tower 1"; // TODO: change for activeTowers[row][col].getType() later
+                    towerKeys[row][col] = activeTowers[row][col].getName();// TODO: change for activeTowers[row][col].getType() later
                 }
             }
         }

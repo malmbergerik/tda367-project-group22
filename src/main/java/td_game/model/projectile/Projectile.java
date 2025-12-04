@@ -30,8 +30,8 @@ public class Projectile {
         this.pierce = pierce;
         this.timeAliveTicks = timeAliveTicks;
         this.angle = angle;
-        this.x = x;
-        this.y = y;
+        this.x = x + 16 / 2; // TODO: Make this cleaner, spawn projectiles in center of tile.
+        this.y = y + 16 / 2; // TODO: Make this cleaner, spawn projectiles in center of tile.
 
         this.hitBoxRound = hitBoxRound;
     }

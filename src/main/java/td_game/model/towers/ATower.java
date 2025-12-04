@@ -75,4 +75,5 @@ public abstract class ATower implements IPositionable, IPlacementRule {
         }
 
     }
+
 }

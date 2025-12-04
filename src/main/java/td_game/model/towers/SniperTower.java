@@ -3,32 +3,26 @@ package td_game.model.towers;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.map.GrassTile;
 import td_game.model.map.TileBase;
-import td_game.model.projectile.IProjectileFactory;
 import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
-import td_game.model.towers.attackStrategies.IAttackStrategy;
 import td_game.model.towers.attackStrategies.SingleAttackStrategy;
 import td_game.model.towers.cooldownStrategies.BasicCooldownStrategy;
-import td_game.model.towers.cooldownStrategies.ICooldownStrategy;
-import td_game.model.towers.rangeStrategies.IRangeStrategy;
 import td_game.model.towers.rangeStrategies.NormalCircularRangeStrategy;
-import td_game.model.towers.targetStrategy.ITargetStrategy;
 import td_game.model.towers.targetStrategy.TargetingFirst;
 
 import java.util.Collection;
-import java.util.List;
 
-public class CanonTower extends ATower{
+public class SniperTower extends ATower{
 
-    public CanonTower(int x, int y,ProjectileManager projectileManager)
+    public SniperTower(int x, int y, ProjectileManager projectileManager)
     {
         super(x,y,
                 new SingleAttackStrategy(
-                        new ProjectileFactory(2,4,4,1,3,400,true),
+                        new ProjectileFactory(6,4,4,1,1,400,true),
                         projectileManager
                 ),
-                new NormalCircularRangeStrategy(80),
-                new BasicCooldownStrategy(50),
+                new NormalCircularRangeStrategy(200),
+                new BasicCooldownStrategy(400),
                 new TargetingFirst());
     }
 
@@ -53,6 +47,4 @@ public class CanonTower extends ATower{
         }
 
     }
-
-
 }
