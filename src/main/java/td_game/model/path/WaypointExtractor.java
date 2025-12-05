@@ -2,6 +2,7 @@ package td_game.model.path;
 
 import td_game.model.map.IMap;
 import td_game.model.map.Tile;
+import td_game.model.map.tileSpecfication.ITileSpecification;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,7 +31,7 @@ public class WaypointExtractor {
             {0, -1}, //left
             {0, 1}   //right
     };
-    public List<int[]> extractTilePath(IMap map) {
+    public List<int[]> extractTilePath(IMap map, ITileSpecification tileSpecification) {
         int rows = map instanceof td_game.model.map.GridMap ? ((td_game.model.map.GridMap) map).getRow() : map.getHeight() / map.getTileSize();
         int cols = map instanceof td_game.model.map.GridMap ? ((td_game.model.map.GridMap) map).getCol() : map.getWidth() / map.getTileSize();
 
@@ -40,9 +41,9 @@ public class WaypointExtractor {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 Tile tile = map.getTile(r, c);
-                if (tile.getType() != "Path") continue;
+                if(!tileSpecification.isSatisfiedBy(tile)) continue;
 
-                int deg = countPathNeightbours(map, r, c,rows,cols);
+                int deg = countPathNeightbours(map, r, c,rows,cols, tileSpecification);
                 if (deg == 1){
                     endpoints.add(new int[]{r,c});
                 }
@@ -81,7 +82,7 @@ public class WaypointExtractor {
                 if(visited[nr][nc]) continue;
 
                 Tile neighbourTile = map.getTile(nr, nc);
-                if(neighbourTile.getType() == "Path"){
+                if(tileSpecification.isSatisfiedBy(neighbourTile)){
                     visited[nr][nc] = true;
                     ordered.add(new int[]{nr,nc});
                     curR = nr;
@@ -96,7 +97,7 @@ public class WaypointExtractor {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 Tile t = map.getTile(r, c);
-                if ("Path".equals(t.getType()) && !visited[r][c]) {
+                if (tileSpecification.isSatisfiedBy(t) && !visited[r][c]) {
                     throw new IllegalArgumentException(
                             "Path terminated unexpectedly: unreachable tile at (" + r + "," + c + ")"
                     );
@@ -108,7 +109,7 @@ public class WaypointExtractor {
 
     }
 
-    private int countPathNeightbours(IMap map, int r, int c, int rows, int cols) {
+    private int countPathNeightbours(IMap map, int r, int c, int rows, int cols, ITileSpecification tileSpecification) {
         int count = 0;
         for(int[] d : DIRS){
             int nr = r + d[0];
@@ -118,7 +119,7 @@ public class WaypointExtractor {
             if(nc<0 || nc >= cols) continue;
 
             Tile t = map.getTile(nr,nc);
-            if(t.getType() == "Path") {
+            if(tileSpecification.isSatisfiedBy(t)) {
                 count++;
             }
         }
