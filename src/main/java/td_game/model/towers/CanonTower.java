@@ -11,6 +11,7 @@ import td_game.model.towers.rangeStrategies.NormalCircularRangeStrategy;
 import td_game.model.towers.targetStrategy.TargetingFirst;
 
 import java.util.Collection;
+import java.util.List;
 
 public class CanonTower extends ATower{
 
@@ -50,4 +51,7 @@ public class CanonTower extends ATower{
     }
 
 
+    public List<ABaseEnemy> getEnemiesInRage() {
+        return enemiesInRange;
+    }
 }

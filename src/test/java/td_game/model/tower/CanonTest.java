@@ -8,6 +8,9 @@ import td_game.model.modelnit.GameModel;
 import td_game.model.path.Path;
 import td_game.model.path.Waypoint;
 import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.ProjectileManager;
+import td_game.model.towers.ATower;
+import td_game.model.towers.CanonTower;
 import td_game.model.towers.placementRules.GrassOnlyPlacementRule;
 import td_game.model.towers.Tower;
 import td_game.model.towers.TowerManager;
@@ -15,29 +18,18 @@ import td_game.model.towers.TowerManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TowerTest {
+public class CanonTest {
 
     private GameModel gameModel;
     private TowerManager manager;
-
+    private ProjectileManager projectileManager;
     @BeforeEach
     public void setup() {
         gameModel = new GameModel(32);
+        projectileManager = new ProjectileManager(gameModel);
         manager = new TowerManager( gameModel);
     }
 
-    @org.junit.jupiter.api.Test
-    public void testAngleAtEnemy()
-    {
-        List<Waypoint> pathList = new ArrayList<>();
-        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
-
-        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true),new GrassOnlyPlacementRule());
-
-        double angle = manager.getAngleToEnemy(tower, enemy);
-
-        Assertions.assertEquals(180, angle);
-    }
 
     @org.junit.jupiter.api.Test
     public void testEnemyInRange()
@@ -48,15 +40,15 @@ public class TowerTest {
         ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
         ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true), new GrassOnlyPlacementRule());
+        CanonTower tower = new CanonTower(1,1,projectileManager);
 
         enemyList.add(enemy1);
-
-        Assertions.assertEquals(1, manager.getEnemyInRangeInOrder(tower, enemyList).size());
+        tower.update(enemyList);
+        Assertions.assertEquals(1, tower.getEnemiesInRage().size(), "Tower should have one enemy in range");
 
         enemyList.add(enemy2);
-
-        Assertions.assertEquals(2, manager.getEnemyInRangeInOrder(tower, enemyList).size());
+        tower.update(enemyList);
+        Assertions.assertEquals(2, tower.getEnemiesInRage().size(), "Tower should have two enemies in range");
     }
 
     @org.junit.jupiter.api.Test
@@ -65,9 +57,9 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,5,0,10,3,new ProjectileFactory(2,10,10,5,3,50, true), new GrassOnlyPlacementRule());
+        ATower tower = new CanonTower(5,0,projectileManager);
 
-        Assertions.assertEquals(5, manager.lenTooEnemy(tower, enemy));
+        Assertions.assertEquals(5, tower.getX()-enemy.getX());
     }
 
     @org.junit.jupiter.api.Test
@@ -76,8 +68,8 @@ public class TowerTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
 
-        Tower tower = new Tower(100,0,5,10,3,new ProjectileFactory(2,10,10,5,3,50, true), new GrassOnlyPlacementRule());
+        ATower tower = new CanonTower(0,5,projectileManager);
 
-        Assertions.assertEquals(5, manager.lenTooEnemy(tower, enemy));
+        Assertions.assertEquals(5, tower.getY() - enemy.getY());
     }
 }
