@@ -2,6 +2,7 @@ package td_game.model.path;
 
 import org.junit.jupiter.api.Test;
 import td_game.model.map.*; // Import all map dependencies
+import td_game.model.map.tileSpecfication.PathSpecification;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class PathTest {
         map.setTile(0, 4, new Tile("Path"));
 
         WaypointExtractor extractor = new WaypointExtractor();
-        List<int[]> tilePath = extractor.extractTilePath(map);
+        List<int[]> tilePath = extractor.extractTilePath(map, new PathSpecification());
 
         assertEquals(5, tilePath.size(), "Expected five tiles in the linear path (S, N, N, N, E)");
         assertArrayEquals(new int[]{0, 0}, tilePath.get(0), "Start must be at (0, 0)");
@@ -57,7 +58,7 @@ public class PathTest {
         map.setTile(2, 2, new Tile("Path"));
 
         WaypointExtractor extractor = new WaypointExtractor();
-        List<int[]> tilePath = extractor.extractTilePath(map);
+        List<int[]> tilePath = extractor.extractTilePath(map, new PathSpecification());
 
         assertEquals(3, tilePath.size(), "Expected three tiles in the path with one turn");
         assertArrayEquals(new int[]{1, 1}, tilePath.get(0));
@@ -71,7 +72,7 @@ public class PathTest {
         map.setTile(0, 0, new Tile("Path"));
 
         WaypointExtractor extractor = new WaypointExtractor();
-        assertThrows(IllegalArgumentException.class, () -> extractor.extractTilePath(map),
+        assertThrows(IllegalArgumentException.class, () -> extractor.extractTilePath(map, new PathSpecification()),
                 "Should throw if no START tile is found.");
     }
 
@@ -84,7 +85,7 @@ public class PathTest {
         map.setTile(2, 2, new Tile("Path")); // END is present but unreachable
 
         WaypointExtractor extractor = new WaypointExtractor();
-        assertThrows(IllegalArgumentException.class, () -> extractor.extractTilePath(map),
+        assertThrows(IllegalArgumentException.class, () -> extractor.extractTilePath(map, new PathSpecification()),
                 "Should throw if the path terminates unexpectedly (dead end).");
     }
 
