@@ -1,7 +1,6 @@
 package td_game.model.modelnit;
 
-import td_game.model.enemy.ABaseEnemy;
-import td_game.model.enemy.EnemyManager;
+import td_game.model.enemy.*;
 import td_game.model.events.IGameEvent;
 import td_game.model.events.TileUpdateEvent;
 import td_game.model.events.TowersUpdateEvent;
@@ -22,9 +21,6 @@ import td_game.model.towers.Tower;
 import td_game.model.towers.TowerManager;
 import td_game.model.projectile.ProjectileManager;
 
-import td_game.model.enemy.EnemyFactory;
-import td_game.model.enemy.Skeleton;
-import td_game.model.enemy.Slime;
 import td_game.model.towers.factory.TowerFactory;
 
 
@@ -40,7 +36,7 @@ public class GameModel implements GameObservable,IUpdatable {
     private final PathManager pathManager;
     private Path currentPath;
 
-    // Enteties
+    // Entities
     private List<ABaseEnemy> activeEnemies = new ArrayList<>();
     private List<Projectile> activeProjectiles = new ArrayList<>();
     private List<ATower> activeTowers = new ArrayList<>();
@@ -65,8 +61,10 @@ public class GameModel implements GameObservable,IUpdatable {
         EnemyFactory enemyFactory = new EnemyFactory();
         enemyFactory.registerFactory("Slime", Slime::new);
         enemyFactory.registerFactory("Skeleton", Skeleton::new);
-        this.enemyManager = new EnemyManager(this, enemyFactory);
+        enemyFactory.registerFactory("Golem", Golem::new);
+        enemyFactory.registerFactory("Bat", Bat::new);
 
+        this.enemyManager = new EnemyManager(this, enemyFactory);
         this.towerManager = new TowerManager( this);
         this.projectileManager = new ProjectileManager(this);
         this.towerFactory = new TowerFactory(projectileManager);
