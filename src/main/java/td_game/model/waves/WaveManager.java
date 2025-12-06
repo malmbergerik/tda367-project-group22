@@ -11,9 +11,9 @@ import java.util.Queue;
 public class WaveManager {
     private final EnemyManager enemyManager;
     private final EnemyFactory enemyFactory;
-    private final Path path; // Beroende injiceras direkt (Löser Law of Demeter)
+    private final Path path;
 
-    private Queue<Wave> allWaves; // Data injiceras
+    private Queue<Wave> allWaves;
 
     private Wave currentWave;
     private Queue<WaveGroup> groupsInCurrentWave;
@@ -28,21 +28,16 @@ public class WaveManager {
     private long lastSpawnTime;
     private int enemiesSpawnedInCurrentGroup = 0;
 
-    // ÄNDRING: Tar emot Queue<Wave> och Path i konstruktorn
     public WaveManager(EnemyManager manager, EnemyFactory enemyFactory, Queue<Wave> waves, Path path) {
         this.enemyManager = manager;
         this.enemyFactory = enemyFactory;
         this.allWaves = waves;
         this.path = path;
 
-        // Initialisera tillstånd men starta inte logik här
         this.currentWave = null;
         this.groupsInCurrentWave = null;
         this.currentGroup = null;
     }
-
-    // Metoden reset() behövs kanske inte längre om GameModel skapar en ny WaveManager vid omstart,
-    // men om den finns kvar ska den inte ladda filer själv.
 
     public void startNextWave() {
         if (allWaves.isEmpty()) {
@@ -51,7 +46,6 @@ public class WaveManager {
         currentWave = allWaves.poll();
         groupsInCurrentWave = new LinkedList<>(currentWave.getGroups());
 
-        // Här kan du använda ditt nya LogEvent istället för sysout
         System.out.println("Starting Wave " + currentWave.getWaveNumber());
 
         startNextGroup();
@@ -89,7 +83,6 @@ public class WaveManager {
 
         String enemyName = currentGroup.getEnemyType();
 
-        // ÄNDRING: Använder den injicerade 'path' variabeln direkt
         ABaseEnemy enemy = enemyFactory.createEnemy(enemyName, 1, 0.2, this.path);
 
         enemyManager.addEnemy(enemy);
@@ -99,8 +92,6 @@ public class WaveManager {
             startNextGroup();
         }
     }
-
-    // ... (resten av metoderna som startNextGroup, isWaveComplete osv är oförändrade)
 
     private void startNextGroup() {
         if (groupsInCurrentWave.isEmpty()) {
@@ -117,8 +108,16 @@ public class WaveManager {
     }
 
     public boolean isWaveComplete() {
-        // Notera: Vi kollar inte enemyManager här för att undvika cirkulärt beroende om möjligt,
-        // men för nuvarande logik är det okej då vi har referensen.
         return allEnemiesSpawned;
+    }
+
+    // --- DESSA METODER SAKNADES ---
+
+    public boolean isWaveActive() {
+        return waveActive;
+    }
+
+    public int getCurrentWave() {
+        return currentWave != null ? currentWave.getWaveNumber() : 0;
     }
 }
