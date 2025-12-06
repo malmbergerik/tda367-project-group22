@@ -70,43 +70,67 @@ public class WaveManager {
     }
 
     public void update() {
-        if (!waveActive || allEnemiesSpawned) {
-            return;
-        }
+        // If inactive or finished spawning, do nothing
+        if (!waveActive || allEnemiesSpawned || currentGroup == null) return;
 
-        long currentTime = System.nanoTime();
-        double dt = (currentTime - lastSpawnTime) / 1_000_000_000.0;
-        lastSpawnTime = currentTime;
+        // Calculate Delta Time in seconds
+        long now = System.nanoTime();
+        double dt = (now - lastTime) / 1_000_000_000.0;
+        lastTime = now;
 
         timerSeconds += dt;
 
         if (isDelayPhase) {
-            if (timerSeconds>= currentGroup.getInitialDelay()) {
+            // PHASE 1: Waiting for the delay specified in waves.txt
+            if (timerSeconds >= currentGroup.getInitialDelay()) {
                 isDelayPhase = false;
-                timerSeconds = 0;
-                spawnEnemy();
+                timerSeconds = 0; // Reset timer for the first spawn interval
+                spawnEnemy();     // Spawn first enemy immediately after delay
             }
-        }
-        else {
-                if (timerSeconds >= currentGroup.getSpawnInterval()) {
-                    timerSeconds = 0;
-                    spawnEnemy();
-                }
+        } else {
+            // PHASE 2: Spawning enemies at "Interval"
+            if (timerSeconds >= currentGroup.getSpawnInterval()) {
+                timerSeconds = 0; // Reset timer
+                spawnEnemy();
             }
         }
     }
 
     private void spawnEnemy() {
-        ABaseEnemy enemy = enemyFactory.createEnemy("Slime", 1, 0.2, enemyManager.gameModel.getCurrentPath());
-        ABaseEnemy enemy2 = enemyFactory.createEnemy("Skeleton", 1, 0.4, enemyManager.gameModel.getCurrentPath());
+        if (currentGroup == null) return;
+
+        String enemyName = currentGroup.getEnemyType();
+        ABaseEnemy enemy = enemyFactory.createEnemy(enemyName, 1, 0.2, enemyManager.gameModel.getCurrentPath());
 
         enemyManager.addEnemy(enemy);
-        enemyManager.addEnemy(enemy2);
+        enemiesSpawnedInCurrentGroup++;
+
+        if (enemiesSpawnedInCurrentGroup >= currentGroup.getCount()) {
+            startNextGroup();
+        }
+    }
+
+    private void startNextGroup() {
+        if (groupsInCurrentWave.isEmpty()) {
+            allEnemiesSpawned = true;
+            currentGroup = null;
+            System.out.println("Wave " + currentWave.getWaveNumber() + " spawning complete.");
+            return;
+        }
+
+        currentGroup = groupsInCurrentWave.poll();
+
+        enemiesSpawnedInCurrentGroup = 0;
+        isDelayPhase = true;
+        timerSeconds = 0;
+
+        System.out.println("  Starting Wave Group: " + currentGroup.getEnemyType() +
+                " x" + currentGroup.getCount());
     }
 
 
     public boolean isWaveComplete() {
-        return allEnemiesSpawned && enemyManager.gameModel.getActiveEnemies().isEmpty();
+        return allEnemiesSpawned && enemyManager.getActiveEnemies().isEmpty();
     }
 
     public boolean isWaveActive() {
@@ -120,14 +144,5 @@ public class WaveManager {
     public void setWaveActive(boolean active) {
         this.waveActive = active;
     }
-
-    public void reset() {
-        currentWave = 0;
-        enemiesSpawnedInWave = 0;
-        enemiesToSpawnInWave = 0;
-        waveActive = false;
-        allEnemiesSpawned = false;
-    }
-
 
 }
