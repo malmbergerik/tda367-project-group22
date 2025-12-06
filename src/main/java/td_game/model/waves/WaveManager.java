@@ -3,7 +3,6 @@ package td_game.model.waves;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.enemy.EnemyFactory;
 import td_game.model.enemy.EnemyManager;
-import
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -14,7 +13,7 @@ public class WaveManager {
 
     private Queue<Wave> allWaves;
 
-    private int currentWave;
+    private Wave currentWave;
     private Queue<WaveGroup> groupsInCurrentWave;
     private WaveGroup currentGroup;
 
@@ -52,7 +51,6 @@ public class WaveManager {
 
     public void startNextWave() {
         if (allWaves.isEmpty()) {
-            System.out.println("Game Over! All waves completed!");
             return;
         }
 
@@ -75,8 +73,8 @@ public class WaveManager {
 
         // Calculate Delta Time in seconds
         long now = System.nanoTime();
-        double dt = (now - lastTime) / 1_000_000_000.0;
-        lastTime = now;
+        double dt = (now - lastSpawnTime) / 1_000_000_000.0;
+        lastSpawnTime = now;
 
         timerSeconds += dt;
 
@@ -138,7 +136,7 @@ public class WaveManager {
     }
 
     public int getCurrentWave() {
-        return currentWave;
+        return currentWave != null ? currentWave.getWaveNumber() : 0;
     }
 
     public void setWaveActive(boolean active) {

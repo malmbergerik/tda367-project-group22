@@ -12,11 +12,11 @@ public class Wave {
         this.waveGroups = new ArrayList<>();
     }
 
-    public void addWaveGroup(WaveGroup group) {
+    public void addGroup(WaveGroup group) {
         waveGroups.add(group);
     }
 
-    public List<WaveGroup> getWaveGroups() {
+    public List<WaveGroup> getGroups() {
         return waveGroups;
     }
 

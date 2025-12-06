@@ -17,7 +17,7 @@ public class WaveGroup {
         return enemyType;
     }
 
-    public int getEnemyCount() {
+    public int getCount() {
         return enemyCount;
     }
 

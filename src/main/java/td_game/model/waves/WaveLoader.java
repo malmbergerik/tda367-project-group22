@@ -8,7 +8,7 @@ public class WaveLoader {
     public Queue<Wave> loadWaves(String filename) {
         // We use a Map temporarily to group lines by wave ID
         Map<Integer, Wave> waveMap = new TreeMap<>(); // TreeMap keeps keys sorted (Wave 1, 2, 3...)
-        try (InputStream is = getClass().getClassLoader().getResourcesAsStream(filename)) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(filename)) {
             if (is == null) {
                 throw new RuntimeException("Wave configuration file not found: " + filename);
             }
@@ -34,7 +34,7 @@ public class WaveLoader {
 
                     // Get or Create Wave
                     waveMap.putIfAbsent(waveId, new Wave(waveId));
-                    WaveGroup group = new WaveGroup(type, count, interval, delay);
+                    WaveGroup group = new WaveGroup(enemyType, enemyCount, spawnInterval, initialDelay);
                     waveMap.get(waveId).addGroup(group);
                 }
             }
