@@ -8,16 +8,14 @@ public class EnemyManager {
 
     private List<ABaseEnemy> activeEnemies;
     public GameModel gameModel;
-    // ÄNDRING: WaveManager är borttagen härifrån
+
 
     public EnemyManager(GameModel gameModel, EnemyFactory enemyFactory) {
         this.gameModel = gameModel;
         this.activeEnemies = gameModel.getActiveEnemies();
-        // ÄNDRING: Vi startar inte vågen här längre. GameModel styr det.
     }
 
     public void update() {
-        // ÄNDRING: WaveManager.update() anropas inte här längre
 
         activeEnemies.removeIf(enemy -> {
             enemy.move();
@@ -26,7 +24,6 @@ public class EnemyManager {
 
         gameModel.notifyObserver(new MovingObjectUpdateEvent());
 
-        // ÄNDRING: Logiken för att kolla "isWaveComplete" flyttas upp till GameModel
     }
 
     public void addEnemy(ABaseEnemy enemy) {
