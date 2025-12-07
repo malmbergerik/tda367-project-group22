@@ -2,17 +2,18 @@ package td_game.model.enemy;
 
 import td_game.model.events.MovingObjectUpdateEvent;
 import td_game.model.modelnit.GameModel;
+import td_game.model.modelnit.GameObservable;
 import java.util.List;
 
 public class EnemyManager {
 
     private List<ABaseEnemy> activeEnemies;
-    public GameModel gameModel;
+    private final GameObservable notifier;
 
 
-    public EnemyManager(GameModel gameModel, EnemyFactory enemyFactory) {
-        this.gameModel = gameModel;
-        this.activeEnemies = gameModel.getActiveEnemies();
+    public EnemyManager(List<ABaseEnemy> activeEnemies, GameObservable notifier) {
+        this.activeEnemies = activeEnemies;
+        this.notifier = notifier;
     }
 
     public void update() {
@@ -22,7 +23,7 @@ public class EnemyManager {
             return (!enemy.isAlive() || enemy.hasReachedEnd());
         });
 
-        gameModel.notifyObserver(new MovingObjectUpdateEvent());
+        notifier.notifyObserver(new MovingObjectUpdateEvent());
 
     }
 

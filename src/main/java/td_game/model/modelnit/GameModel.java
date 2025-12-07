@@ -73,7 +73,7 @@ public class GameModel implements GameObservable, IUpdatable {
         enemyFactory.registerFactory("Golem",    path -> new Golem(100, 0.2, path));
         enemyFactory.registerFactory("Bat",      path -> new Bat(1, 0.5, path));
 
-        this.enemyManager = new EnemyManager(this, enemyFactory);
+        this.enemyManager = new EnemyManager(this.activeEnemies, this);
 
         WaveLoader waveLoader = new WaveLoader();
         Queue<Wave> waves = waveLoader.loadWaves("waves/waves.txt");
