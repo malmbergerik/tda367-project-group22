@@ -22,6 +22,7 @@ public class EnemyViewManager {
             enemyImages.put("Skeleton", loadImage("assets/enemies/Skeleton.png"));
             enemyImages.put("Golem", loadImage("assets/enemies/Golem.png"));
             enemyImages.put("Bat", loadImage("assets/enemies/Bat.png"));
+            enemyImages.put("BabyOrc", loadImage("assets/enemies/BabyOrc.png"));
         }
 
         private BufferedImage loadImage(String path) {

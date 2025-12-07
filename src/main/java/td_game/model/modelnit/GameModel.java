@@ -73,7 +73,7 @@ public class GameModel implements GameObservable, IUpdatable {
         enemyFactory.registerFactory("Skeleton", path -> new Skeleton(2, 0.3, path));
         enemyFactory.registerFactory("Golem",    path -> new Golem(100, 0.2, path));
         enemyFactory.registerFactory("Bat",      path -> new Bat(1, 0.5, path));
-        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(20, 0.35, path));
+        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(20, 0.25, path));
 
         this.enemyManager = new EnemyManager(this.activeEnemies, this);
 
