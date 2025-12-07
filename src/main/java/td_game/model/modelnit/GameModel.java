@@ -11,6 +11,7 @@ import td_game.model.enemy.EnemyManager;
 import td_game.model.enemy.Golem;
 import td_game.model.enemy.Skeleton;
 import td_game.model.enemy.Slime;
+import td_game.model.enemy.BabyOrc;
 
 import td_game.model.events.IGameEvent;
 import td_game.model.events.IGameObserver;
@@ -68,10 +69,11 @@ public class GameModel implements GameObservable, IUpdatable {
         this.currentPath = pathManager.getPathForMap(gridMap);
 
         EnemyFactory enemyFactory = new EnemyFactory();
-        enemyFactory.registerFactory("Slime",    path -> new Slime(10, 0.1, path));
+        enemyFactory.registerFactory("Slime",    path -> new Slime(10, 0.15, path));
         enemyFactory.registerFactory("Skeleton", path -> new Skeleton(2, 0.3, path));
         enemyFactory.registerFactory("Golem",    path -> new Golem(100, 0.2, path));
         enemyFactory.registerFactory("Bat",      path -> new Bat(1, 0.5, path));
+        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(20, 0.35, path));
 
         this.enemyManager = new EnemyManager(this.activeEnemies, this);
 
