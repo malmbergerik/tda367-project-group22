@@ -2,7 +2,8 @@
 # Name of enemy, count, interval between spawns (seconds), delay before wave starts (seconds)
 # Wave 1: Only Skeletons
 1 Skeleton 10 0.5 0
-1 Golem 100 0.5 1.0
+1 Bat 10 0.5 0.1
+1 Golem 100 0.5 0.1
 
 
 #  Wave 2: Skeletons and Slimes
