@@ -83,7 +83,7 @@ public class WaveManager {
 
         String enemyName = currentGroup.getEnemyType();
 
-        ABaseEnemy enemy = enemyFactory.createEnemy(enemyName, 1, 0.2, this.path);
+        ABaseEnemy enemy = enemyFactory.createEnemy(enemyName, this.path);
 
         enemyManager.addEnemy(enemy);
         enemiesSpawnedInCurrentGroup++;

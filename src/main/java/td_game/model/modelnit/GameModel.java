@@ -68,10 +68,10 @@ public class GameModel implements GameObservable, IUpdatable {
         this.currentPath = pathManager.getPathForMap(gridMap);
 
         EnemyFactory enemyFactory = new EnemyFactory();
-        enemyFactory.registerFactory("Slime", Slime::new);
-        enemyFactory.registerFactory("Skeleton", Skeleton::new);
-        enemyFactory.registerFactory("Golem", Golem::new);
-        enemyFactory.registerFactory("Bat", Bat::new);
+        enemyFactory.registerFactory("Slime",    path -> new Slime(10, 0.3, path));
+        enemyFactory.registerFactory("Skeleton", path -> new Skeleton(2, 0.5, path));
+        enemyFactory.registerFactory("Golem",    path -> new Golem(100, 0.2, path));
+        enemyFactory.registerFactory("Bat",      path -> new Bat(1, 0.8, path));
 
         this.enemyManager = new EnemyManager(this, enemyFactory);
 
