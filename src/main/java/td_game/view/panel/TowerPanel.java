@@ -18,7 +18,8 @@ public class TowerPanel extends JPanel {
         this.towerViewManager = towerViewManager;
 
         setPreferredSize(new Dimension(width,height));
-        setBackground(Color.RED);
+
+        setBackground(Color.decode("#181818"));
 
         setLayout(new GridBagLayout());
 

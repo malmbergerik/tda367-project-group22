@@ -10,6 +10,8 @@ public class GameSpeedPanel extends JPanel {
     public GameSpeedPanel(int width, int height){
 
         this.setPreferredSize(new Dimension(width, height));
+        this.setBackground(Color.decode("#222222"));
+
 
 
         waveLabel = new JLabel();

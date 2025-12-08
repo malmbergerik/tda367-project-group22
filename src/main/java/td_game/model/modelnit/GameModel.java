@@ -58,6 +58,7 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
     // New
     private WaveManager waveManager;
 
+    //Observers for game
     private List<IGameObserver> observers = new ArrayList<>();
     private ATower[][] placedTowerGrid;
 
@@ -222,6 +223,8 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         }
     }
 
+
+
     @Override
     public void registerObserver(IGameObserver observer) {
         if (!observers.contains(observer))
@@ -270,6 +273,7 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
     public void togglePause(){
         if(currentState instanceof PlayingState){
             setGameState(new PausedState());
+
         }
         else if(currentState instanceof PausedState){
             setGameState(new PlayingState(this));

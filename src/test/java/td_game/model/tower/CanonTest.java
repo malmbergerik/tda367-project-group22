@@ -7,6 +7,9 @@ import td_game.model.enemy.Skeleton;
 import td_game.model.modelnit.GameModel;
 import td_game.model.path.Path;
 import td_game.model.path.Waypoint;
+import td_game.model.player.IHealth;
+import td_game.model.player.MoneySystem;
+import td_game.model.player.Player;
 import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.ATower;
@@ -21,13 +24,14 @@ import java.util.List;
 public class CanonTest {
 
     private GameModel gameModel;
+    private MoneySystem moneySystem;
     private TowerManager manager;
     private ProjectileManager projectileManager;
     @BeforeEach
     public void setup() {
         gameModel = new GameModel(32);
         projectileManager = new ProjectileManager(gameModel);
-        manager = new TowerManager( gameModel);
+        manager = new TowerManager(gameModel,moneySystem);
     }
 
 

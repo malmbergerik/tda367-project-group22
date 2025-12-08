@@ -1,9 +1,7 @@
 package td_game.controller;
 
-import td_game.model.modelnit.GameModel;
-import td_game.model.modelnit.IGameLoop;
+import td_game.model.modelnit.*;
 
-import td_game.model.modelnit.PlayingState;
 import td_game.view.constants.ViewTypes;
 import td_game.view.helper.*;
 import td_game.view.panel.GamePanel;
@@ -12,7 +10,10 @@ import td_game.view.panel.WindowFrame;
 import td_game.view.render.RenderingContext;
 import td_game.view.render.RenderingContextFactory;
 
+import java.awt.*;
+
 public class AppController {
+
     public AppController(GameModel model, IGameLoop gameLoop,  int windowWidth, int windowHeight, int gameWidth, int gameHeight) {
 
         TileViewManager tileManager = new TileViewManager();
@@ -28,7 +29,6 @@ public class AppController {
         );
 
         WindowFrame windowFrame = new WindowFrame(windowWidth, windowHeight);
-
         MenuPanel menuView = new MenuPanel(windowWidth, windowHeight);
         GamePanel gameView = new GamePanel(gameWidth, gameHeight, renderingContext, towerManager);
 
