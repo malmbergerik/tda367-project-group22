@@ -1,11 +1,11 @@
 package td_game.model.path;
 
 import td_game.model.map.IMap;
-import td_game.model.map.PathTile;
-import td_game.model.map.PathType;
-import td_game.model.map.TileBase;
+import td_game.model.map.Tile;
+import td_game.model.map.tileSpecfication.ITileSpecification;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,31 +24,45 @@ public class WaypointExtractor {
      *
      * @throws IllegalArgumentException if no path or malformed path found
      */
-    public List<int[]> extractTilePath(IMap map) {
+
+    private static final int[][] DIRS = {
+            {-1, 0}, //up
+            {1, 0},  //down
+            {0, -1}, //left
+            {0, 1}   //right
+    };
+    public List<int[]> extractTilePath(IMap map, ITileSpecification tileSpecification) {
         int rows = map instanceof td_game.model.map.GridMap ? ((td_game.model.map.GridMap) map).getRow() : map.getHeight() / map.getTileSize();
         int cols = map instanceof td_game.model.map.GridMap ? ((td_game.model.map.GridMap) map).getCol() : map.getWidth() / map.getTileSize();
 
-        // find start
-        int startR = -1, startC = -1;
+        // Find endpoints
+        List<int[]> endpoints = new ArrayList<>();
+
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                TileBase tile = map.getTile(r, c);
-                if (tile instanceof PathTile) {
-                    PathTile pt = (PathTile) tile;
-                    if (pt.getPathType() == PathType.START) {
-                        startR = r;
-                        startC = c;
-                        break;
-                    }
+                Tile tile = map.getTile(r, c);
+                if(!tileSpecification.isSatisfiedBy(tile)) continue;
+
+                int deg = countPathNeightbours(map, r, c,rows,cols, tileSpecification);
+                if (deg == 1){
+                    endpoints.add(new int[]{r,c});
                 }
             }
-            if (startR != -1) break;
+
         }
 
-        if (startR == -1) {
-            throw new IllegalArgumentException("No START tile found on the map");
+        if(endpoints.size() !=2){
+            throw new IllegalArgumentException("Expected exactly 2 path endpoints");
         }
 
+        //Sets start Tile preferrly from top left
+        int[] startTile = endpoints.stream()
+                .min(Comparator.comparingInt(t ->t[0] + t[1]))
+                .get();
+        int startR = startTile[0];
+        int startC = startTile[1];
+        int endR = endpoints.get(1)[0];
+        int endC = endpoints.get(1)[1];
         // Walk the path
         boolean[][] visited = new boolean[rows][cols];
         List<int[]> ordered = new ArrayList<>();
@@ -57,46 +71,58 @@ public class WaypointExtractor {
         ordered.add(new int[]{curR, curC});
         visited[curR][curC] = true;
 
-        boolean reachedEnd = false;
-        while (!reachedEnd) {
-            // check if current is END
-            TileBase curTile = map.getTile(curR, curC);
-            if (curTile instanceof PathTile && ((PathTile) curTile).getPathType() == PathType.END) {
-                reachedEnd = true;
-                break;
-            }
-
-            // check up/down/left/right for the next unvisited path tile
-            int[][] neighbours = {
-                    {curR - 1, curC}, // up
-                    {curR + 1, curC}, // down
-                    {curR, curC - 1}, // left
-                    {curR, curC + 1}  // right
-            };
-
+        while (true) {
             boolean foundNext = false;
-            for (int[] n : neighbours) {
-                int nr = n[0], nc = n[1];
-                if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
-                if (visited[nr][nc]) continue;
-                TileBase t = map.getTile(nr, nc);
-                if (t instanceof PathTile) {
-                    // append and move
+
+            for(int[] d : DIRS) {
+                int nr = curR +d[0];
+                int nc = curC + d[1];
+
+                if(nr<0 || nr >= rows || nc < 0 || nc >= cols) continue;
+                if(visited[nr][nc]) continue;
+
+                Tile neighbourTile = map.getTile(nr, nc);
+                if(tileSpecification.isSatisfiedBy(neighbourTile)){
                     visited[nr][nc] = true;
-                    ordered.add(new int[]{nr, nc});
+                    ordered.add(new int[]{nr,nc});
                     curR = nr;
                     curC = nc;
                     foundNext = true;
                     break;
                 }
-            }
 
-            if (!foundNext) {
-                // malformed/branched path or dead end
-                throw new IllegalArgumentException("Path terminated unexpectedly (no next path tile). Map may be malformed or branching paths are unsupported.");
+            }
+            if(!foundNext)break;
+        }
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                Tile t = map.getTile(r, c);
+                if (tileSpecification.isSatisfiedBy(t) && !visited[r][c]) {
+                    throw new IllegalArgumentException(
+                            "Path terminated unexpectedly: unreachable tile at (" + r + "," + c + ")"
+                    );
+                }
             }
         }
 
         return ordered;
+
+    }
+
+    private int countPathNeightbours(IMap map, int r, int c, int rows, int cols, ITileSpecification tileSpecification) {
+        int count = 0;
+        for(int[] d : DIRS){
+            int nr = r + d[0];
+            int nc = c + d[1];
+
+            if(nr<0 || nr >= rows) continue;
+            if(nc<0 || nc >= cols) continue;
+
+            Tile t = map.getTile(nr,nc);
+            if(tileSpecification.isSatisfiedBy(t)) {
+                count++;
+            }
+        }
+        return count;
     }
 }

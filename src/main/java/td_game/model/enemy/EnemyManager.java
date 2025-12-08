@@ -2,38 +2,29 @@ package td_game.model.enemy;
 
 import td_game.model.events.MovingObjectUpdateEvent;
 import td_game.model.modelnit.GameModel;
-
+import td_game.model.modelnit.GameObservable;
 import java.util.List;
 
 public class EnemyManager {
 
     private List<ABaseEnemy> activeEnemies;
-    private EnemyWaveSpawner waveSpawner;
-    public GameModel gameModel;
+    private final GameObservable notifier;
 
-    public EnemyManager(GameModel gameModel, EnemyFactory enemyFactory) {
-        this.waveSpawner = new EnemyWaveSpawner(this, enemyFactory);
-        this.gameModel = gameModel;
-        this.activeEnemies = gameModel.getActiveEnemies();
-        startNextWave();
+
+    public EnemyManager(List<ABaseEnemy> activeEnemies, GameObservable notifier) {
+        this.activeEnemies = activeEnemies;
+        this.notifier = notifier;
     }
 
     public void update() {
 
-        waveSpawner.update();
-        activeEnemies.removeIf( enemy -> {
+        activeEnemies.removeIf(enemy -> {
             enemy.move();
             return (!enemy.isAlive() || enemy.hasReachedEnd());
         });
-        gameModel.notifyObserver(new MovingObjectUpdateEvent());
 
-        if(activeEnemies.isEmpty() && waveSpawner.isWaveComplete()){
-            startNextWave();
-        }
-    }
+        notifier.notifyObserver(new MovingObjectUpdateEvent());
 
-    public void startNextWave(){
-        waveSpawner.startNextWave();
     }
 
     public void addEnemy(ABaseEnemy enemy) {
@@ -46,8 +37,5 @@ public class EnemyManager {
 
     public void reset() {
         activeEnemies.clear();
-        waveSpawner.reset();
     }
-
-
 }

@@ -21,4 +21,3 @@ public class Main {
         new AppController(gameModel,gameLoop, WINDOW_WIDTH, WINDOW_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
     }
 }
-

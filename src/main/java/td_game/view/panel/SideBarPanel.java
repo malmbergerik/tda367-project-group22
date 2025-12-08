@@ -22,7 +22,8 @@ public class SideBarPanel extends JPanel {
 
         setLayout(new GridBagLayout());
 
-        addToPanel(createTowerButton("Tower 1"));
+        addToPanel(createTowerButton("CanonTower"));
+        addToPanel(createTowerButton("SniperTower"));
 
         fillPanel();
 

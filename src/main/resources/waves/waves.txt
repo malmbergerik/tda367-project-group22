@@ -1,0 +1,70 @@
+
+# Name of enemy, count, interval between spawns (seconds), delay before wave starts (seconds)
+# Wave 1: Intro - Just Skeletons
+1 Skeleton 5 0.5 0
+
+# Wave 2: The Slimes join
+2 Skeleton 5 0.5 0
+2 Slime 5 1.0 0.1
+
+# Wave 3: Bats join
+3 Skeleton 15 0.3 0
+3 Bat 10 1.2 0.2
+
+# Wave 4:
+4 Skeleton 25 0.6 0
+4 Slime 15 0.8 0
+4 Bat 10 1.0 0.3
+
+# Wave 5:
+5 Skeleton 10 0.8 0
+5 BabyOrc 5 1.0 2.0
+
+
+# Wave 6:
+6 Bat 20 0.6 0
+6 BabyOrc 8 1.0 0.5
+
+# Wave 7: Slime Flood
+7 Slime 40 0.4 0
+7 Skeleton 20 0.5 2.0
+
+# Wave 8: The Heavy Hitters
+8 BabyOrc 15 1.5 0
+8 Skeleton 20 0.6 2.0
+
+# Wave 9: Air Raid
+9 Bat 30 0.2 0
+9 BabyOrc 10 1.0 0.1
+
+# Wave 10: Swarm
+10 Skeleton 50 0.3 0
+10 Slime 30 0.4 0.1
+
+# --- LATE GAME ---
+
+# Wave 11: Armored Column
+11 BabyOrc 25 1.2 0
+11 Bat 15 0.8 3.0
+
+# Wave 12: Chaos
+12 Skeleton 40 0.4 0
+12 Slime 40 0.4 0.1
+12 Bat 20 0.6 0.1
+
+# Wave 13: Elite Squad
+13 BabyOrc 30 1.0 0
+13 Bat 25 0.5 5.0
+
+# Wave 14: Pre-Boss Swarm
+14 Skeleton 60 0.2 0
+14 Slime 50 0.3 0.1
+14 BabyOrc 15 1.0 1.0
+
+# --- FINAL BOSS ---
+
+# Wave 15: The Golem
+15 Skeleton 20 0.5 0
+15 Golem 1 0.0 0.1
+15 Bat 15 0.8 2.0
+15 BabyOrc 10 0.5 0.1

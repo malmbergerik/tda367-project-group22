@@ -2,6 +2,7 @@ package td_game.model.path;
 
 import org.junit.jupiter.api.Test;
 import td_game.model.map.*; // Import all map dependencies
+import td_game.model.map.tileSpecfication.PathSpecification;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class PathTest {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 // Use the GrassTile implementation
-                map.setTile(r, c, new GrassTile());
+                map.setTile(r, c, new Tile("Grass"));
             }
         }
         return map;
@@ -34,14 +35,14 @@ public class PathTest {
     public void testExtractSimpleLinearPath() {
         // Path: (0,0) -> (0,4)
         GridMap map = makeEmptyMap(1, 5);
-        map.setTile(0, 0, new PathTile(PathType.START));
-        map.setTile(0, 1, new PathTile(PathType.NORMAL));
-        map.setTile(0, 2, new PathTile(PathType.NORMAL));
-        map.setTile(0, 3, new PathTile(PathType.NORMAL));
-        map.setTile(0, 4, new PathTile(PathType.END));
+        map.setTile(0, 0, new Tile("Path"));
+        map.setTile(0, 1, new Tile("Path"));
+        map.setTile(0, 2, new Tile("Path"));
+        map.setTile(0, 3, new Tile("Path"));
+        map.setTile(0, 4, new Tile("Path"));
 
         WaypointExtractor extractor = new WaypointExtractor();
-        List<int[]> tilePath = extractor.extractTilePath(map);
+        List<int[]> tilePath = extractor.extractTilePath(map, new PathSpecification());
 
         assertEquals(5, tilePath.size(), "Expected five tiles in the linear path (S, N, N, N, E)");
         assertArrayEquals(new int[]{0, 0}, tilePath.get(0), "Start must be at (0, 0)");
@@ -52,12 +53,12 @@ public class PathTest {
     public void testExtractPathWithTurn() {
         // Path: (1,1) START -> (1,2) -> (2,2) END
         GridMap map = makeEmptyMap(3, 3);
-        map.setTile(1, 1, new PathTile(PathType.START));
-        map.setTile(1, 2, new PathTile(PathType.NORMAL));
-        map.setTile(2, 2, new PathTile(PathType.END));
+        map.setTile(1, 1, new Tile("Path"));
+        map.setTile(1, 2, new Tile("Path"));
+        map.setTile(2, 2, new Tile("Path"));
 
         WaypointExtractor extractor = new WaypointExtractor();
-        List<int[]> tilePath = extractor.extractTilePath(map);
+        List<int[]> tilePath = extractor.extractTilePath(map, new PathSpecification());
 
         assertEquals(3, tilePath.size(), "Expected three tiles in the path with one turn");
         assertArrayEquals(new int[]{1, 1}, tilePath.get(0));
@@ -66,26 +67,25 @@ public class PathTest {
     }
 
     @Test
-    public void testExtractorThrowsIfNoStart() {
+    public void testExtractorThrowsIfOnlyStart() {
         GridMap map = makeEmptyMap(1, 2);
-        map.setTile(0, 0, new PathTile(PathType.NORMAL));
-        map.setTile(0, 1, new PathTile(PathType.END));
+        map.setTile(0, 0, new Tile("Path"));
 
         WaypointExtractor extractor = new WaypointExtractor();
-        assertThrows(IllegalArgumentException.class, () -> extractor.extractTilePath(map),
+        assertThrows(IllegalArgumentException.class, () -> extractor.extractTilePath(map, new PathSpecification()),
                 "Should throw if no START tile is found.");
     }
 
     @Test
     public void testExtractorThrowsOnDeadEnd() {
         // Path: (0,0) START -> (0,1) NORMAL -> END
-        GridMap map = makeEmptyMap(2, 2);
-        map.setTile(0, 0, new PathTile(PathType.START));
-        map.setTile(0, 1, new PathTile(PathType.NORMAL)); // Dead end
-        map.setTile(1, 1, new PathTile(PathType.END)); // END is present but unreachable
+        GridMap map = makeEmptyMap(3, 3);
+        map.setTile(0, 0, new Tile("Path"));
+        map.setTile(0, 1, new Tile("Path")); // Dead end
+        map.setTile(2, 2, new Tile("Path")); // END is present but unreachable
 
         WaypointExtractor extractor = new WaypointExtractor();
-        assertThrows(IllegalArgumentException.class, () -> extractor.extractTilePath(map),
+        assertThrows(IllegalArgumentException.class, () -> extractor.extractTilePath(map, new PathSpecification()),
                 "Should throw if the path terminates unexpectedly (dead end).");
     }
 
@@ -95,11 +95,11 @@ public class PathTest {
     public void testPathFactoryCreatesWaypointsWithCorrectWorldCoordinates() {
         // Path: (0,0) START -> (1,1) END
         GridMap map = makeEmptyMap(2, 2);
-        map.setTile(0, 0, new PathTile(PathType.START));
-        map.setTile(1, 1, new PathTile(PathType.END)); // This requires the path to be connected
+        map.setTile(0, 0, new Tile("Path"));
+        map.setTile(1, 1, new Tile("Path")); // This requires the path to be connected
 
         // To make it connect: S (0,0) -> N (0,1) -> E (1,1)
-        map.setTile(0, 1, new PathTile(PathType.NORMAL));
+        map.setTile(0, 1, new Tile("Path"));
 
         PathFactory factory = new PathFactory();
         Path path = factory.buildPathForMap(map);
@@ -120,9 +120,9 @@ public class PathTest {
     @Test
     public void testPathManagerCachesPathInstance() {
         GridMap map = makeEmptyMap(1, 3);
-        map.setTile(0, 0, new PathTile(PathType.START));
-        map.setTile(0, 1, new PathTile(PathType.NORMAL));
-        map.setTile(0, 2, new PathTile(PathType.END));
+        map.setTile(0, 0, new Tile("Path"));
+        map.setTile(0, 1, new Tile("Path"));
+        map.setTile(0, 2, new Tile("Path"));
 
         PathManager manager = new PathManager();
 

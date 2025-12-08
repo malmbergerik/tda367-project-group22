@@ -1,6 +1,7 @@
 package td_game.model.path;
 
 import td_game.model.map.IMap;
+import td_game.model.map.tileSpecfication.PathSpecification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class PathFactory {
     }
 
     public Path buildPathForMap(IMap map) {
-        List<int[]> tileCoords = extractor.extractTilePath(map);
+        List<int[]> tileCoords = extractor.extractTilePath(map, new PathSpecification());
         List<Waypoint> waypoints = new ArrayList<>(tileCoords.size());
         for (int[] tc : tileCoords) {
             int row = tc[0];

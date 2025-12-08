@@ -1,6 +1,5 @@
 
 package td_game.view.helper;
-import td_game.model.map.TileBase;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

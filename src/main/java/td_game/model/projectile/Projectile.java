@@ -22,7 +22,7 @@ public class Projectile {
 
     private final boolean hitBoxRound;
 
-    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, boolean hitBoxRound) {
+    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, double x, double y, boolean hitBoxRound) {
         this.pixelsPerTick = pixelsPerTick;
         this.width = width;
         this.height = height;
@@ -30,8 +30,8 @@ public class Projectile {
         this.pierce = pierce;
         this.timeAliveTicks = timeAliveTicks;
         this.angle = angle;
-        this.x = x;
-        this.y = y;
+        this.x = x + 16 / 2; // TODO: Make this cleaner, spawn projectiles in center of tile.
+        this.y = y + 16 / 2; // TODO: Make this cleaner, spawn projectiles in center of tile.
 
         this.hitBoxRound = hitBoxRound;
     }

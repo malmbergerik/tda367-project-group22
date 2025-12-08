@@ -12,11 +12,11 @@ public class EnemyFactory {
         enemyFactories.put(name, factory);
     }
 
-    public ABaseEnemy createEnemy(String name, int health, double speed, Path path) {
+    public ABaseEnemy createEnemy(String name, Path path) {
         IEnemyFactory factory = enemyFactories.get(name);
         if (factory == null) {
             throw new IllegalArgumentException("No factory registered for enemy type: " + name);
         }
-        return factory.createEnemy(health, speed, path);
+        return factory.createEnemy(path);
     }
 }

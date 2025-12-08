@@ -1,5 +1,5 @@
 package td_game.model.projectile;
 
 public interface IProjectileFactory {
-    Projectile create(double angle, int x, int y);
+    Projectile create(double angle, double x, double y);
 }

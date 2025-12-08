@@ -18,8 +18,11 @@ public class TowerViewManager {
     }
 
     public void loadTileImages() {
-        towerImages.put("Tower 1", loadImage("assets/towers/tower1.png"));
+
+        towerImages.put("CanonTower", loadImage("assets/towers/tower1.png"));
+        towerImages.put("SniperTower", loadImage("assets/towers/tower1.png"));
     }
+
 
     private BufferedImage loadImage(String path) {
         try {

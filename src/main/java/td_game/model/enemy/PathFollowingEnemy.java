@@ -68,4 +68,8 @@ public abstract class PathFollowingEnemy extends ABaseEnemy {
             }
         }
     }
+
+    public int getCurrentWaypointIndex(){
+        return currentWaypointIndex;
+    }
 }

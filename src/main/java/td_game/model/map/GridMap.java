@@ -3,14 +3,14 @@ package td_game.model.map;
 public class GridMap implements IMap{
     private int row;
     private int col;
-    private TileBase[][] tiles;
+    private Tile[][] tiles;
     private int tileSize;
 
     public GridMap(int row, int col, int tileSize){
         this.row = row;
         this.col = col;
         this.tileSize = tileSize;
-        this.tiles = new TileBase[row][col];
+        this.tiles = new Tile[row][col];
     }
 
     public int getRow() {return row;}
@@ -25,10 +25,10 @@ public class GridMap implements IMap{
     @Override
     public int getTileSize() {return tileSize;}
 
-    public TileBase[][] getMap() {return tiles;}
+    public Tile[][] getMap() {return tiles;}
 
     @Override
-    public TileBase getTile(int x, int y) {
+    public Tile getTile(int x, int y) {
         if(x<=row && x>=0 && y<=col && y>=0){
             return tiles[x][y];
         }
@@ -38,7 +38,7 @@ public class GridMap implements IMap{
     }
 
     @Override
-    public void setTile(int x, int y, TileBase tile) {
+    public void setTile(int x, int y, Tile tile) {
         if(x<=row && x>=0 && y<=col && y>=0) {
             tiles[x][y] = tile;
         }

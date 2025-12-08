@@ -1,10 +1,10 @@
 package td_game.model.map;
 
-public abstract class TileBase {
+public class Tile {
 
     private final String type;
 
-    public TileBase(String type){
+    public Tile(String type){
         this.type = type;
     }
 

@@ -28,7 +28,7 @@ public class ProjectileFactory implements IProjectileFactory {
     }
 
     @Override
-    public Projectile create(double angle, int x, int y) {
+    public Projectile create(double angle, double x, double y) {
         return new Projectile(
                 angle,
                 this.pixelsPerTick,

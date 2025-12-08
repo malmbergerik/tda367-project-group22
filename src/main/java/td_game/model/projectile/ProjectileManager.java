@@ -22,6 +22,9 @@ public class ProjectileManager {
         Projectile p = new Projectile(angle, pixelsPerTick, width, height,  damage, pierce, timeAliveTicks,  x, y, hitBoxRound);
         activeProjectiles.add(p);
     }
+    public void addProjectile(Projectile p) {
+        activeProjectiles.add(p);
+    }
 
     public RectangularShape getProjectileHitBox(Projectile p){
         if (p.getHitBoxRound()) {

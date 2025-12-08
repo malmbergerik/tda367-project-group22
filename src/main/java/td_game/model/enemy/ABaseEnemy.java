@@ -1,6 +1,8 @@
 package td_game.model.enemy;
 
 
+import td_game.model.towers.IPositionable;
+
 import java.lang.Math;
 
 public abstract class ABaseEnemy implements IMoveable, IDamageable {
