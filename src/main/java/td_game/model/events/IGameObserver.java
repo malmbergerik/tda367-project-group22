@@ -5,4 +5,7 @@ public interface IGameObserver {
     void onMovingObjectsUpdate(MovingObjectUpdateEvent event);
     void onTowersUpdate(TowersUpdateEvent event);
     void onProjectileUpdate(ProjectileUpdateEvent event);
+    void onPlayerHealthUpdate(PlayerHealthUpdateEvent event);
+    void onPlayerMoneyUpdate(PlayerMoneyUpdateEvent event);
+    void onWaveUpdate(WaveUpdateEvent event);
 }

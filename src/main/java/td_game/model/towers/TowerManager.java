@@ -3,6 +3,7 @@ package td_game.model.towers;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.events.TowersUpdateEvent;
 import td_game.model.modelnit.GameModel;
+import td_game.model.player.MoneySystem;
 import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
@@ -14,17 +15,28 @@ import java.util.List;
 public class TowerManager {
     private List<ATower> activeTowers = new ArrayList<>();
     private GameModel gameModel;
+    private MoneySystem moneySystem;
 
-    public TowerManager(GameModel gameModel )
+    public TowerManager(GameModel gameModel, MoneySystem moneySystem)
     {
         this.gameModel = gameModel;
+        this.moneySystem = moneySystem;
         this.activeTowers = gameModel.getActiveTowers();
     }
-    public void addTower(ATower tower) {
-        activeTowers.add(tower);
+
+    public boolean addTower(ATower tower) {
+        if (moneySystem.canAfford(tower.getValue())) {
+            moneySystem.handleTowerPurchase(tower.getValue());
+            activeTowers.add(tower);
+
+            return true;
+
+        }
+        return false;
     }
 
     public void removeTower(ATower tower) {
+        moneySystem.handleTowerSell(tower.getValue() / 2);
         activeTowers.remove(tower);
     }
 

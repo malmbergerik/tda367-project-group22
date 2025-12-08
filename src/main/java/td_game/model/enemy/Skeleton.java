@@ -6,8 +6,8 @@ public class Skeleton extends PathFollowingEnemy {
     private static final int ENEMY_HEIGHT = 8;
     private static final String NAME = "Skeleton";
 
-    public Skeleton(int health, double speed, Path path){
-        super(health, speed, path, ENEMY_WIDTH, ENEMY_HEIGHT);
+    public Skeleton(int health, double speed, Path path, int damageAmount){
+        super(health, speed, path, ENEMY_WIDTH, ENEMY_HEIGHT, damageAmount);
     }
 
     @Override

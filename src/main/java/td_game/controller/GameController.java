@@ -4,23 +4,28 @@ import td_game.model.events.*;
 import td_game.model.modelnit.GameModel;
 import td_game.view.panel.GameViewPanel;
 import td_game.view.listener.IGameMouseListener;
+import td_game.view.panel.SideBarPanel;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class GameController implements IGameObserver {
     private final GameModel model;
     private final GameViewPanel view;
+    private final SideBarPanel sideBar;
     private PlacementController placementController;
     private IGameUpdateController gameUpdateController;
-
-    public GameController(GameModel model, GameViewPanel view) {
+    private InputController inputController;
+    public GameController(GameModel model, GameViewPanel view, SideBarPanel sideBar) {
         this.model = model;
         this.view = view;
+        this.sideBar = sideBar;
         this.model.registerObserver(this);
 
         this.placementController = new PlacementController(model, view);
-        this.gameUpdateController = new GameUpdateController(model, view);
+        this.gameUpdateController = new GameUpdateController(model, view, sideBar);
+        this.inputController = new InputController(model);
 
         initGameMouseListener();
 
@@ -71,6 +76,20 @@ public class GameController implements IGameObserver {
         gameUpdateController.handleProjectilesUpdate();
     }
 
+    @Override
+    public void onPlayerHealthUpdate(PlayerHealthUpdateEvent event) {
+        gameUpdateController.handleHealthUpdate();
+    }
+
+    @Override
+    public void onPlayerMoneyUpdate(PlayerMoneyUpdateEvent event) {
+        gameUpdateController.handleMoneyUpdate();
+    }
+
+    @Override
+    public void onWaveUpdate(WaveUpdateEvent event) {
+        gameUpdateController.handleWaveUpdate();
+    }
 
     public PlacementController getPlacementController(){
         return placementController;
@@ -80,6 +99,7 @@ public class GameController implements IGameObserver {
         return gameUpdateController;
     }
 
+    public InputController getInputController(){ return inputController;}
 
 
 

@@ -17,7 +17,7 @@ public class CanonTower extends ATower{
 
     public CanonTower(int x, int y,ProjectileManager projectileManager)
     {
-        super(x,y,
+        super(x,y,10,
                 new SingleAttackStrategy(
                         new ProjectileFactory(2,4,4,1,3,400,true),
                         projectileManager

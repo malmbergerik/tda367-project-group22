@@ -53,6 +53,7 @@ public class WaveManager {
         waveActive = true;
         allEnemiesSpawned = false;
         lastSpawnTime = System.nanoTime();
+
     }
 
     public void update() {

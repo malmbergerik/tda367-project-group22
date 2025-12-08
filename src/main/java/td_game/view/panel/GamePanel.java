@@ -46,6 +46,8 @@ public class GamePanel extends JPanel implements IView {
     }
 
     public void addSideBarListener(ITowerPlacementListener listener){
-        sideBar.setListener(listener);
+        //SideBarPanel sideBar = getSideBar();
+
+        sideBar.getTowerPanel().setListener(listener);
     }
 }

@@ -7,8 +7,8 @@ public class BabyOrc extends PathFollowingEnemy {
     private static final int ENEMY_HEIGHT = 12;
     private static final String NAME = "BabyOrc";
 
-    public BabyOrc(int health, double speed, Path path) {
-        super(health, speed, path, ENEMY_WIDTH, ENEMY_HEIGHT);
+    public BabyOrc(int health, double speed, Path path, int damageAmount) {
+        super(health, speed, path, ENEMY_WIDTH, ENEMY_HEIGHT, damageAmount);
     }
 
     @Override

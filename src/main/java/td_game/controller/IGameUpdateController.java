@@ -5,5 +5,8 @@ public interface IGameUpdateController {
     void handleMovingObjectsUpdate();
     void handleTowersUpdate();
     void handleProjectilesUpdate();
+    void handleHealthUpdate();
+    void handleMoneyUpdate();
+    void handleWaveUpdate();
 
 }

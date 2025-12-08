@@ -4,7 +4,6 @@ import td_game.model.modelnit.GameModel;
 import td_game.model.modelnit.IGameLoop;
 
 import td_game.model.modelnit.PlayingState;
-import td_game.view.*;
 import td_game.view.constants.ViewTypes;
 import td_game.view.helper.*;
 import td_game.view.panel.GamePanel;
@@ -40,13 +39,16 @@ public class AppController {
         menuView.addPlayListener(e -> {
             windowFrame.showView(ViewTypes.GAME_VIEW);
             model.setGameState(new PlayingState(model));
+            gameView.setFocusable(true);
+            gameView.requestFocusInWindow();
             gameLoop.start();
         });
 
         menuView.addExitListener(e -> System.exit(0));
 
-        GameController gameController = new GameController(model, gameView.getGameViewPanel());
+        GameController gameController = new GameController(model, gameView.getGameViewPanel(), gameView.getSideBar());
         gameView.addSideBarListener(gameController.getPlacementController());
+        gameView.addKeyListener(gameController.getInputController());
 
         windowFrame.showView(ViewTypes.MENU_VIEW);
         windowFrame.makeVisible();

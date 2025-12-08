@@ -8,8 +8,8 @@ public class Bat extends PathFollowingEnemy {
     private static final int ENEMY_HEIGHT = 16;
     private static final String NAME = "Bat"; //
 
-    public Bat(int health, double speed, Path path){
-        super(health, speed, path, ENEMY_WIDTH, ENEMY_HEIGHT);
+    public Bat(int health, double speed, Path path, int damageAmount){
+        super(health, speed, path, ENEMY_WIDTH, ENEMY_HEIGHT, damageAmount);
     }
 
     @Override

@@ -12,6 +12,7 @@ public class PlayingState implements IGameState {
     @Override
     public void enterState() {
         gameModel.notifyObserver(new TileUpdateEvent());
+
         // Code to initialize the playing state
     }
 

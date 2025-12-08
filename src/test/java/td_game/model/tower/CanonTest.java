@@ -37,8 +37,8 @@ public class CanonTest {
         List<Waypoint> pathList = new ArrayList<>();
         ArrayList<ABaseEnemy> enemyList = new ArrayList<>();
 
-        ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
-        ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
+        ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList),10);
+        ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList),10);
 
         CanonTower tower = new CanonTower(1,1,projectileManager);
 
@@ -55,7 +55,7 @@ public class CanonTest {
     public void testLenToEnemyX()
     {
         List<Waypoint> pathList = new ArrayList<>();
-        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
+        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList),10);
 
         ATower tower = new CanonTower(5,0,projectileManager);
 
@@ -66,7 +66,7 @@ public class CanonTest {
     public void testLenToEnemyY()
     {
         List<Waypoint> pathList = new ArrayList<>();
-        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
+        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList),10);
 
         ATower tower = new CanonTower(0,5,projectileManager);
 
