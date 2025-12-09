@@ -2,6 +2,11 @@ package td_game.model.projectile;
 
 import td_game.model.collision.*;
 import td_game.model.enemy.ABaseEnemy;
+import td_game.model.projectile.damageTypeStrategy.IDamagetypeStrategy;
+import td_game.model.projectile.lifeTimeStrategy.ILifeTimeStrategy;
+import td_game.model.projectile.movementStrategy.BasicMovementStrategy;
+import td_game.model.projectile.movementStrategy.IMovementStrategy;
+import td_game.model.projectile.pierceStrategy.IPierceStrategy;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,9 +25,14 @@ public class Projectile {
     private boolean alive = true;
     private List<ABaseEnemy> enemiesHitThisFrame = new ArrayList<>();
 
+    private IPierceStrategy pierceStrategy;
+    private IMovementStrategy movementStrategy;
+    private IDamagetypeStrategy damagetypeStrategy;
+    private ILifeTimeStrategy lifeTimeStrategy;
+
     private final boolean hitBoxRound;
 
-    public Projectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, double x, double y, boolean hitBoxRound) {
+    public Projectile(IMovementStrategy movementStrategy , IPierceStrategy pierceStrategy, IDamagetypeStrategy damagetypeStrategy,ILifeTimeStrategy lifeTimeStrategy, double angle, int width, int height, int timeAliveTicks, double x, double y, boolean hitBoxRound) {
         this.pixelsPerTick = pixelsPerTick;
         this.width = width;
         this.height = height;
@@ -33,30 +43,27 @@ public class Projectile {
         this.x = x + 16 / 2; // TODO: Make this cleaner, spawn projectiles in center of tile.
         this.y = y + 16 / 2; // TODO: Make this cleaner, spawn projectiles in center of tile.
 
+        this.lifeTimeStrategy = lifeTimeStrategy;
+        this.damagetypeStrategy = damagetypeStrategy;
+        this.movementStrategy = movementStrategy;
+        this.pierceStrategy = pierceStrategy;
         this.hitBoxRound = hitBoxRound;
     }
 
-    public void move(){
-        x += pixelsPerTick * Math.cos(angle * Math.PI / 180);
-        y += pixelsPerTick * Math.sin(angle * Math.PI / 180);
-    }
 
-    public int getX() { return (int) Math.round(x); }
-    public int getY() { return (int) Math.round(y); }
-    public int getDamage() { return damage; }
-    public int getPierce() { return pierce; }
-    public int getTimeAliveTicks() { return timeAliveTicks; }
+
+    public double getX() { return  Math.round(x); }
+    public double getY() { return  Math.round(y); }
+    public void setX(double x) { this.x = x; }
+    public void setY(double y) { this.y = y; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
     public double getAngle() { return angle; }
     public boolean getHitBoxRound() { return hitBoxRound; }
 
-    public void setAlive(boolean alive){
-        this.alive = alive;
-    }
 
     public boolean getIsAlive() {
-        return (pierce > 0 && timeAliveTicks > 0 && this.alive);
+        return lifeTimeStrategy.isAlive(this);
     }
 
     public List<ABaseEnemy> getEnemiesHitThisFrame() {
@@ -70,8 +77,6 @@ public class Projectile {
     public void clearEnemiesHitThisFrame() {
         enemiesHitThisFrame.clear();
     }
-    public void reducePierce() { pierce--; }
-    public void reduceTimeAlive() { timeAliveTicks--; }
 
     // Fix later
     public String getName() {

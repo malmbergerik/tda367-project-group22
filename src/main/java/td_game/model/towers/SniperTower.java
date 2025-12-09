@@ -2,7 +2,7 @@ package td_game.model.towers;
 
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.map.Tile;
-import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.factory.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.attackStrategies.SingleAttackStrategy;
 import td_game.model.towers.cooldownStrategies.BasicCooldownStrategy;

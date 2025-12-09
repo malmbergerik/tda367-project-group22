@@ -7,12 +7,9 @@ import td_game.model.enemy.Skeleton;
 import td_game.model.modelnit.GameModel;
 import td_game.model.path.Path;
 import td_game.model.path.Waypoint;
-import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.ATower;
 import td_game.model.towers.CanonTower;
-import td_game.model.towers.placementRules.GrassOnlyPlacementRule;
-import td_game.model.towers.Tower;
 import td_game.model.towers.TowerManager;
 
 import java.util.ArrayList;

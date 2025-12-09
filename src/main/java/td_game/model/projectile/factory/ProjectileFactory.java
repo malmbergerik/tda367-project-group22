@@ -1,4 +1,7 @@
-package td_game.model.projectile;
+package td_game.model.projectile.factory;
+
+import td_game.model.projectile.IProjectileFactory;
+import td_game.model.projectile.Projectile;
 
 public class ProjectileFactory implements IProjectileFactory {
     private final int pixelsPerTick;
