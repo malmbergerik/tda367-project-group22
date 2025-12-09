@@ -10,8 +10,6 @@ import td_game.view.panel.WindowFrame;
 import td_game.view.render.RenderingContext;
 import td_game.view.render.RenderingContextFactory;
 
-import java.awt.*;
-
 public class AppController {
 
     public AppController(GameModel model, IGameLoop gameLoop,  int windowWidth, int windowHeight, int gameWidth, int gameHeight) {
@@ -52,6 +50,7 @@ public class AppController {
 
         windowFrame.showView(ViewTypes.MENU_VIEW);
         windowFrame.makeVisible();
+
 
     }
 

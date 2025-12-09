@@ -22,7 +22,7 @@ public class GameSpeedPanel extends JPanel {
         button.setPreferredSize(new Dimension(96,96));
         button.setMaximumSize(new Dimension(96,96));
         button.setMinimumSize(new Dimension(96,96));
-
+        button.setFocusable(false);
         add(waveLabel);
         add(button);
     }

@@ -35,4 +35,16 @@ public class WindowFrame extends JFrame {
     public void makeVisible() {
         this.setVisible(true);
     }
+
+    public void showOverlay(JPanel overlayPanel) {
+        this.setGlassPane(overlayPanel);
+        overlayPanel.setVisible(true);
+        overlayPanel.revalidate();
+        overlayPanel.repaint();
+    }
+
+    public void hideOverlay() {
+        this.getGlassPane().setVisible(false);
+    }
+
 }

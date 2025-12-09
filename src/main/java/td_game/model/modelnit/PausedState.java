@@ -7,6 +7,7 @@ public class PausedState implements IGameState{
     @Override
     public void enterState() {
        System.out.println("Game Paused");
+
     }
 
     @Override

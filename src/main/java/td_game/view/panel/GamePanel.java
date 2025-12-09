@@ -14,7 +14,6 @@ public class GamePanel extends JPanel implements IView {
 
     public GamePanel(int width, int height, RenderingContext renderingContext, TowerViewManager towerManager) {
         setLayout(new BorderLayout());
-
         gameView = new GameViewPanel(width, height, renderingContext);
 
         JPanel bottomBar = new JPanel(); // Replace with actual bottom bar implementation

@@ -52,6 +52,8 @@ public class TowerPanel extends JPanel {
                 listener.onTowerSelection(name);
             }
         });
+
+        button.setFocusable(false);
         return button;
     }
     private void addToPanel(JButton button){
