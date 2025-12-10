@@ -1,5 +1,6 @@
 package td_game.controller;
 
+import td_game.model.events.IGameObserver;
 import td_game.model.modelnit.*;
 
 import td_game.view.constants.ViewTypes;
@@ -9,6 +10,9 @@ import td_game.view.panel.MenuPanel;
 import td_game.view.panel.WindowFrame;
 import td_game.view.render.RenderingContext;
 import td_game.view.render.RenderingContextFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppController {
 
@@ -45,6 +49,9 @@ public class AppController {
         menuView.addExitListener(e -> System.exit(0));
 
         GameController gameController = new GameController(model, gameView.getGameViewPanel(), gameView.getSideBar());
+        StateController stateController = new StateController(model, windowFrame);
+
+        model.registerStateObserver(stateController);
         gameView.addSideBarListener(gameController.getPlacementController());
         gameView.addKeyListener(gameController.getInputController());
 

@@ -37,9 +37,9 @@ import td_game.model.waves.WaveManager;
 
 public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
-    private final GridMap gridMap;
+    private GridMap gridMap;
     private IGameState currentState;
-    private final PathManager pathManager;
+    private PathManager pathManager;
     private Path currentPath;
 
     //Player
@@ -54,12 +54,13 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
     private TowerManager towerManager;
     private ProjectileManager projectileManager;
     private TowerFactory towerFactory;
-
+    private EnemyFactory enemyFactory;
     // New
     private WaveManager waveManager;
 
     //Observers for game
     private List<IGameObserver> observers = new ArrayList<>();
+    private List<IGameStateObserver> stateObservers = new ArrayList<>();
 
     private ATower[][] placedTowerGrid;
 
@@ -80,10 +81,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         this.damageSystem = new DamageSystem(player);
         this.moneySystem = new MoneySystem(player);
 
-        EnemyFactory enemyFactory = new EnemyFactory();
+        this.enemyFactory = new EnemyFactory();
         enemyFactory.registerFactory("Slime",    path -> new Slime(10, 0.15, path,1));
         enemyFactory.registerFactory("Skeleton", path -> new Skeleton(2, 0.3, path,2));
-        enemyFactory.registerFactory("Golem",    path -> new Golem(100, 0.2, path,5));
+        enemyFactory.registerFactory("Golem",    path -> new Golem(100, 0.2, path,20));
         enemyFactory.registerFactory("Bat",      path -> new Bat(1, 0.5, path,3));
         enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(20, 0.25, path,8));
 
@@ -102,6 +103,34 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         this.towerFactory = new TowerFactory(projectileManager);
 
         placedTowerGrid = new ATower[gridMap.getRow()][gridMap.getCol()];
+    }
+
+    public void resetGame(){
+        activeEnemies.clear();
+        activeProjectiles.clear();
+        activeTowers.clear();
+        player.removeObserver(this);
+        this.player = new Player(new PlayerHealth(100), new PlayerMoney(100));
+        player.addObserver(this);
+        damageSystem = new DamageSystem(player);
+        moneySystem = new MoneySystem(player);
+
+        enemyManager = new EnemyManager(this.activeEnemies, this, damageSystem, moneySystem);
+        WaveLoader waveLoader = new WaveLoader();
+        Queue<Wave> waves = waveLoader.loadWaves("waves/waves.txt");
+
+        waveManager = new WaveManager(enemyManager, enemyFactory, waves, currentPath);
+
+        // Start first wave
+        waveManager.startNextWave();
+
+        towerManager = new TowerManager(this, moneySystem);
+        this.projectileManager = new ProjectileManager(this);
+        this.towerFactory = new TowerFactory(projectileManager);
+
+        placedTowerGrid = new ATower[gridMap.getRow()][gridMap.getCol()];
+        onHealthChanged(100);
+        onMoneyChanged();
     }
 
     public Path getCurrentPath() {
@@ -229,12 +258,21 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         if (!observers.contains(observer))
             observers.add(observer);
     }
+    public void registerStateObserver(IGameStateObserver observer) {
+        if (!stateObservers.contains(observer))
+            stateObservers.add(observer);
+    }
 
     @Override
     public void unregisterObserver(IGameObserver observer) {
         observers.remove(observer);
     }
 
+    public void unregisterAllObserver(){
+        observers.clear();
+        stateObservers.clear();
+        player.removeObserver(this);
+    }
     @Override
     public void notifyObserver(IGameEvent event) {
         for (IGameObserver observer : observers) {
@@ -242,15 +280,18 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         }
     }
 
+
     @Override
-    public void onHealthChanged(int newHealth) {
+    public void onHealthChanged(int health) {
         notifyObserver(new PlayerHealthUpdateEvent());
     }
 
     @Override
     public void onPlayerDeath() {
-        System.out.println("You Lose!");
-
+        setGameState(new LostState());
+        for (IGameStateObserver observer : stateObservers) {
+            observer.onGameLost();
+        }
     }
 
     public void onMoneyChanged(){
@@ -273,10 +314,16 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         if(currentState instanceof PlayingState){
             setGameState(new PausedState());
 
+            for (IGameStateObserver observer : stateObservers) {
+                observer.onGamePause();
+            }
 
         }
         else if(currentState instanceof PausedState){
             setGameState(new PlayingState(this));
+            for (IGameStateObserver observer : stateObservers) {
+                observer.onGameUnPause();
+            }
         }
     }
 }
