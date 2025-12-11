@@ -2,8 +2,14 @@ package td_game.model.towers;
 
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.map.Tile;
-import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.damageTypeStrategy.BasicDamageTypeStrategy;
+import td_game.model.projectile.factory.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
+import td_game.model.projectile.lifeTimeStrategy.BasicLifeTimeStrategy;
+import td_game.model.projectile.movementStrategy.BasicMovementStrategy;
+import td_game.model.projectile.movementStrategy.IMovementStrategy;
+import td_game.model.projectile.pierceStrategy.BasicPierceStrategy;
+import td_game.model.projectile.sizeStrategy.BasicRoundSizeStrategy;
 import td_game.model.towers.attackStrategies.SingleAttackStrategy;
 import td_game.model.towers.cooldownStrategies.BasicCooldownStrategy;
 import td_game.model.towers.placementRules.GrassOnlyPlacementRule;
@@ -19,8 +25,8 @@ public class CanonTower extends ATower{
     {
         super(x,y,
                 new SingleAttackStrategy(
-                        new ProjectileFactory(2,4,4,1,3,400,true),
-                        projectileManager
+                    new ProjectileFactory(new BasicMovementStrategy(1),new BasicPierceStrategy(3),new BasicDamageTypeStrategy(1),new BasicLifeTimeStrategy(120),new BasicRoundSizeStrategy(8,8)),
+                    projectileManager
                 ),
                 new NormalCircularRangeStrategy(80),
                 new BasicCooldownStrategy(50),
