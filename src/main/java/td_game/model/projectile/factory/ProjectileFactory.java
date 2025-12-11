@@ -1,48 +1,48 @@
 package td_game.model.projectile.factory;
 
-import td_game.model.projectile.IProjectileFactory;
 import td_game.model.projectile.Projectile;
+import td_game.model.projectile.damageTypeStrategy.IDamagetypeStrategy;
+import td_game.model.projectile.lifeTimeStrategy.ILifeTimeStrategy;
+import td_game.model.projectile.movementStrategy.IMovementStrategy;
+import td_game.model.projectile.pierceStrategy.IPierceStrategy;
+import td_game.model.projectile.sizeStrategy.ISizeStrategy;
 
 public class ProjectileFactory implements IProjectileFactory {
-    private final int pixelsPerTick;
-    private final int width;
-    private final int height;
-    private final int damage;
-    private final int pierce;
-    private final int timeAliveTicks;
-    private final boolean hitBoxRound;
+
+    private final IMovementStrategy movementStrategy;
+    private final IPierceStrategy pierceStrategy;
+    private final IDamagetypeStrategy damagetypeStrategy;
+    private final ILifeTimeStrategy lifeTimeStrategy;
+    private final ISizeStrategy sizeStrategy;
 
     public ProjectileFactory(
-            int pixelsPerTick,
-            int width,
-            int height,
-            int damage,
-            int pierce,
-            int timeAliveTicks,
-            boolean hitBoxRound
+            IMovementStrategy movementStrategy,
+            IPierceStrategy pierceStrategy,
+            IDamagetypeStrategy damagetypeStrategy,
+            ILifeTimeStrategy lifeTimeStrategy,
+            ISizeStrategy sizeStrategy
     ) {
-        this.pixelsPerTick = pixelsPerTick;
-        this.width = width;
-        this.height = height;
-        this.damage = damage;
-        this.pierce = pierce;
-        this.timeAliveTicks = timeAliveTicks;
-        this.hitBoxRound = hitBoxRound;
+        this.movementStrategy = movementStrategy;
+        this.pierceStrategy = pierceStrategy;
+        this.damagetypeStrategy = damagetypeStrategy;
+        this.lifeTimeStrategy = lifeTimeStrategy;
+        this.sizeStrategy = sizeStrategy;
     }
 
     @Override
     public Projectile create(double angle, double x, double y) {
         return new Projectile(
                 angle,
-                this.pixelsPerTick,
-                this.width,
-                this.height,
-                this.damage,
-                this.pierce,
-                this.timeAliveTicks,
                 x,
                 y,
-                this.hitBoxRound
+                movementStrategy.copy(),
+                this.pierceStrategy.copy(),
+                this.damagetypeStrategy,
+                this.lifeTimeStrategy.copy(),
+                this.sizeStrategy
+
+
+
         );
     }
 }

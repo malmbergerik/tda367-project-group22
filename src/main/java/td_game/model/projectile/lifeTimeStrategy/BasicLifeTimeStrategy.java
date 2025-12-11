@@ -10,6 +10,12 @@ public class BasicLifeTimeStrategy implements ILifeTimeStrategy{
     {
         this.timeAliveTick = timeAliveTick;
     }
+
+    @Override
+    public BasicLifeTimeStrategy copy() {
+        return new BasicLifeTimeStrategy(this.timeAliveTick);
+    }
+
     @Override
     public void updateLifetime() {
         this.timeAliveTick -= 1;
@@ -17,7 +23,7 @@ public class BasicLifeTimeStrategy implements ILifeTimeStrategy{
 
     @Override
     public boolean isAlive(Projectile p) {
-        if ((this.timeAliveTick <= 0) || p.getPierce() <= 0)
+        if ((this.timeAliveTick <= 0) || !p.getPierce())
         {
             return false;
         }

@@ -10,6 +10,10 @@ public class BasicPierceStrategy implements IPierceStrategy{
         this.pierceLeft = pierce;
     }
 
+    public BasicPierceStrategy copy() {
+        return new BasicPierceStrategy(this.pierceLeft);
+    }
+
     @Override
     public boolean hasPierceLeft() {
         if (pierceLeft >=1)
@@ -19,8 +23,5 @@ public class BasicPierceStrategy implements IPierceStrategy{
         else return false;
     }
 
-    @Override
-    public void onHitEnemy( ABaseEnemy enemy) {
-        pierceLeft -= 1;
-    }
+    public void reducePierce(){ pierceLeft -= 1;}
 }

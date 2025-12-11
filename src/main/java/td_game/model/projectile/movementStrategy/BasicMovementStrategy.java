@@ -12,6 +12,10 @@ public class BasicMovementStrategy implements IMovementStrategy{
         this.pixelsPerTick = pixelsPerTick;
     }
 
+    public BasicMovementStrategy copy() {
+        return new BasicMovementStrategy(this.pixelsPerTick);
+    }
+
     @Override
     public void move(Projectile p){
         dX += pixelsPerTick * Math.cos(p.getAngle() * Math.PI / 180);
