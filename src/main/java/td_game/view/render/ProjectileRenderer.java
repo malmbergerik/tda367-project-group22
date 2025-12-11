@@ -25,7 +25,7 @@ public class ProjectileRenderer extends ABaseRenderer {
             BufferedImage projectileImage = projectileViewManager.getProjectileImage(data.getName());
 
             if (projectileImage != null) {
-                drawCenteredImage(g2, projectileImage, data.getX(), data.getY(), 16, 16);
+                drawCenteredImage(g2, projectileImage, data.getX(), data.getY(), data.getWidth(), data.getHeight());
             }
         }
 

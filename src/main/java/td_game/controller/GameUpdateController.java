@@ -101,7 +101,7 @@ public class GameUpdateController implements IGameUpdateController {
         projectileList.clear();
 
         for (Projectile projectile : currentProjectiles) {
-            projectileList.add(new ProjectileViewData(projectile.getName(), projectile.getX(), projectile.getY()));
+            projectileList.add(new ProjectileViewData(projectile.getName(), projectile.getX(), projectile.getY(), projectile.getHeight(), projectile.getWidth()));
         }
 
         renderingContext.updateProjectileViewData(projectileList);
