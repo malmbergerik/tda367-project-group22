@@ -9,7 +9,6 @@ import td_game.model.projectile.damageTypeStrategy.IDamagetypeStrategy;
 import td_game.model.projectile.lifeTimeStrategy.ILifeTimeStrategy;
 import td_game.model.projectile.movementStrategy.IMovementStrategy;
 import td_game.model.projectile.pierceStrategy.IPierceStrategy;
-import td_game.model.projectile.sizeStrategy.BasicRoundSizeStrategy;
 import td_game.model.projectile.sizeStrategy.ISizeStrategy;
 
 import java.awt.geom.RectangularShape;

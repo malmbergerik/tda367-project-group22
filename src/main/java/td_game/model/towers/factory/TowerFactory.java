@@ -3,6 +3,7 @@ package td_game.model.towers.factory;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.ATower;
 import td_game.model.towers.CanonTower;
+import td_game.model.towers.FlameThrowerTower;
 import td_game.model.towers.SniperTower;
 
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class TowerFactory  {
     private void registerDefults() {
         register("CanonTower", (x, y) -> new CanonTower(x, y, projectileManager));
         register("SniperTower", (x, y) -> new SniperTower(x, y, projectileManager));
+        register("FlameThrowerTower", (x, y) -> new FlameThrowerTower(x, y, projectileManager));
     }
 
     public void register(String name, ITowerFactory factory) {

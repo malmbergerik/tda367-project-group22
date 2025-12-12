@@ -6,9 +6,9 @@ import td_game.model.projectile.damageTypeStrategy.BasicDamageTypeStrategy;
 public class BasicMovementStrategy implements IMovementStrategy{
     private double dX;
     private double dY;
-    private int pixelsPerTick;
+    private double pixelsPerTick;
 
-    public BasicMovementStrategy(int pixelsPerTick){
+    public BasicMovementStrategy(double pixelsPerTick){
         this.pixelsPerTick = pixelsPerTick;
     }
 
