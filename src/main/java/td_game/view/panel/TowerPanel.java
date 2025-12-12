@@ -25,6 +25,7 @@ public class TowerPanel extends JPanel {
 
         addToPanel(createTowerButton("CanonTower"));
         addToPanel(createTowerButton("SniperTower"));
+        addToPanel(createTowerButton("FlameThrowerTower"));
 
         fillPanel();
 
