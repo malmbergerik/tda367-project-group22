@@ -5,6 +5,12 @@ import td_game.model.collision.CreateHitbox;
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.events.ProjectileUpdateEvent;
 import td_game.model.modelnit.GameModel;
+import td_game.model.projectile.damageTypeStrategy.IDamagetypeStrategy;
+import td_game.model.projectile.lifeTimeStrategy.ILifeTimeStrategy;
+import td_game.model.projectile.movementStrategy.IMovementStrategy;
+import td_game.model.projectile.pierceStrategy.IPierceStrategy;
+import td_game.model.projectile.sizeStrategy.BasicRoundSizeStrategy;
+import td_game.model.projectile.sizeStrategy.ISizeStrategy;
 
 import java.awt.geom.RectangularShape;
 import java.util.List;
@@ -18,21 +24,14 @@ public class ProjectileManager {
         this.gameModel = gameModel;
         this.activeProjectiles = gameModel.getActiveProjectiles();
     }
-    public void createProjectile(double angle, int pixelsPerTick, int width, int height, int damage, int pierce, int timeAliveTicks, int x, int y, boolean hitBoxRound) {
-        Projectile p = new Projectile(angle, pixelsPerTick, width, height,  damage, pierce, timeAliveTicks,  x, y, hitBoxRound);
+    public void createProjectile(double angle, int x, int y, IMovementStrategy movementStrategy , IPierceStrategy pierceStrategy, IDamagetypeStrategy damagetypeStrategy, ILifeTimeStrategy lifeTimeStrategy, ISizeStrategy sizeStrategy) {
+        Projectile p = new Projectile(angle, x,y,movementStrategy , pierceStrategy,  damagetypeStrategy,  lifeTimeStrategy, sizeStrategy );
         activeProjectiles.add(p);
     }
     public void addProjectile(Projectile p) {
         activeProjectiles.add(p);
     }
 
-    public RectangularShape getProjectileHitBox(Projectile p){
-        if (p.getHitBoxRound()) {
-            return CreateHitbox.createHitboxEllipse((double) p.getX(),(double) p.getY(),(double) p.getWidth(),(double) p.getHeight());
-        } else {
-            return CreateHitbox.createHitboxRectangle((int) p.getX(),(int) p.getY(), p.getWidth(), p.getHeight());
-        }
-    }
 
     public List<Projectile> getActiveProjectiles() {
         return activeProjectiles;
@@ -40,14 +39,14 @@ public class ProjectileManager {
 
     public void hitEnemy(Projectile p)
     {
-        RectangularShape hitBox = getProjectileHitBox(p);
+        RectangularShape hitBox = p.getHitbox();
         List<ABaseEnemy> enemies = gameModel.getActiveEnemies();
         for (ABaseEnemy e: enemies) {
             RectangularShape enemyHitBox = CreateHitbox.createHitboxRectangle((int) e.getX(),(int) e.getY(), e.getWidth(), e.getHeight());
             if (!p.getEnemiesHitThisFrame().contains(e) && CheckCollision.checkCollision(hitBox, enemyHitBox)) {
                 e.takeDamage(p.getDamage());
                 p.reducePierce();
-                if (p.getPierce() <= 0){
+                if (!p.getPierce()){
                     break;
                 }
                 if (e.isAlive()){
