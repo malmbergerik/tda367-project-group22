@@ -26,8 +26,9 @@ public class Projectile {
     private IDamagetypeStrategy damagetypeStrategy;
     private ILifeTimeStrategy lifeTimeStrategy;
     private ISizeStrategy sizeStrategy;
+    private String projectileName;
 
-    public Projectile(double angle, double x, double y, IMovementStrategy movementStrategy , IPierceStrategy pierceStrategy, IDamagetypeStrategy damagetypeStrategy, ILifeTimeStrategy lifeTimeStrategy, ISizeStrategy sizeStrategy) {
+    public Projectile(double angle, double x, double y, IMovementStrategy movementStrategy , IPierceStrategy pierceStrategy, IDamagetypeStrategy damagetypeStrategy, ILifeTimeStrategy lifeTimeStrategy, ISizeStrategy sizeStrategy, String projecileName) {
         this.angle = angle;
         this.x = x + 16 / 2; // TODO: Make this cleaner, spawn projectiles in center of tile.
         this.y = y + 16 / 2; // TODO: Make this cleaner, spawn projectiles in center of tile.
@@ -37,6 +38,7 @@ public class Projectile {
         this.damagetypeStrategy = damagetypeStrategy;
         this.movementStrategy = movementStrategy;
         this.pierceStrategy = pierceStrategy;
+        this.projectileName = projecileName;
     }
 
 
@@ -73,7 +75,7 @@ public class Projectile {
 
     // Fix later
     public String getName() {
-        return "Bullet";
+        return this.projectileName;
     }
 
 

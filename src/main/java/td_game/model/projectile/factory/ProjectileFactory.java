@@ -14,19 +14,22 @@ public class ProjectileFactory implements IProjectileFactory {
     private final IDamagetypeStrategy damagetypeStrategy;
     private final ILifeTimeStrategy lifeTimeStrategy;
     private final ISizeStrategy sizeStrategy;
+    private final String name;
 
     public ProjectileFactory(
             IMovementStrategy movementStrategy,
             IPierceStrategy pierceStrategy,
             IDamagetypeStrategy damagetypeStrategy,
             ILifeTimeStrategy lifeTimeStrategy,
-            ISizeStrategy sizeStrategy
+            ISizeStrategy sizeStrategy,
+            String name
     ) {
         this.movementStrategy = movementStrategy;
         this.pierceStrategy = pierceStrategy;
         this.damagetypeStrategy = damagetypeStrategy;
         this.lifeTimeStrategy = lifeTimeStrategy;
         this.sizeStrategy = sizeStrategy;
+        this.name = name;
     }
 
     @Override
@@ -39,7 +42,8 @@ public class ProjectileFactory implements IProjectileFactory {
                 this.pierceStrategy.copy(),
                 this.damagetypeStrategy,
                 this.lifeTimeStrategy.copy(),
-                this.sizeStrategy
+                this.sizeStrategy,
+                this.name
 
 
 

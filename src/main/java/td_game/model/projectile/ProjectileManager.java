@@ -23,10 +23,7 @@ public class ProjectileManager {
         this.gameModel = gameModel;
         this.activeProjectiles = gameModel.getActiveProjectiles();
     }
-    public void createProjectile(double angle, int x, int y, IMovementStrategy movementStrategy , IPierceStrategy pierceStrategy, IDamagetypeStrategy damagetypeStrategy, ILifeTimeStrategy lifeTimeStrategy, ISizeStrategy sizeStrategy) {
-        Projectile p = new Projectile(angle, x,y,movementStrategy , pierceStrategy,  damagetypeStrategy,  lifeTimeStrategy, sizeStrategy );
-        activeProjectiles.add(p);
-    }
+
     public void addProjectile(Projectile p) {
         activeProjectiles.add(p);
     }
