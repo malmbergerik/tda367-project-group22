@@ -1,12 +1,8 @@
 package td_game.model.towers;
 
-import td_game.model.enemy.ABaseEnemy;
 import td_game.model.events.TowersUpdateEvent;
 import td_game.model.modelnit.GameModel;
 import td_game.model.player.MoneySystem;
-import td_game.model.projectile.Projectile;
-import td_game.model.projectile.ProjectileFactory;
-import td_game.model.projectile.ProjectileManager;
 
 import java.util.ArrayList;
 import java.util.List;
