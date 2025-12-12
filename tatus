@@ -1,0 +1,14 @@
+  10-create-path-finding-method-for-enemies[m
+  41-create-tests-for-enemy-path[m
+  56-remove-enums-from-gamastates[m
+  66-change-factory-method-for-enemies-again[m
+  72-test-for-new-towers[m
+  73-replace-waypoint-class-with-record[m
+  75-remove-instanceof-from-waypointextractor[m
+  82-refactor-tilesystem[m
+  83-removing-instanceof-from-the-refactored-tile-and-pathcalculating-system[m
+  84-refactor-enemy-wavespawner-and-add-more-enemies[m
+  86-create-a-player-health[m
+* [32m88-create-and-update-tests[m
+  main[m
+  replace-waypoint-class-with-records[m
