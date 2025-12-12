@@ -2,8 +2,13 @@ package td_game.model.towers;
 
 import td_game.model.enemy.ABaseEnemy;
 import td_game.model.map.Tile;
-import td_game.model.projectile.ProjectileFactory;
+import td_game.model.projectile.damageTypeStrategy.BasicDamageTypeStrategy;
+import td_game.model.projectile.factory.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
+import td_game.model.projectile.lifeTimeStrategy.BasicLifeTimeStrategy;
+import td_game.model.projectile.movementStrategy.BasicMovementStrategy;
+import td_game.model.projectile.pierceStrategy.BasicPierceStrategy;
+import td_game.model.projectile.sizeStrategy.BasicRoundSizeStrategy;
 import td_game.model.towers.attackStrategies.SingleAttackStrategy;
 import td_game.model.towers.cooldownStrategies.BasicCooldownStrategy;
 import td_game.model.towers.placementRules.GrassOnlyPlacementRule;
@@ -18,7 +23,7 @@ public class SniperTower extends ATower{
     {
         super(x,y,20,
                 new SingleAttackStrategy(
-                        new ProjectileFactory(6,4,4,1,1,400,true),
+                        new ProjectileFactory(new BasicMovementStrategy(4),new BasicPierceStrategy(5),new BasicDamageTypeStrategy(4),new BasicLifeTimeStrategy(400),new BasicRoundSizeStrategy(8,8)),
                         projectileManager
                 ),
                 new NormalCircularRangeStrategy(200),

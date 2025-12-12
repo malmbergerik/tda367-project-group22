@@ -1,13 +1,11 @@
 package td_game.model.towers.attackStrategies;
 
 import td_game.model.enemy.ABaseEnemy;
-import td_game.model.projectile.IProjectileFactory;
+import td_game.model.projectile.factory.IProjectileFactory;
 import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.ATower;
 import td_game.model.towers.MathHelper;
-
-import java.util.List;
 
 public class SingleAttackStrategy implements IAttackStrategy{
 
