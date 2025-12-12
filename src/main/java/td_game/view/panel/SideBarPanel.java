@@ -24,7 +24,6 @@ public class SideBarPanel extends JPanel {
 
         addToPanel(createTowerButton("CanonTower"));
         addToPanel(createTowerButton("SniperTower"));
-        addToPanel(createTowerButton("FlameThrowerTower"));
 
         fillPanel();
 

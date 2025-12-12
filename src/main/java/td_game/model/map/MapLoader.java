@@ -6,6 +6,23 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Loads a {@link GridMap} from a txt-file
+ * <p>
+ * Each line in the file represents a row,
+ * Each character on the line corresponds to a tile, which is created using a {@link TileFactory}
+ * </p>
+ *
+ * <p>
+ * Example file:
+ * <pre>
+ * 1 1 1
+ * 1 2 1
+ * 1 1 1
+ * </pre>
+ * Will result in a 3x3 map.
+ * </p>
+ */
 public class MapLoader {
 
     private final TileFactory tileFactory;

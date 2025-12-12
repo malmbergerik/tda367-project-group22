@@ -11,6 +11,7 @@ import td_game.view.panel.GameViewPanel;
 import td_game.view.helper.EnemyViewData;
 import td_game.view.helper.MapViewData;
 import td_game.view.helper.TowerViewData;
+import td_game.view.panel.SideBarPanel;
 import td_game.view.render.RenderingContext;
 
 import java.util.ArrayList;
@@ -20,18 +21,24 @@ public class GameUpdateController implements IGameUpdateController {
 
     private final GameModel model;
     private final GameViewPanel view;
+    private final SideBarPanel sideBar;
     private final RenderingContext renderingContext;
 
     private final List<EnemyViewData> enemyList;
     private final List<ProjectileViewData> projectileList;
 
-    public GameUpdateController(GameModel model, GameViewPanel view) {
+    public GameUpdateController(GameModel model, GameViewPanel view, SideBarPanel sideBar) {
         this.model = model;
         this.view = view;
+        this.sideBar = sideBar;
         this.renderingContext = view.getRenderingContext();
 
         this.enemyList = new ArrayList<>();
         this.projectileList = new ArrayList<>();
+
+        updateHealth();
+        updateMoney();
+        updateWave();
     }
 
     @Override
@@ -47,6 +54,34 @@ public class GameUpdateController implements IGameUpdateController {
     @Override
     public void handleProjectilesUpdate() {
         updateProjectiles();
+    }
+
+    @Override
+    public void handleHealthUpdate() {
+        updateHealth();
+    }
+
+    public void handleMoneyUpdate(){
+        updateMoney();
+    }
+
+    private void updateHealth(){
+        int currentHealth = model.getHealth();
+        sideBar.getStatsPanel().updateHealth(currentHealth);
+    }
+
+    private void updateMoney(){
+        int currentMoney = model.getMoney();
+        sideBar.getStatsPanel().updateMoney(currentMoney);
+    }
+
+    public void handleWaveUpdate() {
+        updateWave();
+    }
+
+    private void updateWave() {
+        int currentWave = model.getCurrentWave();
+        sideBar.getGameSpeedPanel().updateWave(currentWave);
     }
 
     public void handleTowersUpdate() {

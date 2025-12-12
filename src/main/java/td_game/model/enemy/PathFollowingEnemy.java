@@ -7,8 +7,8 @@ public abstract class PathFollowingEnemy extends ABaseEnemy {
     protected Path path;
     protected int currentWaypointIndex = 0;
 
-    public PathFollowingEnemy (int health, double speed, Path path, int width, int height) {
-        super(health, speed, width, height);
+    public PathFollowingEnemy (int health, double speed, Path path, int width, int height,int damageAmount) {
+        super(health, speed, width, height,damageAmount);
         this.path = path;
         initializePosition();
     }

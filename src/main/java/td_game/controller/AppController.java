@@ -1,10 +1,8 @@
 package td_game.controller;
 
-import td_game.model.modelnit.GameModel;
-import td_game.model.modelnit.IGameLoop;
+import td_game.model.events.IGameObserver;
+import td_game.model.modelnit.*;
 
-import td_game.model.modelnit.PlayingState;
-import td_game.view.*;
 import td_game.view.constants.ViewTypes;
 import td_game.view.helper.*;
 import td_game.view.panel.GamePanel;
@@ -13,7 +11,11 @@ import td_game.view.panel.WindowFrame;
 import td_game.view.render.RenderingContext;
 import td_game.view.render.RenderingContextFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppController {
+
     public AppController(GameModel model, IGameLoop gameLoop,  int windowWidth, int windowHeight, int gameWidth, int gameHeight) {
 
         TileViewManager tileManager = new TileViewManager();
@@ -29,7 +31,6 @@ public class AppController {
         );
 
         WindowFrame windowFrame = new WindowFrame(windowWidth, windowHeight);
-
         MenuPanel menuView = new MenuPanel(windowWidth, windowHeight);
         GamePanel gameView = new GamePanel(gameWidth, gameHeight, renderingContext, towerManager);
 
@@ -40,16 +41,23 @@ public class AppController {
         menuView.addPlayListener(e -> {
             windowFrame.showView(ViewTypes.GAME_VIEW);
             model.setGameState(new PlayingState(model));
+            gameView.setFocusable(true);
+            gameView.requestFocusInWindow();
             gameLoop.start();
         });
 
         menuView.addExitListener(e -> System.exit(0));
 
-        GameController gameController = new GameController(model, gameView.getGameViewPanel());
+        GameController gameController = new GameController(model, gameView.getGameViewPanel(), gameView.getSideBar());
+        StateController stateController = new StateController(model, windowFrame);
+
+        model.registerStateObserver(stateController);
         gameView.addSideBarListener(gameController.getPlacementController());
+        gameView.addKeyListener(gameController.getInputController());
 
         windowFrame.showView(ViewTypes.MENU_VIEW);
         windowFrame.makeVisible();
+
 
     }
 

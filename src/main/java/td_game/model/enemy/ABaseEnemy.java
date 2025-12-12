@@ -5,20 +5,22 @@ import td_game.model.towers.IPositionable;
 
 import java.lang.Math;
 
-public abstract class ABaseEnemy implements IMoveable, IDamageable {
+public abstract class ABaseEnemy implements IMoveable, IDamageable ,IDamageDealer{
     protected int health;
     protected double speed;
     protected double posX;
     protected double posY;
     protected int width;
     protected int height;
+    protected int damageAmount;
 
 
-    public ABaseEnemy (int health, double speed, int width, int height) {
+    public ABaseEnemy (int health, double speed, int width, int height, int damageAmount) {
         this.health = health;
         this.speed = speed;
         this.width = width;
         this.height = height;
+        this.damageAmount = damageAmount;
     }
 
     public abstract boolean hasReachedEnd();
@@ -51,4 +53,6 @@ public abstract class ABaseEnemy implements IMoveable, IDamageable {
     public abstract void move();
 
     public abstract String getName();
+
+    public int getDamageAmount(){return damageAmount;}
 }

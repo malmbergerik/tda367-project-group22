@@ -21,7 +21,7 @@ public class SniperTower extends ATower{
 
     public SniperTower(int x, int y, ProjectileManager projectileManager)
     {
-        super(x,y,
+        super(x,y,20,
                 new SingleAttackStrategy(
                         new ProjectileFactory(new BasicMovementStrategy(4),new BasicPierceStrategy(5),new BasicDamageTypeStrategy(4),new BasicLifeTimeStrategy(400),new BasicRoundSizeStrategy(8,8)),
                         projectileManager

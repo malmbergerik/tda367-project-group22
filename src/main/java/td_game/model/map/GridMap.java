@@ -1,5 +1,8 @@
 package td_game.model.map;
 
+/**
+ * Represents a 2D rectangular grid-based map of {@link Tile} objects.
+ */
 public class GridMap implements IMap{
     private int row;
     private int col;
@@ -27,6 +30,12 @@ public class GridMap implements IMap{
 
     public Tile[][] getMap() {return tiles;}
 
+    /**
+     * @param x row index
+     * @param y col index
+     * @return the tile at the given coordinates
+     */
+
     @Override
     public Tile getTile(int x, int y) {
         if(x<=row && x>=0 && y<=col && y>=0){
@@ -37,6 +46,12 @@ public class GridMap implements IMap{
         }
     }
 
+    /**
+     * @param x row index
+     * @param y col index
+     * @param tile tile that should be placed
+     * @throws IndexOutOfBoundsException if the coordinates are outside of map bounds
+     */
     @Override
     public void setTile(int x, int y, Tile tile) {
         if(x<=row && x>=0 && y<=col && y>=0) {

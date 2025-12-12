@@ -7,9 +7,15 @@ import td_game.model.enemy.Skeleton;
 import td_game.model.modelnit.GameModel;
 import td_game.model.path.Path;
 import td_game.model.path.Waypoint;
+import td_game.model.player.IHealth;
+import td_game.model.player.MoneySystem;
+import td_game.model.player.Player;
+import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.ATower;
 import td_game.model.towers.CanonTower;
+import td_game.model.towers.placementRules.GrassOnlyPlacementRule;
+import td_game.model.towers.Tower;
 import td_game.model.towers.TowerManager;
 
 import java.util.ArrayList;
@@ -18,13 +24,14 @@ import java.util.List;
 public class CanonTest {
 
     private GameModel gameModel;
+    private MoneySystem moneySystem;
     private TowerManager manager;
     private ProjectileManager projectileManager;
     @BeforeEach
     public void setup() {
         gameModel = new GameModel(32);
         projectileManager = new ProjectileManager(gameModel);
-        manager = new TowerManager( gameModel);
+        manager = new TowerManager(gameModel,moneySystem);
     }
 
 
@@ -34,8 +41,8 @@ public class CanonTest {
         List<Waypoint> pathList = new ArrayList<>();
         ArrayList<ABaseEnemy> enemyList = new ArrayList<>();
 
-        ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList));
-        ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList));
+        ABaseEnemy enemy1 = new Skeleton(1,1,new Path(pathList),10);
+        ABaseEnemy enemy2 = new Skeleton(1,1,new Path(pathList),10);
 
         CanonTower tower = new CanonTower(1,1,projectileManager);
 
@@ -52,7 +59,7 @@ public class CanonTest {
     public void testLenToEnemyX()
     {
         List<Waypoint> pathList = new ArrayList<>();
-        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
+        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList),10);
 
         ATower tower = new CanonTower(5,0,projectileManager);
 
@@ -63,7 +70,7 @@ public class CanonTest {
     public void testLenToEnemyY()
     {
         List<Waypoint> pathList = new ArrayList<>();
-        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList));
+        ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList),10);
 
         ATower tower = new CanonTower(0,5,projectileManager);
 
