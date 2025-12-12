@@ -12,10 +12,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class ATower implements IPositionable, IPlacementRule {
+public abstract class ATower implements IPositionable, IPlacementRule, IValue {
 
     private int x;
     private int y;
+    private int value;
     protected List<ABaseEnemy> enemiesInRange = new ArrayList<>();
     protected IAttackStrategy attackStrategy;
     protected IRangeStrategy rangeStrategy;
@@ -24,7 +25,7 @@ public abstract class ATower implements IPositionable, IPlacementRule {
     protected IPlacementRule placementRule;
 
     public ATower(
-            int x, int y,
+            int x, int y, int value,
             IAttackStrategy attackStrategy,
             IRangeStrategy rangeStrategy,
             ICooldownStrategy cooldownStrategy,
@@ -32,6 +33,7 @@ public abstract class ATower implements IPositionable, IPlacementRule {
             IPlacementRule placementRule)
 
     {
+        this.value = value;
         this.x = x;
         this.y = y;
         this.attackStrategy = attackStrategy;
@@ -83,4 +85,8 @@ public abstract class ATower implements IPositionable, IPlacementRule {
 
     }
 
+    @Override
+    public int getValue() {
+        return value;
+    }
 }

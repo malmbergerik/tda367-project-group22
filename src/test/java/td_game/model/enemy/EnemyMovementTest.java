@@ -21,7 +21,7 @@ public class EnemyMovementTest {
 
     private EnemyFactory getEnemyFactory() {
         EnemyFactory enemyFactory = new EnemyFactory();
-        enemyFactory.registerFactory("Skeleton", Skeleton::new);
+        enemyFactory.registerFactory("Skeleton", path -> new Skeleton(2, 0.3, path,2));
         return enemyFactory;
     }
 
@@ -31,7 +31,7 @@ public class EnemyMovementTest {
     void testEnemyInitialization() {
         Path path = createTestPath();
         EnemyFactory enemyFactory = getEnemyFactory();
-        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", 1, 0.5, path);
+        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", path);
 
         assertNotNull(enemy, "Factory should create an enemy.");
         assertEquals(16.0, enemy.getX(), DELTA);
@@ -49,7 +49,7 @@ public class EnemyMovementTest {
         Path path = createTestPath();
         double speed = 4.0;
         EnemyFactory enemyFactory = getEnemyFactory();
-        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", 1, speed, path);
+        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", path);
 
         // Move 1 tick (4 pixels)
         enemy.move();
@@ -80,7 +80,7 @@ public class EnemyMovementTest {
         Path path = createTestPath();
         double speed = 8.0;
         EnemyFactory enemyFactory = getEnemyFactory();
-        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", 1, speed, path);
+        ABaseEnemy enemy = enemyFactory.createEnemy("Skeleton", path);
 
         PathFollowingEnemy pathEnemy = (PathFollowingEnemy) enemy;
 

@@ -18,6 +18,6 @@ public class Main {
     public static void main(String[] args) {
         GameModel gameModel = new GameModel(TILE_SIZE);
         IGameLoop gameLoop = new GameLoop(gameModel);
-        new AppController(gameModel,gameLoop, WINDOW_WIDTH, WINDOW_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
+        AppController appController = new AppController(gameModel,gameLoop, WINDOW_WIDTH, WINDOW_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
     }
 }
