@@ -25,8 +25,8 @@ public class DoubleAttackStrategy implements IAttackStrategy{
         for (int i = 0; i < getProjectileAmount(tower); i++) {
             Projectile projectile = projectileFactory.create(
                     (MathHelper.getAngleToTarget(tower, enemy)-10*i),
-                    tower.getX(),
-                    tower.getY()
+                    tower.getX()-8,
+                    tower.getY()-8
             );
             projectileManager.addProjectile(projectile);
         }

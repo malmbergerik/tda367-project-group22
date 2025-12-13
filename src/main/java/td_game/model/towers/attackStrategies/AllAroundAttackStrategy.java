@@ -1,18 +1,18 @@
 package td_game.model.towers.attackStrategies;
 
 import td_game.model.enemy.ABaseEnemy;
-import td_game.model.projectile.factory.IProjectileFactory;
 import td_game.model.projectile.Projectile;
 import td_game.model.projectile.ProjectileManager;
+import td_game.model.projectile.factory.IProjectileFactory;
 import td_game.model.towers.ATower;
 import td_game.model.towers.MathHelper;
 
-public class SingleAttackStrategy implements IAttackStrategy{
+public class AllAroundAttackStrategy implements IAttackStrategy{
 
     private final IProjectileFactory projectileFactory;
     private final ProjectileManager projectileManager;
 
-    public SingleAttackStrategy(IProjectileFactory projectileFactory, ProjectileManager projectileManager) {
+    public AllAroundAttackStrategy(IProjectileFactory projectileFactory, ProjectileManager projectileManager) {
         this.projectileFactory = projectileFactory;
         this.projectileManager = projectileManager;
     }
@@ -24,7 +24,7 @@ public class SingleAttackStrategy implements IAttackStrategy{
         ABaseEnemy enemy = targets[0];
         for (int i = 0; i < getProjectileAmount(tower); i++) {
             Projectile projectile = projectileFactory.create(
-                    MathHelper.getAngleToTarget(tower, enemy),
+                    (i * 36 ),
                     tower.getX()-8,
                     tower.getY()-8
             );
@@ -35,6 +35,6 @@ public class SingleAttackStrategy implements IAttackStrategy{
 
     @Override
     public int getProjectileAmount(ATower tower) {
-        return 1;
+        return 10;
     }
 }
