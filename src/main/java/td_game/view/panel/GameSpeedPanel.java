@@ -11,23 +11,38 @@ public class GameSpeedPanel extends JPanel {
 
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.decode("#222222"));
-
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 
 
         waveLabel = new JLabel();
         waveLabel.setForeground(Color.YELLOW);
         waveLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
-        JButton button = new JButton();
-        button.setPreferredSize(new Dimension(96,96));
-        button.setMaximumSize(new Dimension(96,96));
-        button.setMinimumSize(new Dimension(96,96));
-        button.setFocusable(false);
+
+
+        startWaveButton = new JButton("Start Wave");
+        startWaveButton.setPreferredSize(new Dimension(120, 40));
+        startWaveButton.setFocusable(false);
+        startWaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         add(waveLabel);
-        add(button);
+        add(startWaveButton);
     }
 
     public void updateWave(int currentWave) {
-        waveLabel.setText(currentWave + " / " + "10");
+        waveLabel.setText(currentWave + " / " + "15");
+    }
+
+    public void setStartWaveButtonEnabled(boolean enabled) {
+        startWaveButton.setEnabled(enabled);
+        if(enabled) {
+            startWaveButton.setText("Start Wave");
+        } else {
+            startWaveButton.setText("In Progress");
+        }
+    }
+
+    public void addStartWaveListener(ActionListener listener) {
+        startWaveButton.addActionListener(listener);
     }
 }

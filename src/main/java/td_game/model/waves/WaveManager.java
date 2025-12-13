@@ -117,8 +117,6 @@ public class WaveManager {
         return allEnemiesSpawned;
     }
 
-    // --- DESSA METODER SAKNADES ---
-
     public boolean isWaveActive() {
         return waveActive;
     }
