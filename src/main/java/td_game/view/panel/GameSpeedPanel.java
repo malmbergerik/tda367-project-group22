@@ -2,10 +2,12 @@ package td_game.view.panel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class GameSpeedPanel extends JPanel {
 
     private JLabel waveLabel;
+    private JButton startWaveButton;
 
     public GameSpeedPanel(int width, int height){
 
@@ -34,12 +36,8 @@ public class GameSpeedPanel extends JPanel {
     }
 
     public void setStartWaveButtonEnabled(boolean enabled) {
+        if (startWaveButton == null) return;
         startWaveButton.setEnabled(enabled);
-        if(enabled) {
-            startWaveButton.setText("Start Wave");
-        } else {
-            startWaveButton.setText("In Progress");
-        }
     }
 
     public void addStartWaveListener(ActionListener listener) {

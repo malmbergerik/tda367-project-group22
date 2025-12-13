@@ -81,7 +81,10 @@ public class GameUpdateController implements IGameUpdateController {
 
     private void updateWave() {
         int currentWave = model.getCurrentWave();
+        boolean isWaveActive = model.isWaveActive();
+
         sideBar.getGameSpeedPanel().updateWave(currentWave);
+        sideBar.getGameSpeedPanel().setStartWaveButtonEnabled(!isWaveActive);
     }
 
     public void handleTowersUpdate() {
