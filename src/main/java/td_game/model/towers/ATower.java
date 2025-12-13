@@ -34,8 +34,8 @@ public abstract class ATower implements IPositionable, IPlacementRule, IValue {
 
     {
         this.value = value;
-        this.x = x;
-        this.y = y;
+        this.x = x+8;
+        this.y = y+8;
         this.attackStrategy = attackStrategy;
         this.rangeStrategy = rangeStrategy;
         this.cooldownStrategy = cooldownStrategy;

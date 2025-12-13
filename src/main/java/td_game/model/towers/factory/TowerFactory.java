@@ -1,10 +1,7 @@
 package td_game.model.towers.factory;
 
 import td_game.model.projectile.ProjectileManager;
-import td_game.model.towers.ATower;
-import td_game.model.towers.CanonTower;
-import td_game.model.towers.FlameThrowerTower;
-import td_game.model.towers.SniperTower;
+import td_game.model.towers.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +20,7 @@ public class TowerFactory  {
         register("CanonTower", (x, y) -> new CanonTower(x, y, projectileManager));
         register("SniperTower", (x, y) -> new SniperTower(x, y, projectileManager));
         register("FlameThrowerTower", (x, y) -> new FlameThrowerTower(x, y, projectileManager));
+        register("FireTackTower", (x, y) -> new FireTackTower(x, y, projectileManager));
     }
 
     public void register(String name, ITowerFactory factory) {

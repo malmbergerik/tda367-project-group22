@@ -22,6 +22,7 @@ public class TowerViewManager {
         towerImages.put("CanonTower", loadImage("assets/towers/tower1.png"));
         towerImages.put("SniperTower", loadImage("assets/towers/tower1.png"));
         towerImages.put("FlameThrowerTower", loadImage("assets/towers/tower2.png"));
+        towerImages.put("FireTackTower", loadImage("assets/towers/tower2.png"));
     }
 
 

@@ -9,8 +9,8 @@ import td_game.model.projectile.lifeTimeStrategy.BasicLifeTimeStrategy;
 import td_game.model.projectile.movementStrategy.BasicMovementStrategy;
 import td_game.model.projectile.pierceStrategy.BasicPierceStrategy;
 import td_game.model.projectile.sizeStrategy.BasicRoundSizeStrategy;
+import td_game.model.towers.attackStrategies.AllAroundAttackStrategy;
 import td_game.model.towers.attackStrategies.DoubleAttackStrategy;
-import td_game.model.towers.attackStrategies.SingleAttackStrategy;
 import td_game.model.towers.cooldownStrategies.BasicCooldownStrategy;
 import td_game.model.towers.placementRules.GrassOnlyPlacementRule;
 import td_game.model.towers.rangeStrategies.NormalCircularRangeStrategy;
@@ -19,18 +19,18 @@ import td_game.model.towers.targetStrategy.TargetingFirst;
 import java.util.Collection;
 import java.util.List;
 
-public class FlameThrowerTower extends ATower{
+public class FireTackTower extends ATower{
 
-    public FlameThrowerTower(int x, int y, ProjectileManager projectileManager)
+    public FireTackTower(int x, int y, ProjectileManager projectileManager)
     {
         super(x,y,10,
-                new DoubleAttackStrategy(
-                    new ProjectileFactory(new BasicMovementStrategy(0.07),new BasicPierceStrategy(1),new BasicDamageTypeStrategy(1),new BasicLifeTimeStrategy(30),new BasicRoundSizeStrategy(12,12), "Fireball"),
+                new AllAroundAttackStrategy(
+                    new ProjectileFactory(new BasicMovementStrategy(0.15),new BasicPierceStrategy(1),new BasicDamageTypeStrategy(1),new BasicLifeTimeStrategy(16),new BasicRoundSizeStrategy(10,10), "Fireball"),
 
                     projectileManager
                 ),
-                new NormalCircularRangeStrategy(25),
-                new BasicCooldownStrategy(20),
+                new NormalCircularRangeStrategy(20),
+                new BasicCooldownStrategy(60),
                 new TargetingFirst(),
                 new GrassOnlyPlacementRule());
     }
