@@ -96,7 +96,6 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         this.waveManager = new WaveManager(enemyManager, enemyFactory, waves, currentPath);
 
         // Start first wave
-        this.waveManager.startNextWave();
 
         this.towerManager = new TowerManager(this, moneySystem);
         this.projectileManager = new ProjectileManager(this);
@@ -121,9 +120,6 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
         waveManager = new WaveManager(enemyManager, enemyFactory, waves, currentPath);
 
-        // Start first wave
-        waveManager.startNextWave();
-
         towerManager = new TowerManager(this, moneySystem);
         this.projectileManager = new ProjectileManager(this);
         this.towerFactory = new TowerFactory(projectileManager);
@@ -131,6 +127,8 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         placedTowerGrid = new ATower[gridMap.getRow()][gridMap.getCol()];
         onHealthChanged(100);
         onMoneyChanged();
+
+        notifyObserver(new WaveUpdateEvent());
     }
 
     public Path getCurrentPath() {
@@ -173,9 +171,20 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
 
         if (waveManager.isWaveComplete() && activeEnemies.isEmpty()) {
+            waveManager.waveFinished();
+            notifyObserver(new WaveUpdateEvent());
+        }
+    }
+
+    public void startNextWave() {
+        if (!waveManager.isWaveActive()) {
             waveManager.startNextWave();
             notifyObserver(new WaveUpdateEvent());
         }
+    }
+
+    public boolean isWaveActive() {
+        return waveManager.isWaveActive();
     }
 
     public void updateProjectile() {

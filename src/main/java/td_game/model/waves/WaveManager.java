@@ -56,6 +56,11 @@ public class WaveManager {
 
     }
 
+
+    public void waveFinished() {
+        waveActive = false;
+    }
+
     public void update() {
         if (!waveActive || allEnemiesSpawned || currentGroup == null) return;
 
