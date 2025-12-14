@@ -1,5 +1,8 @@
 package td_game.view.helper;
 
+/**
+ * A class to hold data about the map view.
+ */
 public class MapViewData {
     private final String[][] tileKeys;
     private final int tileSize;
