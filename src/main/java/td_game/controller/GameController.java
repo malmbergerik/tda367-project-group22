@@ -24,7 +24,7 @@ public class GameController implements IGameObserver {
         this.gameUpdateController = new GameUpdateController(model, view, sideBar);
 
         initGameMouseListener();
-        initUIListeners();
+        initUIListeners(sideBar);
 
         gameUpdateController.handleTileUpdate();
         gameUpdateController.handleWaveUpdate();
@@ -53,7 +53,7 @@ public class GameController implements IGameObserver {
 
     }
 
-    private void initUIListeners() {
+    private void initUIListeners(SideBarPanel sideBar) {
         // Connect the button in the view to the model method
         sideBar.getGameSpeedPanel().addStartWaveListener(e -> model.startNextWave());
     }
