@@ -3,11 +3,10 @@ package td_game.controller;
 import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
 import td_game.view.panel.GameViewPanel;
-import td_game.view.listener.ITowerPlacementListener;
 import td_game.view.render.RenderingContext;
 
 
-public class PlacementController implements IPlacementController, ITowerPlacementListener {
+public class PlacementController implements IMouseController {
     private final GameViewPanel view;
     private final GameModel model;
     private final RenderingContext renderingContext;
@@ -81,7 +80,6 @@ public class PlacementController implements IPlacementController, ITowerPlacemen
         view.repaint();
     }
 
-    @Override
     public void onTowerSelection(String name) {
         if (selectedTower != null && selectedTower.equals(name)) {
             selectedTower = null;
@@ -91,4 +89,14 @@ public class PlacementController implements IPlacementController, ITowerPlacemen
         }
         view.repaint();
     }
+
+    public String getSelectedTower(){
+        return selectedTower;
+    }
+
+    public void reset(){
+        selectedTower = null;
+        handleMouseExit();
+    }
+
 }

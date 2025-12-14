@@ -10,7 +10,6 @@ import td_game.model.path.Waypoint;
 import td_game.model.player.IHealth;
 import td_game.model.player.MoneySystem;
 import td_game.model.player.Player;
-import td_game.model.projectile.ProjectileFactory;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.ATower;
 import td_game.model.towers.CanonTower;

@@ -97,4 +97,14 @@ class TowerManagerTest {
         // If it returns an object, change this line to: return p.getMoney().getCurrentMoney();
         return p.getMoney();
     }
+
+    @Test
+    void testRemoveTower(){
+        ATower tower = towerFactory.createTower("CanonTower", 0, 0);
+
+        towerManager.addTower(tower);
+
+        towerManager.removeTower(tower);
+        assertFalse(model.getActiveTowers().contains(tower));
+    }
 }

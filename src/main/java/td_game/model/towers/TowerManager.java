@@ -9,7 +9,8 @@ import java.util.List;
 
 
 public class TowerManager {
-    private List<ATower> activeTowers = new ArrayList<>();
+    private List<ATower> activeTowers;
+    private ATower[][] towergrid;
     private GameModel gameModel;
     private MoneySystem moneySystem;
 
@@ -18,6 +19,7 @@ public class TowerManager {
         this.gameModel = gameModel;
         this.moneySystem = moneySystem;
         this.activeTowers = gameModel.getActiveTowers();
+        this.towergrid = gameModel.getPlacedTowerGrid();
     }
 
     public boolean addTower(ATower tower) {
