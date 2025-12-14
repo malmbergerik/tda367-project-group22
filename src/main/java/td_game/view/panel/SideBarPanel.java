@@ -5,11 +5,13 @@ import td_game.view.helper.TowerViewManager;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The side bar panel that contains the stats panel, tower panel, and game speed panel.
+ */
 public class SideBarPanel extends JPanel {
 
     private StatsPanel statsPanel;
     private TowerPanel towerPanel;
-    private TowerViewManager towerViewManager;
     private GameSpeedPanel gameSpeedPanel;
 
     public SideBarPanel(int width, int height, TowerViewManager towerViewManager){
@@ -18,7 +20,7 @@ public class SideBarPanel extends JPanel {
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
 
-        this.statsPanel = new StatsPanel(width,144, 100); // TODO: Fixed 100 value, fix later
+        this.statsPanel = new StatsPanel(width,144, 100); // TODO: Fixed 100 value, make dynamic
 
         this.towerPanel = new TowerPanel(width,364,towerViewManager);
         this.gameSpeedPanel = new GameSpeedPanel(width, 192);

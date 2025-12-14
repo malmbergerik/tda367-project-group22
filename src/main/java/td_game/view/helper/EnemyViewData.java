@@ -5,6 +5,9 @@ import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A class to hold data about an enemy for view purposes.
+ */
 public class EnemyViewData {
     private String enemy;
     private double x;

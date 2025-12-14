@@ -1,5 +1,8 @@
 package td_game.view.helper;
 
+/**
+ * A class to hold data about towers for view purposes.
+ */
 public class TowerViewData {
 
     private final String[][] towerKeys;

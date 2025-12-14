@@ -7,6 +7,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A class to manage tower images for the game view.
+ * Used for passive View in MVC architecture.
+ */
 public class TowerViewManager {
 
     private final Map<String, BufferedImage> towerImages;

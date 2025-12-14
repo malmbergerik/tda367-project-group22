@@ -9,6 +9,10 @@ import td_game.view.render.RenderingContext;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The main game panel that contains the game view, side bar, and bottom bar.
+ */
+
 public class GamePanel extends JPanel implements IView {
     private final GameViewPanel gameView;
     private final SideBarPanel sideBar;

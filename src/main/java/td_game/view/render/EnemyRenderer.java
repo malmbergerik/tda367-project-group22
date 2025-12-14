@@ -8,6 +8,9 @@ import java.awt.image.BufferedImage;
 
 import java.util.List;
 
+/**
+ * A renderer for enemies in the game.
+ */
 public class EnemyRenderer extends ABaseRenderer {
 
     private final EnemyViewManager enemyViewManager;
@@ -17,6 +20,11 @@ public class EnemyRenderer extends ABaseRenderer {
         this.enemyViewManager = enemyViewManager;
     }
 
+    /**
+     * Renders the enemies on the game view.
+     *
+     * @param g2 The Graphics2D object to draw on.
+     */
     @Override
     public void render(Graphics2D g2) {
         List<EnemyViewData> enemyViewData = context.getEnemyViewData();
@@ -33,6 +41,11 @@ public class EnemyRenderer extends ABaseRenderer {
 
     }
 
+    /**
+     * Gets the render priority for enemies.
+     *
+     * @return The render priority.
+     */
     @Override
     public int getRenderPriority() {
         return 30;

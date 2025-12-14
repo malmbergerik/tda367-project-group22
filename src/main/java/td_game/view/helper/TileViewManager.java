@@ -9,7 +9,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * A class to manage tile images for the game view.
+ * Used for passive View in MVC architecture.
+ */
 public class TileViewManager {
 
     private final Map<String, BufferedImage> tileImages;

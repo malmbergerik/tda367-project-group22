@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+
+/**
+ * The tower panel that contains the tower buttons for placing towers.
+ */
 public class TowerPanel extends JPanel {
     private ITowerPlacementListener listener;
     private int row = 0;

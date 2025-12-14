@@ -5,6 +5,10 @@ import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * A utility class to load custom fonts for the game view.
+ * Made completly by AI.
+ */
 public class FontLoader {
 
     public static Font loadFont(String path, float size) {

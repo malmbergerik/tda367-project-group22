@@ -5,6 +5,10 @@ import td_game.view.helper.FontLoader;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The stats panel that displays the player's health and money.
+ */
+
 public class StatsPanel extends JPanel {
     private final JLabel healthLabel;
     private final JLabel moneyLabel;
@@ -44,10 +48,16 @@ public class StatsPanel extends JPanel {
         this.add(moneyLabel, gbc);
     }
 
+    /** Update the health label with the current health
+     * @param currentHealth the current health
+     */
     public void updateHealth(int currentHealth) {
         healthLabel.setText("HP:           " + currentHealth + " / " + maxHealth);
     }
 
+    /** Update the money label with the current money
+     * @param currentMoney the current money
+     */
     public void updateMoney(int currentMoney) {
         moneyLabel.setText("Money:     " + currentMoney);
     }

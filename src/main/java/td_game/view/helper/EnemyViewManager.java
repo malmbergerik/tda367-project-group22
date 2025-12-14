@@ -7,6 +7,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A class to manage enemy images for the game view.
+ * Used for passive View in MVC architecture.
+ */
 public class EnemyViewManager {
 
     private final Map<String, BufferedImage> enemyImages;

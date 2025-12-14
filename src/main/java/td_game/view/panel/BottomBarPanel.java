@@ -11,6 +11,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+/**
+ * The bottom bar panel that displays selected tower information and sell options.
+ */
+
 public class BottomBarPanel extends JPanel {
 
     private ITowerActionListener listener;

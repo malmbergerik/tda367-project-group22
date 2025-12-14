@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * The panel that displays the current wave and a button to start the wave.
+ */
+
 public class GameSpeedPanel extends JPanel {
 
     private JLabel waveLabel;
@@ -31,15 +35,23 @@ public class GameSpeedPanel extends JPanel {
         add(startWaveButton);
     }
 
+
+    /** Update the wave label with the current wave number
+     * @param currentWave the current wave number
+     */
     public void updateWave(int currentWave) {
         waveLabel.setText(currentWave + " / " + "15");
     }
 
+    /** Enable or disable the start wave button
+     * @param enabled true to enable, false to disable
+     */
     public void setStartWaveButtonEnabled(boolean enabled) {
         if (startWaveButton == null) return;
         startWaveButton.setEnabled(enabled);
     }
 
+    // Add an ActionListener to the start wave button
     public void addStartWaveListener(ActionListener listener) {
         startWaveButton.addActionListener(listener);
     }

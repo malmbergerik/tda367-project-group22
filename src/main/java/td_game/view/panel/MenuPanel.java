@@ -10,13 +10,17 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MenuPanel extends APanel implements IMenuView, IView {
+/**
+ * The menu panel that displays the main menu with play and exit buttons.
+ */
+
+public class MenuPanel extends JPanel implements IMenuView, IView {
     private final JButton playButton;
     private final JButton exitButton;
     private final Image backgroundImage;
 
     public MenuPanel(int width, int height) {
-        super(width, height);
+        //super(width, height);
         Dimension size = new Dimension(width, height);
         setPreferredSize(size);
         setLayout(new GridBagLayout());

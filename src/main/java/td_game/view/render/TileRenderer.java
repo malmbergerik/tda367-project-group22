@@ -6,7 +6,9 @@ import td_game.view.helper.TileViewManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-// Extend BaseRenderer!
+/**
+ * A renderer for drawing the tile layer of the map.
+ */
 public class TileRenderer extends ABaseRenderer {
 
     private final TileViewManager tileViewManager;
@@ -17,6 +19,11 @@ public class TileRenderer extends ABaseRenderer {
         this.tileViewManager = tileViewManager;
     }
 
+    /**
+     * Renders the tile layer on the game view.
+     *
+     * @param g2 The Graphics2D object to draw on.
+     */
     @Override
     public void render(Graphics2D g2) {
         MapViewData mapViewData = context.getMapViewData();
@@ -31,6 +38,11 @@ public class TileRenderer extends ABaseRenderer {
         }
     }
 
+    /**
+     * Builds the tile layer image based on the map view data.
+     *
+     * @param mapData The map view data.
+     */
     private void buildTileLayer(MapViewData mapData) {
         String[][] tileKeys = mapData.getTileKeys();
         int tileSize = mapData.getTileSize();
@@ -57,6 +69,11 @@ public class TileRenderer extends ABaseRenderer {
         g2.dispose();
     }
 
+    /**
+     * Gets the render priority for tiles.
+     *
+     * @return The render priority.
+     */
     @Override
     public int getRenderPriority() {
         return 0; //

@@ -1,5 +1,8 @@
 package td_game.view.helper;
 
+/**
+ * A class to hold data about a projectile for view purposes.
+ */
 public class ProjectileViewData {
     private final String name;
     private final double x;

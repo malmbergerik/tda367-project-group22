@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+/**
+ * A renderer for projectiles in the game.
+ */
 public class ProjectileRenderer extends ABaseRenderer {
 
     private final ProjectileViewManager projectileViewManager;
@@ -16,6 +19,11 @@ public class ProjectileRenderer extends ABaseRenderer {
         this.projectileViewManager = projectileViewManager;
     }
 
+    /**
+     * Renders the projectiles on the game view.
+     *
+     * @param g2 The Graphics2D object to draw on.
+     */
     @Override
     public void render(Graphics2D g2) {
         List<ProjectileViewData> projectileViewData = context.getProjectileViewData();
@@ -31,6 +39,11 @@ public class ProjectileRenderer extends ABaseRenderer {
 
     }
 
+    /**
+     * Gets the render priority for projectiles.
+     *
+     * @return The render priority.
+     */
     @Override
     public int getRenderPriority() {
         return 40;
