@@ -83,10 +83,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
         this.enemyFactory = new EnemyFactory();
         enemyFactory.registerFactory("Slime",    path -> new Slime(10, 0.15, path,1));
-        enemyFactory.registerFactory("Skeleton", path -> new Skeleton(2, 0.3, path,2));
-        enemyFactory.registerFactory("Golem",    path -> new Golem(100, 0.2, path,20));
-        enemyFactory.registerFactory("Bat",      path -> new Bat(1, 0.5, path,3));
-        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(20, 0.25, path,8));
+        enemyFactory.registerFactory("Skeleton", path -> new Skeleton(3, 0.4, path,2));
+        enemyFactory.registerFactory("Golem",    path -> new Golem(100, 0.15, path,20));
+        enemyFactory.registerFactory("Bat",      path -> new Bat(2, 0.6, path,3));
+        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(25, 0.25, path,8));
 
         this.enemyManager = new EnemyManager(this.activeEnemies, this, damageSystem, moneySystem);
 
@@ -96,7 +96,6 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         this.waveManager = new WaveManager(enemyManager, enemyFactory, waves, currentPath);
 
         // Start first wave
-        this.waveManager.startNextWave();
 
         this.towerManager = new TowerManager(this, moneySystem);
         this.projectileManager = new ProjectileManager(this);
@@ -120,9 +119,7 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         Queue<Wave> waves = waveLoader.loadWaves("waves/waves.txt");
 
         waveManager = new WaveManager(enemyManager, enemyFactory, waves, currentPath);
-
-        // Start first wave
-        waveManager.startNextWave();
+        notifyObserver(new WaveUpdateEvent());
 
         towerManager = new TowerManager(this, moneySystem);
         this.projectileManager = new ProjectileManager(this);
@@ -173,9 +170,20 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
 
         if (waveManager.isWaveComplete() && activeEnemies.isEmpty()) {
+            waveManager.waveFinished();
+            notifyObserver(new WaveUpdateEvent());
+        }
+    }
+
+    public void startNextWave() {
+        if (!waveManager.isWaveActive()) {
             waveManager.startNextWave();
             notifyObserver(new WaveUpdateEvent());
         }
+    }
+
+    public boolean isWaveActive() {
+        return waveManager.isWaveActive();
     }
 
     public void updateProjectile() {
