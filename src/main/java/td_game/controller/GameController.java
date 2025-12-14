@@ -24,9 +24,10 @@ public class GameController implements IGameObserver {
         this.gameUpdateController = new GameUpdateController(model, view, sideBar);
 
         initGameMouseListener();
+        initUIListeners();
 
         gameUpdateController.handleTileUpdate();
-
+        gameUpdateController.handleWaveUpdate();
     }
 
     private void initGameMouseListener() {
@@ -50,6 +51,11 @@ public class GameController implements IGameObserver {
         view.addGameMouseListener(mouseAdapter);
         view.addGameMouseMotionListener(mouseAdapter);
 
+    }
+
+    private void initUIListeners() {
+        // Connect the button in the view to the model method
+        sideBar.getGameSpeedPanel().addStartWaveListener(e -> model.startNextWave());
     }
 
     @Override

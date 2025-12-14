@@ -56,6 +56,11 @@ public class WaveManager {
 
     }
 
+
+    public void waveFinished() {
+        waveActive = false;
+    }
+
     public void update() {
         if (!waveActive || allEnemiesSpawned || currentGroup == null) return;
 
@@ -111,8 +116,6 @@ public class WaveManager {
     public boolean isWaveComplete() {
         return allEnemiesSpawned;
     }
-
-    // --- DESSA METODER SAKNADES ---
 
     public boolean isWaveActive() {
         return waveActive;
