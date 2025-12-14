@@ -11,6 +11,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 
+/**
+ * The game view panel that displays the main game area.
+ */
 public class GameViewPanel extends JPanel {
    private final RenderingContext renderingContext;
 
@@ -41,6 +44,9 @@ public class GameViewPanel extends JPanel {
         return renderingContext.getScale();
     }
 
+    /** Get the rendering context
+     * @return the rendering context
+     */
     public RenderingContext getRenderingContext() {
         return renderingContext;
     }

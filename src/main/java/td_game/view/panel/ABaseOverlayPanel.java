@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
+/**
+ * An abstract base class for overlay panels with a semi-transparent background.
+ */
+
 public class ABaseOverlayPanel extends JPanel {
     protected GridBagConstraints gbc;
 
