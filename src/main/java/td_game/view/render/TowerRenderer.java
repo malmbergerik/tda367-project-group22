@@ -7,6 +7,9 @@ import td_game.view.helper.TowerViewManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * A renderer for towers in the game.
+ */
 public class TowerRenderer extends ABaseRenderer {
 
     private final TowerViewManager towerViewManager;
@@ -16,6 +19,11 @@ public class TowerRenderer extends ABaseRenderer {
         this.towerViewManager = towerViewManager;
     }
 
+    /**
+     * Renders the towers on the game view.
+     *
+     * @param g2 The Graphics2D object to draw on.
+     */
     @Override
     public void render(Graphics2D g2) {
         TowerViewData towerViewData = context.getTowerViewData();
@@ -42,6 +50,11 @@ public class TowerRenderer extends ABaseRenderer {
         }
     }
 
+    /**
+     * Gets the render priority for towers.
+     *
+     * @return The render priority.
+     */
     @Override
     public int getRenderPriority() {
         return 10;
