@@ -10,7 +10,12 @@ import td_game.view.panel.WindowFrame;
 import td_game.view.render.RenderingContext;
 import td_game.view.render.RenderingContextFactory;
 
-
+/**
+ * The {@code AppController} class is responsible for initializing and linking
+ * the main componenets of the game application.
+ * It sets up the game window,menys and rendering context,
+ * input handling and linking the UI interactions to the controllers.
+ */
 public class AppController {
 
     public AppController(GameModel model, IGameLoop gameLoop,  int windowWidth, int windowHeight, int gameWidth, int gameHeight) {

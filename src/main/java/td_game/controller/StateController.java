@@ -8,6 +8,12 @@ import td_game.view.panel.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Observes the game state and updates the UI accordingly.
+ * Displays overlays for pause, game won, and gameover-states.
+ * Implements {@link IGameStateObserver}.
+ */
+
 public class StateController implements IGameStateObserver {
     private GameModel model;
     private WindowFrame window;
@@ -43,22 +49,25 @@ public class StateController implements IGameStateObserver {
         }
     };
 
-
+    /** Call for view to display game won overlay. */
     @Override
     public void onGameWon() {
         window.showOverlay(new GameWonPanel(onRestartAction, onMenuAction));
     }
 
+    /** Call for view to display game over overlay. */
     @Override
     public void onGameLost() {
         window.showOverlay(new GameOverPanel(onRestartAction, onMenuAction));
     }
 
+    /** Call for view to display game pause overlay. */
     @Override
     public void onGamePause() {
         window.showOverlay(new PausePanel(onContinueAction, onMenuAction));
     }
 
+    /**Hides overlay when game is unpaused. */
     @Override
     public void onGameUnPause() {
         window.hideOverlay();

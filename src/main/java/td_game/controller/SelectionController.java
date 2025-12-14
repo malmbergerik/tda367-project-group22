@@ -4,6 +4,11 @@ import td_game.model.modelnit.GameModel;
 import td_game.model.towers.ATower;
 import td_game.view.panel.BottomBarPanel;
 
+/**
+ * Handles selecting towers on the game grid and send tower information
+ * to the view.
+ * Implements {@link IMouseController}.
+ */
 public class SelectionController implements IMouseController {
 
     private GameModel model;
@@ -19,11 +24,18 @@ public class SelectionController implements IMouseController {
         this.gameViewScale = gameViewScale;
 
     }
+
+    /** Not used for selection. */
     @Override
     public void handleMouseMoved(int x, int y) {
 
     }
 
+    /**
+     * Selects a tower when the user clicks on an occupied tile.
+     * @param x the x-coordinate of the mouse click
+     * @param y the y-coordinate of the mouse click
+     */
     @Override
     public void handleMouseClicked(int x, int y) {
         int tileSize = model.getGridMap().getTileSize() * gameViewScale;
@@ -45,15 +57,17 @@ public class SelectionController implements IMouseController {
         }
     }
 
+    /** Not used for selection. */
     @Override
     public void handleMouseExit() {
 
     }
-
+    /** Sells the currently selected tower. */
     public void onTowerSell(){
         model.sellTower(selectedRow,selectedCol);
     }
 
+    /** Resets the selection and clears tower information from the UI. */
     public void reset(){
         selectedCol = -1;
         selectedRow = -1;

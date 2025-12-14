@@ -3,6 +3,10 @@ package td_game.controller;
 import td_game.model.modelnit.GameModel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+/**
+ * Handles keyboard input for the game.
+ * Supports pausing the game with the ESC key.
+ */
 
 public class InputController implements KeyListener {
     private GameModel model;

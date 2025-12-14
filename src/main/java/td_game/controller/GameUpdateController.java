@@ -16,6 +16,11 @@ import td_game.view.render.RenderingContext;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Updates the game view and sidebar based on changes in the model.
+ * Implements {@link IGameUpdateController}.
+ */
+
 public class GameUpdateController implements IGameUpdateController {
 
     private final GameModel model;
@@ -64,20 +69,23 @@ public class GameUpdateController implements IGameUpdateController {
         updateMoney();
     }
 
+    public void handleWaveUpdate() {
+        updateWave();
+    }
+
+    /** Updates player health info in the sidebar. */
     private void updateHealth(){
         int currentHealth = model.getHealth();
         sideBar.getStatsPanel().updateHealth(currentHealth);
     }
 
+    /** Updates player money info in the sidebar. */
     private void updateMoney(){
         int currentMoney = model.getMoney();
         sideBar.getStatsPanel().updateMoney(currentMoney);
     }
 
-    public void handleWaveUpdate() {
-        updateWave();
-    }
-
+    /** Updates the wave info in the sidebar. */
     private void updateWave() {
         int currentWave = model.getCurrentWave();
         boolean isWaveActive = model.isWaveActive();
@@ -86,6 +94,7 @@ public class GameUpdateController implements IGameUpdateController {
         sideBar.getGameSpeedPanel().setStartWaveButtonEnabled(!isWaveActive);
     }
 
+    /** Updates the placed tower info in the view. */
     public void handleTowersUpdate() {
         ATower[][] activeTowers = model.getPlacedTowerGrid();
         int rows = activeTowers.length;
@@ -95,7 +104,7 @@ public class GameUpdateController implements IGameUpdateController {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 if (activeTowers[row][col] != null) {
-                    towerKeys[row][col] = activeTowers[row][col].getName();// TODO: change for activeTowers[row][col].getType() later
+                    towerKeys[row][col] = activeTowers[row][col].getName();
                 }
             }
         }
@@ -104,6 +113,7 @@ public class GameUpdateController implements IGameUpdateController {
         view.repaint();
     }
 
+    /** Updates the map/tiles in the view. */
     private void updateMapInView() {
         GridMap currentMap = model.getGridMap();
         int rows = currentMap.getRow();
@@ -121,6 +131,7 @@ public class GameUpdateController implements IGameUpdateController {
         view.repaint();
     }
 
+    /** Updates the active enemies in the view. */
     private void updateMovingObjects() {
         List<ABaseEnemy> currentEnemies = model.getActiveEnemies();
         enemyList.clear();
@@ -133,6 +144,7 @@ public class GameUpdateController implements IGameUpdateController {
         view.repaint();
     }
 
+    /** Updates the active projectiles in the view. */
     private void updateProjectiles() {
         List<Projectile> currentProjectiles = model.getActiveProjectiles();
         projectileList.clear();
