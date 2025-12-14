@@ -51,7 +51,7 @@ public class TowerPanel extends JPanel {
 
         button.addActionListener(e ->{
             if(listener != null) {
-                listener.onTowerSelection(name);
+                listener.onTowerPlacementSelection(name);
             }
         });
 

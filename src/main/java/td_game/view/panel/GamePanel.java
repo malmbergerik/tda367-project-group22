@@ -1,6 +1,7 @@
 package td_game.view.panel;
 
 import td_game.view.helper.TowerViewManager;
+import td_game.view.listener.ITowerActionListener;
 import td_game.view.listener.ITowerPlacementListener;
 import td_game.view.IView;
 import td_game.view.render.RenderingContext;
@@ -11,13 +12,13 @@ import java.awt.*;
 public class GamePanel extends JPanel implements IView {
     private final GameViewPanel gameView;
     private final SideBarPanel sideBar;
+    private final BottomBarPanel bottomBar;
 
     public GamePanel(int width, int height, RenderingContext renderingContext, TowerViewManager towerManager) {
         setLayout(new BorderLayout());
         gameView = new GameViewPanel(width, height, renderingContext);
 
-        JPanel bottomBar = new JPanel(); // Replace with actual bottom bar implementation
-        bottomBar.setPreferredSize(new Dimension(720, 192));
+        bottomBar = new BottomBarPanel(720,192, towerManager);
         bottomBar.setBackground(Color.decode("#222222"));
 
         // Left container for game view and bottom bar
@@ -44,9 +45,15 @@ public class GamePanel extends JPanel implements IView {
         return sideBar;
     }
 
-    public void addSideBarListener(ITowerPlacementListener listener){
-        //SideBarPanel sideBar = getSideBar();
+    public BottomBarPanel getBottomBar(){
+        return bottomBar;
+    }
 
+    public void addSideBarListener(ITowerPlacementListener listener){
         sideBar.getTowerPanel().setListener(listener);
+    }
+
+    public void addBottomBarListener(ITowerActionListener listener){
+        bottomBar.setListener(listener);
     }
 }

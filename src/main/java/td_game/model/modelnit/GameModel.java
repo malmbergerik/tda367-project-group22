@@ -61,6 +61,8 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
     //Observers for game
     private List<IGameObserver> observers = new ArrayList<>();
     private List<IGameStateObserver> stateObservers = new ArrayList<>();
+    private List<IResetListener> resetListeners = new ArrayList<>();
+
 
     private ATower[][] placedTowerGrid;
 
@@ -131,6 +133,13 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         placedTowerGrid = new ATower[gridMap.getRow()][gridMap.getCol()];
         onHealthChanged(100);
         onMoneyChanged();
+        notifyObserver(new TowersUpdateEvent());
+        notifyObserver(new MovingObjectUpdateEvent());
+        notifyObserver(new ProjectileUpdateEvent());
+
+        for (IResetListener listener : resetListeners) {
+            listener.onReset();
+        }
     }
 
     public Path getCurrentPath() {
@@ -204,6 +213,18 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         return Boolean.FALSE;
     }
 
+    public ATower getTower(int row, int col){
+        return placedTowerGrid[row][col];
+    }
+
+    public void sellTower(int row, int col){
+        ATower tower = placedTowerGrid[row][col];
+        towerManager.removeTower(tower);
+        placedTowerGrid[row][col] = null;
+        System.out.println("Tower sold");
+        notifyObserver(new TowersUpdateEvent());
+    }
+
     public Boolean canBePlaced(int row, int col, String tower) {
         if (!towerFactory.isValidTower(tower)) return false;
 
@@ -261,6 +282,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
     public void registerStateObserver(IGameStateObserver observer) {
         if (!stateObservers.contains(observer))
             stateObservers.add(observer);
+    }
+
+    public void addResetListener(IResetListener listener) {
+        resetListeners.add(listener);
     }
 
     @Override

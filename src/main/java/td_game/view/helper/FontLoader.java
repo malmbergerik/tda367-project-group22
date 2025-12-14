@@ -11,7 +11,6 @@ public class FontLoader {
         try {
             InputStream is = FontLoader.class.getResourceAsStream(path);
 
-            System.out.println(is);
             if (is == null) {
                 return new Font("Serif", Font.BOLD, (int) size);
             }
