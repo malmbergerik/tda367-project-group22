@@ -5,7 +5,6 @@ import td_game.model.map.GridMap;
 import td_game.model.modelnit.GameModel;
 import td_game.model.projectile.Projectile;
 import td_game.model.towers.ATower;
-import td_game.model.towers.Tower;
 import td_game.view.helper.ProjectileViewData;
 import td_game.view.panel.GameViewPanel;
 import td_game.view.helper.EnemyViewData;

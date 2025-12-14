@@ -1,6 +1,5 @@
 package td_game.controller;
 
-import td_game.model.modelnit.IGameStateObserver;
 import td_game.model.modelnit.IResetListener;
 import td_game.view.listener.ITowerActionListener;
 import td_game.view.listener.ITowerPlacementListener;

@@ -3,9 +3,6 @@ package td_game.controller;
 import td_game.model.modelnit.GameModel;
 import td_game.model.towers.ATower;
 import td_game.view.panel.BottomBarPanel;
-import td_game.view.panel.GameViewPanel;
-
-import javax.swing.*;
 
 public class SelectionController implements IMouseController {
 

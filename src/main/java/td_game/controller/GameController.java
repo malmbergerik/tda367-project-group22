@@ -2,12 +2,9 @@ package td_game.controller;
 
 import td_game.model.events.*;
 import td_game.model.modelnit.GameModel;
-import td_game.model.player.Player;
 import td_game.view.panel.GameViewPanel;
-import td_game.view.listener.IGameMouseListener;
 import td_game.view.panel.SideBarPanel;
 
-import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
