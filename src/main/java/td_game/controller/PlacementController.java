@@ -5,7 +5,10 @@ import td_game.model.modelnit.GameModel;
 import td_game.view.panel.GameViewPanel;
 import td_game.view.render.RenderingContext;
 
-
+/**
+ * Handles mouse interactions for placing towers on the game grid.
+ * Implements {@link IMouseController}.
+ */
 public class PlacementController implements IMouseController {
     private final GameViewPanel view;
     private final GameModel model;
@@ -21,6 +24,12 @@ public class PlacementController implements IMouseController {
         this.renderingContext = view.getRenderingContext();
     }
 
+    /**
+     * Updates the highlighted tile with tower info based on mouse movement.
+     *
+     * @param posX the x-coordinate of the mouse
+     * @param posY the y-coordinate of the mouse
+     */
     @Override
     public void handleMouseMoved(int posX, int posY) {
         int tileSize = model.getGridMap().getTileSize() * view.getSCALE();
@@ -43,6 +52,12 @@ public class PlacementController implements IMouseController {
 
     }
 
+    /**
+     * Updates the highlighted tile with tower info based on mouse clicked.
+     *
+     * @param posX the x-coordinate of the mouse
+     * @param posY the y-coordinate of the mouse
+     */
     @Override
     public void handleMouseClicked(int posX, int posY) {
         GridMap currentGridMap = model.getGridMap();
@@ -73,6 +88,7 @@ public class PlacementController implements IMouseController {
 
     }
 
+    /** Clears selection when the mouse exits the game view. */
     public void handleMouseExit(){
         selectedCol =-1;
         selectedRow =-1;
@@ -80,6 +96,11 @@ public class PlacementController implements IMouseController {
         view.repaint();
     }
 
+    /**
+     * Handles tower selection from the UI.
+     *
+     * @param name the name of the tower to select
+     */
     public void onTowerSelection(String name) {
         if (selectedTower != null && selectedTower.equals(name)) {
             selectedTower = null;
@@ -94,6 +115,7 @@ public class PlacementController implements IMouseController {
         return selectedTower;
     }
 
+    /** Resets the selected tower and clears the highlight. */
     public void reset(){
         selectedTower = null;
         handleMouseExit();

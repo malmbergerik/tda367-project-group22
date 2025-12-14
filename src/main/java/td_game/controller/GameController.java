@@ -8,13 +8,18 @@ import td_game.view.panel.SideBarPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Controls the game by connecting the model, view, and player input.
+ * Implements {@link IGameObserver} to update the view on model changes.
+ */
+
 public class GameController implements IGameObserver {
     private final GameModel model;
     private final GameViewPanel view;
-    private PlacementController placementController;
     private IGameUpdateController gameUpdateController;
     private PlayerController playerController;
     private InputController inputController;
+
     public GameController(GameModel model, GameViewPanel view, PlayerController playerController, SideBarPanel sideBar) {
         this.model = model;
         this.view = view;
@@ -30,6 +35,7 @@ public class GameController implements IGameObserver {
         gameUpdateController.handleWaveUpdate();
     }
 
+    /** Initializes mouse listeners for the game view **/
     private void initGameMouseListener() {
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
@@ -53,6 +59,7 @@ public class GameController implements IGameObserver {
 
     }
 
+    /** Initializes UI listeners for the game view **/
     private void initUIListeners(SideBarPanel sideBar) {
         // Connect the button in the view to the model method
         sideBar.getGameSpeedPanel().addStartWaveListener(e -> model.startNextWave());
