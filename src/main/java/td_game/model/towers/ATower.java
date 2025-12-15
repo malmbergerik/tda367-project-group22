@@ -89,4 +89,8 @@ public abstract class ATower implements IPositionable, IPlacementRule, IValue {
     public int getValue() {
         return value;
     }
+
+    public int getRange() {
+        return rangeStrategy.getRange();
+    }
 }

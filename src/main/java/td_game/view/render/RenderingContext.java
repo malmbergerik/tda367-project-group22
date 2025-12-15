@@ -28,8 +28,10 @@ public class RenderingContext {
     private int hoverRow = -1;
     private int hoverCol = -1;
     private String selectedTower;
+    private int selectedTowerRange;
     private Boolean placeable;
     private final int SCALE = 3;
+
 
     public RenderingContext() {
         this.renderers = new ArrayList<>();
@@ -109,6 +111,10 @@ public class RenderingContext {
         this.selectedTower = towerType;
     }
 
+    public void updateSelectedTowerRange(int range){
+        this.selectedTowerRange = range;
+    }
+
     /**
      * Clears the selected tower information.
      */
@@ -158,6 +164,7 @@ public class RenderingContext {
     public synchronized int getHoverRow() { return hoverRow; }
     public synchronized int getHoverCol() { return hoverCol; }
     public synchronized String getSelectedTower(){ return selectedTower; }
+    public synchronized int getSelectedTowerRange(){ return selectedTowerRange; }
     public synchronized Boolean getPlaceable(){ return placeable; }
 
     public int getScale(){ return SCALE; }

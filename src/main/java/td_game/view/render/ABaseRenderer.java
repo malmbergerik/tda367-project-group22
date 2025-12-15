@@ -97,4 +97,14 @@ public abstract class ABaseRenderer implements IRenderer {
         g2.fillRect(x, y, size, size);
     }
 
+    protected void fillCircle(Graphics2D g2, Color color, int row, int col, int tilesize, int diameter){
+        g2.setColor(color);
+
+        int scaledDiameter = scale(diameter);
+
+        int x = (scale(col * tilesize) - scaledDiameter /2) + scale(tilesize/2);
+        int y = (scale(row * tilesize) - scaledDiameter /2) + scale(tilesize/2);
+        g2.fillOval(x,y,scaledDiameter,scaledDiameter);
+    }
+
 }

@@ -359,4 +359,9 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
             }
         }
     }
+
+    public int getTowerRangeByName(String towerName) {
+        ATower tempTower = towerFactory.createTower(towerName, 0, 0);
+        return tempTower.getRange();
+    }
 }

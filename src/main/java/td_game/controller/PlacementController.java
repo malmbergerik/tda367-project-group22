@@ -46,6 +46,7 @@ public class PlacementController implements IMouseController {
             boolean placable = model.canBePlaced(row,col,selectedTower);
             boolean canPlace = !occupied && placable;
 
+
             renderingContext.updateSelectedTower(row, col, canPlace, selectedTower);
             view.repaint();
         }
@@ -107,6 +108,7 @@ public class PlacementController implements IMouseController {
             renderingContext.clearSelectedTower();
         } else {
             selectedTower = name;
+            renderingContext.updateSelectedTowerRange(model.getTowerRangeByName(name));
         }
         view.repaint();
     }
