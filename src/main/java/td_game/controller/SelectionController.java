@@ -55,12 +55,14 @@ public class SelectionController implements IMouseController {
             int sellprice = selectedTower.getValue() /2;
             bottomBar.showTowerInformation(selectedTower.getName(),sellprice);
         }
+        else {
+            reset();
+        }
     }
 
     /** Not used for selection. */
     @Override
     public void handleMouseExit() {
-
     }
     /** Sells the currently selected tower. */
     public void onTowerSell(){
