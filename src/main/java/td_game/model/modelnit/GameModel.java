@@ -182,6 +182,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
             waveManager.waveFinished();
             notifyObserver(new WaveUpdateEvent());
         }
+
+        if (waveManager.isAllWavesCompleted()) {
+            notifyGameWon();
+        }
     }
 
     public void startNextWave() {
@@ -310,6 +314,13 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
     public void notifyObserver(IGameEvent event) {
         for (IGameObserver observer : observers) {
             event.dispatch(observer);
+        }
+    }
+
+    public void notifyGameWon() {
+        setGameState(new WonState());
+        for (IGameStateObserver observer : stateObservers) {
+            observer.onGameWon();
         }
     }
 
