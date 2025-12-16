@@ -39,7 +39,7 @@ public class EnemyManager {
 
             }
             else if (!enemy.isAlive()) {
-                moneySystem.handleEnemyKilled(enemy.getDamageAmount()); // Earn == enemy baseHealth, change later
+                moneySystem.handleEnemyKilled(enemy.getDamageAmount() * 3); // Earn == enemy baseHealth, change later
                 iterator.remove();
             }
             notifier.notifyObserver(new MovingObjectUpdateEvent());

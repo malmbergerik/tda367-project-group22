@@ -46,5 +46,26 @@ public class TowerViewManager {
     public BufferedImage getTowerImage(String key) {
         return towerImages.get(key);
     }
+
+
+    // TODO : Ugly quick solution, refactor later
+    public int getTowerPrice(String key) {
+        switch (key) {
+            case "CanonTower" -> {
+                return 25;
+            }
+            case "SniperTower" -> {
+                return 100;
+            }
+            case "FlameThrowerTower" -> {
+                return 250;
+            }
+            case "FireTackTower" -> {
+                return 450;
+            }
+        }
+
+        return 0;
+    }
 }
 
