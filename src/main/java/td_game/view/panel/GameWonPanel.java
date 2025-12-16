@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
  */
 
 public class GameWonPanel extends ABaseOverlayPanel{
-    public GameWonPanel(ActionListener onResart, ActionListener onMenu) {
+    public GameWonPanel(ActionListener onRestart, ActionListener onMenu) {
         addTitle("VICTORY!", Color.GREEN);
-        addButton("Play Again", onResart);
+        addButton("Play Again", onRestart);
         addButton("Exit to Menu", onMenu);
     }
 }

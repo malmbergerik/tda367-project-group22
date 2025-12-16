@@ -16,4 +16,9 @@ public class NormalCircularRangeStrategy implements IRangeStrategy {
         double distanceSquared = dx * dx + dy * dy;
         return distanceSquared <= radius * radius;
     }
+
+    @Override
+    public int getRange() {
+        return radius;
+    }
 }

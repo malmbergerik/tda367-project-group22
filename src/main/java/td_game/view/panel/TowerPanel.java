@@ -38,9 +38,9 @@ public class TowerPanel extends JPanel {
 
     private JButton createTowerButton(String name){
         JButton button = new JButton(name);
-        button.setPreferredSize(new Dimension(96,96));
-        button.setMaximumSize(new Dimension(96,96));
-        button.setMinimumSize(new Dimension(96,96));
+        button.setPreferredSize(new Dimension(130,130));
+        button.setMaximumSize(new Dimension(130,130));
+        button.setMinimumSize(new Dimension(130,130));
 
         if( towerViewManager.getTowerImage(name) != null) {
             BufferedImage towerImage = towerViewManager.getTowerImage(name);
@@ -48,6 +48,12 @@ public class TowerPanel extends JPanel {
             ImageIcon icon = new ImageIcon(scaledImage);
             button.setIcon(icon);
         }
+
+        int price = towerViewManager.getTowerPrice(name);
+
+        String displayName = name.replace("Tower", "");
+        button.setText("<html><center>" + displayName + "<br>" + "$" + price + "</center></html>");
+
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
 

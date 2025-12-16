@@ -56,6 +56,10 @@ public class WaveManager {
 
     }
 
+    public boolean isAllWavesCompleted() {
+        return allWaves.isEmpty() && !waveActive;
+    }
+
 
     public void waveFinished() {
         waveActive = false;

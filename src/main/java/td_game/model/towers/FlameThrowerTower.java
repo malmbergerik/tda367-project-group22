@@ -25,12 +25,12 @@ public class FlameThrowerTower extends ATower{
     {
         super(x,y,10,
                 new DoubleAttackStrategy(
-                    new ProjectileFactory(new BasicMovementStrategy(0.07),new BasicPierceStrategy(1),new BasicDamageTypeStrategy(1),new BasicLifeTimeStrategy(30),new BasicRoundSizeStrategy(12,12), "Fireball"),
+                    new ProjectileFactory(new BasicMovementStrategy(0.07),new BasicPierceStrategy(1),new BasicDamageTypeStrategy(1),new BasicLifeTimeStrategy(50),new BasicRoundSizeStrategy(12,12), "Fireball"),
 
                     projectileManager
                 ),
-                new NormalCircularRangeStrategy(25),
-                new BasicCooldownStrategy(20),
+                new NormalCircularRangeStrategy(48),
+                new BasicCooldownStrategy(2),
                 new TargetingFirst(),
                 new GrassOnlyPlacementRule());
     }

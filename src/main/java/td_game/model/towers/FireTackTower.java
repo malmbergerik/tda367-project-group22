@@ -23,14 +23,14 @@ public class FireTackTower extends ATower{
 
     public FireTackTower(int x, int y, ProjectileManager projectileManager)
     {
-        super(x,y,10,
+        super(x,y,450,
                 new AllAroundAttackStrategy(
-                    new ProjectileFactory(new BasicMovementStrategy(0.15),new BasicPierceStrategy(1),new BasicDamageTypeStrategy(1),new BasicLifeTimeStrategy(16),new BasicRoundSizeStrategy(10,10), "Fireball"),
+                    new ProjectileFactory(new BasicMovementStrategy(0.15),new BasicPierceStrategy(1),new BasicDamageTypeStrategy(5),new BasicLifeTimeStrategy(35),new BasicRoundSizeStrategy(10,10), "Fireball"),
 
                     projectileManager
                 ),
-                new NormalCircularRangeStrategy(20),
-                new BasicCooldownStrategy(60),
+                new NormalCircularRangeStrategy(80),
+                new BasicCooldownStrategy(20),
                 new TargetingFirst(),
                 new GrassOnlyPlacementRule());
     }

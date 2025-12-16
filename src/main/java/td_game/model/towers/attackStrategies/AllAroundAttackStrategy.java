@@ -24,7 +24,7 @@ public class AllAroundAttackStrategy implements IAttackStrategy{
         ABaseEnemy enemy = targets[0];
         for (int i = 0; i < getProjectileAmount(tower); i++) {
             Projectile projectile = projectileFactory.create(
-                    (i * 36 ),
+                    (i * 360 / getProjectileAmount(tower) ),
                     tower.getX()-8,
                     tower.getY()-8
             );
@@ -35,6 +35,6 @@ public class AllAroundAttackStrategy implements IAttackStrategy{
 
     @Override
     public int getProjectileAmount(ATower tower) {
-        return 10;
+        return 20;
     }
 }

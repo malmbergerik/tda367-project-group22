@@ -100,16 +100,18 @@ public class GameUpdateController implements IGameUpdateController {
         int rows = activeTowers.length;
         int cols = activeTowers[0].length;
         String[][] towerKeys = new String[rows][cols];
+        int[][] towerRanges = new int[rows][cols];
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 if (activeTowers[row][col] != null) {
                     towerKeys[row][col] = activeTowers[row][col].getName();
+                    towerRanges[row][col] = activeTowers[row][col].getRange();
                 }
             }
         }
 
-        renderingContext.updateTowerViewData(new TowerViewData(towerKeys));
+        renderingContext.updateTowerViewData(new TowerViewData(towerKeys, towerRanges));
         view.repaint();
     }
 

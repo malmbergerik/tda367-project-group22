@@ -1,6 +1,7 @@
 package td_game.view.render;
 
 import td_game.view.helper.MapViewData;
+import td_game.view.helper.TowerViewData;
 import td_game.view.helper.TowerViewManager;
 
 import java.awt.*;
@@ -30,6 +31,7 @@ public class SelectedTowerRenderer extends ABaseRenderer {
         int hoverCol = context.getHoverCol();
         Boolean placeable = context.getPlaceable();
         MapViewData mapViewData = context.getMapViewData();
+        TowerViewData towerViewData = context.getTowerViewData();
 
         if (selectedTower == null || hoverRow < 0 || hoverCol < 0 || mapViewData == null) return;
 
@@ -47,7 +49,11 @@ public class SelectedTowerRenderer extends ABaseRenderer {
                     new Color(0, 255, 0, 128) :  // Green for not placeable
                     new Color(255, 0, 0, 128); // Red for placeable
 
+            Color rangeColor = new Color(18, 18, 18,  128);
+
             fillTile(g2, indicatorColor, hoverRow, hoverCol, mapViewData.getTileSize());
+            fillCircle(g2, rangeColor, hoverRow, hoverCol, mapViewData.getTileSize(), context.getSelectedTowerRange() * 2);
+
         }
 
         g2.setComposite(originalComposite);

@@ -21,13 +21,13 @@ public class SniperTower extends ATower{
 
     public SniperTower(int x, int y, ProjectileManager projectileManager)
     {
-        super(x,y,20,
+        super(x,y,100,
                 new SingleAttackStrategy(
-                        new ProjectileFactory(new BasicMovementStrategy(4),new BasicPierceStrategy(5),new BasicDamageTypeStrategy(10),new BasicLifeTimeStrategy(400),new BasicRoundSizeStrategy(8,8), "Bullet"),
+                        new ProjectileFactory(new BasicMovementStrategy(4),new BasicPierceStrategy(10),new BasicDamageTypeStrategy(50),new BasicLifeTimeStrategy(400),new BasicRoundSizeStrategy(8,8), "Bullet"),
                         projectileManager
                 ),
                 new NormalCircularRangeStrategy(200),
-                new BasicCooldownStrategy(400),
+                new BasicCooldownStrategy(100),
                 new TargetingFirst(),
                 new GrassOnlyPlacementRule());
     }
