@@ -23,7 +23,7 @@ public class FlameThrowerTower extends ATower{
 
     public FlameThrowerTower(int x, int y, ProjectileManager projectileManager)
     {
-        super(x,y,10,
+        super(x,y,250,
                 new DoubleAttackStrategy(
                     new ProjectileFactory(new BasicMovementStrategy(0.07),new BasicPierceStrategy(1),new BasicDamageTypeStrategy(1),new BasicLifeTimeStrategy(50),new BasicRoundSizeStrategy(12,12), "Fireball"),
 
