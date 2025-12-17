@@ -1,7 +1,7 @@
 # tda367-project-group22
 # Dungeon Defence
 ## Table Of Contents
- - [Software requirments & Build instructions](#software-requirments--build-instructions)
+ - [System requirments & Build instructions](#system-requirments--build-instructions)
  - [About the Game](#about-the-game)
  - [Game Features](#game-features)
  - [Architecture & Design Patterns](#architecture--design-patterns)
@@ -17,21 +17,21 @@
 * **Apache Maven:** Version 3.6.0 or later
   * *Check version:* 'mvn-version'
 
-## 🛠️ Buld instruction
+### 🛠️ Buld instruction
 
-1. ### Clone the repo:
+1. #### Clone the repo:
    ```bash
    git clone https://github.com/malmbergerik/tda367-project-group22
    cd tda267-project-group22 
    ```
 
-2. ### Build the project:
+2. #### Build the project:
    This will install required libraries and compile the code.
    ```bash
    mvn clean install
    ```
 
-3. ### Run the game:
+3. #### Run the game:
    Run the following command in the project root-folder.
    ```bash
    mvn exec:java
