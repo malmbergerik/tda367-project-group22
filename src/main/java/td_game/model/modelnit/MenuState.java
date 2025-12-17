@@ -9,17 +9,11 @@ public class MenuState implements IGameState {
     }
 
     @Override
-    public void enterState() {
-        System.out.println("Entering Menu State");
-    }
+    public void enterState() {}
 
     @Override
-    public void exitState() {
-        System.out.println("Exiting Menu State");
-    }
+    public void exitState() {}
 
     @Override
-    public void update() {
-        System.out.println("Updating Menu State");
-    }
+    public void update() {}
 }

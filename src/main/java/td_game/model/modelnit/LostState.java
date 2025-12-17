@@ -7,7 +7,7 @@ public class LostState implements IGameState{
 
     @Override
     public void enterState() {
-        System.out.println("Game Lost");
+
     }
 
     @Override

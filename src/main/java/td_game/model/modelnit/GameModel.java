@@ -233,7 +233,6 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         ATower tower = placedTowerGrid[row][col];
         towerManager.removeTower(tower);
         placedTowerGrid[row][col] = null;
-        System.out.println("Tower sold");
         notifyObserver(new TowersUpdateEvent());
     }
 
@@ -250,12 +249,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
     public void placeTower(int row, int col, String tower) {
         if (gridOccupied(row, col)) {
-            System.out.println("A tower is already placed here!");
             return;
         }
 
         if (!canBePlaced(row, col, tower)) {
-            System.out.println("Tower cant be placed here");
             return;
         }
 
