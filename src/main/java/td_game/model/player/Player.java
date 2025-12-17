@@ -3,13 +3,24 @@ package td_game.model.player;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class Player{
+/**
+ * The central Player class that aggregates health and money components.
+ * It acts as the subject in the Observer pattern, notifying listeners of changes
+ * to health, money, or the player's living state.
+ */
+public class Player {
 
     private IHealth health;
     private IMoney money;
     private final List<IPlayerObserver> observerList = new ArrayList<>();
-    public Player(IHealth health, IMoney money){
+
+    /**
+     * Constructs a new Player with the specified health and money components.
+     *
+     * @param health The component managing player health.
+     * @param money  The component managing player money.
+     */
+    public Player(IHealth health, IMoney money) {
         this.health = health;
         this.money = money;
     }
@@ -18,36 +29,60 @@ public class Player{
         return health.getHealth();
     }
 
-    public void takeDamage(int amount){
+    /**
+     * Inflicts damage on the player, updates the health component, and notifies observers.
+     * If the player dies, a death notification is sent.
+     *
+     * @param amount The amount of damage to take.
+     */
+    public void takeDamage(int amount) {
         health.takeDamage(amount);
         notifyHealthChanged();
 
-        if(health.isDead()){
+        if (health.isDead()) {
             notifyPlayerDeath();
         }
-
-
     }
 
-    public int getMoney(){
+    public int getMoney() {
         return money.getMoney();
     }
 
-    public void addMoney(int amount){
+    /**
+     * Adds money to the player's balance and notifies observers of the change.
+     *
+     * @param amount The amount of money to add.
+     */
+    public void addMoney(int amount) {
         money.addMoney(amount);
         notifyMoneyChanged();
     }
 
-    public void spendMoney(int amount){
+    /**
+     * Deducts money from the player's balance and notifies observers of the change.
+     *
+     * @param amount The amount of money to spend.
+     */
+    public void spendMoney(int amount) {
         money.spendMoney(amount);
         notifyMoneyChanged();
     }
 
-    public void addObserver(IPlayerObserver playerObserver){
+    /**
+     * Registers an observer to listen for player events (health change, money change, death).
+     *
+     * @param playerObserver The observer to add.
+     */
+    public void addObserver(IPlayerObserver playerObserver) {
         observerList.add(playerObserver);
     }
 
-    public void removeObserver(IPlayerObserver playerObserver){
+    /**
+     * Unregisters an observer from the player.
+     *
+     * @param playerObserver The observer to remove.
+     */
+    public void removeObserver(IPlayerObserver playerObserver) {
         observerList.remove(playerObserver);
     }
 
@@ -63,7 +98,7 @@ public class Player{
         }
     }
 
-    private void notifyMoneyChanged(){
+    private void notifyMoneyChanged() {
         for (IPlayerObserver observer : observerList) {
             observer.onMoneyChanged();
         }

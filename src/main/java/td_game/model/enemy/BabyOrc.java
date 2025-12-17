@@ -2,6 +2,9 @@ package td_game.model.enemy;
 
 import td_game.model.path.Path;
 
+/**
+ * Represents a BabyOrc enemy that follows a path.
+ */
 public class BabyOrc extends PathFollowingEnemy {
     private static final int ENEMY_WIDTH = 12;
     private static final int ENEMY_HEIGHT = 12;
