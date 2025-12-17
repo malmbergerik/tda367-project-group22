@@ -71,18 +71,15 @@ public class PlacementController implements IMouseController {
             selectedTower = null;
 
             renderingContext.clearSelectedTower();
-            System.out.println("Placed tower at x:" + col + " and y:" + row + " - " + selectedTower);
         }
 
         if(row<=currentGridMap.getRow() && row>=0 && col>=0 &&col<=currentGridMap.getCol()){
             selectedRow = row;
             selectedCol = col;
-            System.out.println("Selected tile is " + selectedCol + " " + selectedRow + selectedTower);
         }
         else{
             selectedRow = -1;
             selectedCol = -1;
-            System.out.println("Out of bounce");
         }
         view.repaint();
 

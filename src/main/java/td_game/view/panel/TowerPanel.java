@@ -22,6 +22,10 @@ public class TowerPanel extends JPanel {
         this.towerViewManager = towerViewManager;
 
         setPreferredSize(new Dimension(width,height));
+        setMinimumSize(new Dimension(width,height));
+        setMaximumSize(new Dimension(width,height));
+
+
 
         setBackground(Color.decode("#181818"));
 

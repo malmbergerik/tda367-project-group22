@@ -27,15 +27,6 @@ public class PlayingState implements IGameState {
         gameModel.updateProjectile();
         gameModel.updateTower();
 
-        /*
-        if (gameModel.getLives() <= 0) {
-            gameModel.changeState(new GameOverState(gameModel));
-        }
-
-        if (gameModel.isWaveComplete()) {
-            gameModel.startNextWave();
-        }
-        */
 
     }
 

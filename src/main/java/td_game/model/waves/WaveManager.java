@@ -62,8 +62,6 @@ public class WaveManager {
         currentWave = allWaves.poll();
         groupsInCurrentWave = new LinkedList<>(currentWave.getGroups());
 
-        System.out.println("Starting Wave " + currentWave.getWaveNumber());
-
         startNextGroup();
 
         waveActive = true;
@@ -147,14 +145,12 @@ public class WaveManager {
         if (groupsInCurrentWave.isEmpty()) {
             allEnemiesSpawned = true;
             currentGroup = null;
-            System.out.println("Wave " + currentWave.getWaveNumber() + " spawning complete.");
             return;
         }
         currentGroup = groupsInCurrentWave.poll();
         enemiesSpawnedInCurrentGroup = 0;
         isDelayPhase = true;
         timerSeconds = 0;
-        System.out.println("  Starting Wave Group: " + currentGroup.getEnemyType() + " x" + currentGroup.getCount());
     }
 
     /**

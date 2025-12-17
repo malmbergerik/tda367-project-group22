@@ -4,7 +4,7 @@ public class WonState implements IGameState{
 
     @Override
     public void enterState() {
-        System.out.println("Game Won");
+
     }
 
     @Override

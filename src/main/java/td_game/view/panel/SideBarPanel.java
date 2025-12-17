@@ -16,13 +16,12 @@ public class SideBarPanel extends JPanel {
 
     public SideBarPanel(int width, int height, TowerViewManager towerViewManager){
         setPreferredSize(new Dimension(width, height));
-
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
 
         this.statsPanel = new StatsPanel(width,144, 100); // TODO: Fixed 100 value, make dynamic
 
-        this.towerPanel = new TowerPanel(width,364,towerViewManager);
+        this.towerPanel = new TowerPanel(width,432,towerViewManager);
         this.gameSpeedPanel = new GameSpeedPanel(width, 192);
 
         add(statsPanel);
