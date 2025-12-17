@@ -15,7 +15,7 @@ public class TargetingFirst implements ITargetStrategy {
     @Override
     public Optional<ABaseEnemy> selectTarget(ATower tower, Collection<ABaseEnemy> allEnemiesInRange) {
 
-        // No speciall logic, take first enemy in range
+        // No special logic, take first enemy in range
         return allEnemiesInRange.stream()
                 .max(Comparator.comparingDouble(e -> {
                     if (e instanceof PathFollowingEnemy pe){

@@ -35,6 +35,14 @@ import td_game.model.waves.Wave;
 import td_game.model.waves.WaveLoader;
 import td_game.model.waves.WaveManager;
 
+/**
+ * The GameModel class acts as the central hub for the game's logic and state management.
+ * It aggregates various sub-systems (enemies, towers, map, player) and coordinates their interactions.
+ * Implements the Observer pattern to notify the view of state changes.
+ *
+ * DISCLAIMER: This class acts as the single source of truth for the game state.
+ * Modifications here propagate to all registered observers.
+ */
 public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
     private GridMap gridMap;
@@ -70,6 +78,12 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
     private DamageSystem damageSystem;
     private MoneySystem moneySystem;
 
+    /**
+     * Constructs the GameModel and initializes all game subsystems.
+     * Loads the default map, configures factories, and sets up the initial game state.
+     *
+     * @param tileSize The size of a single tile in pixels (used for map loading).
+     */
     public GameModel(int tileSize) {
         TileFactory tileFactory = new TileFactory();
         MapLoader mapLoader = new MapLoader(tileFactory);
@@ -106,6 +120,11 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         placedTowerGrid = new ATower[gridMap.getRow()][gridMap.getCol()];
     }
 
+    /**
+     * Resets the entire game state to the initial configuration.
+     * Re-initializes managers, clears entities, reloads waves, and resets player stats.
+     * Triggers notifications to update the view.
+     */
     public void resetGame(){
         activeEnemies.clear();
         activeProjectiles.clear();
@@ -172,6 +191,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
     }
 
 
+    /**
+     * Updates the state of all active enemies and the current wave.
+     * Checks if the wave is complete or if the game has been won.
+     */
     public void updateEnemies() {
 
         enemyManager.update();
@@ -188,6 +211,9 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         }
     }
 
+    /**
+     * Initiates the next wave if no wave is currently active.
+     */
     public void startNextWave() {
         if (!waveManager.isWaveActive()) {
             waveManager.startNextWave();
@@ -207,6 +233,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         towerManager.update();
     }
 
+    /**
+     * Updates the game model logic.
+     * Delegates the update to the current game state (e.g., Playing, Menu).
+     */
     @Override
     public void update() {
         if (currentState != null) {
@@ -214,11 +244,25 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         }
     }
 
+    /**
+     * Updates a specific tile in the grid map.
+     *
+     * @param row  The row index.
+     * @param col  The column index.
+     * @param tile The new tile object.
+     */
     public void updateTile(int row, int col, Tile tile) {
         gridMap.setTile(row, col, tile);
         notifyObserver(new TileUpdateEvent());
     }
 
+    /**
+     * Checks if a specific grid cell is occupied by a tower.
+     *
+     * @param row The row index.
+     * @param col The column index.
+     * @return true if a tower exists at the location, false otherwise.
+     */
     public Boolean gridOccupied(int row, int col) {
         if (placedTowerGrid[row][col] != null)
             return Boolean.TRUE;
@@ -229,6 +273,13 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         return placedTowerGrid[row][col];
     }
 
+    /**
+     * Sells the tower at the specified grid location.
+     * Removes the tower from the manager and updates the player's money.
+     *
+     * @param row The row index.
+     * @param col The column index.
+     */
     public void sellTower(int row, int col){
         ATower tower = placedTowerGrid[row][col];
         towerManager.removeTower(tower);
@@ -237,6 +288,14 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         notifyObserver(new TowersUpdateEvent());
     }
 
+    /**
+     * Checks if a tower of a specific type can be placed at the given location.
+     *
+     * @param row    The row index.
+     * @param col    The column index.
+     * @param tower  The type/name of the tower.
+     * @return true if placement is valid (valid type, enough money, valid terrain), false otherwise.
+     */
     public Boolean canBePlaced(int row, int col, String tower) {
         if (!towerFactory.isValidTower(tower)) return false;
 
@@ -248,6 +307,14 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         return t.canBePlaced(gridMap.getTile(row, col));
     }
 
+    /**
+     * Attempts to place a tower at the specified grid coordinates.
+     * verifies validity (occupation and rules) before updating the game state.
+     *
+     * @param row    The row index.
+     * @param col    The column index.
+     * @param tower  The type/name of the tower to place.
+     */
     public void placeTower(int row, int col, String tower) {
         if (gridOccupied(row, col)) {
             System.out.println("A tower is already placed here!");
@@ -276,6 +343,12 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         return placedTowerGrid;
     }
 
+    /**
+     * Transitions the game to a new state.
+     * Handles exit logic for the previous state and entry logic for the new state.
+     *
+     * @param newState The new IGameState to transition to.
+     */
     public void setGameState(IGameState newState) {
         if (currentState != null) {
             currentState.exitState();
@@ -305,6 +378,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         observers.remove(observer);
     }
 
+    /**
+     * Unregisters all observers and listeners.
+     * Useful when shutting down the game or performing a hard reset.
+     */
     public void unregisterAllObserver(){
         observers.clear();
         stateObservers.clear();
@@ -317,6 +394,9 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         }
     }
 
+    /**
+     * Notifies all state observers that the game has been won.
+     */
     public void notifyGameWon() {
         setGameState(new WonState());
         for (IGameStateObserver observer : stateObservers) {
@@ -354,6 +434,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         return waveManager.getCurrentWave();
     }
 
+    /**
+     * Toggles the game state between Playing and Paused.
+     * Notifies state observers of the change.
+     */
     public void togglePause(){
         if(currentState instanceof PlayingState){
             setGameState(new PausedState());
@@ -371,6 +455,13 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         }
     }
 
+    /**
+     * Retrieves the range of a specific tower type.
+     * Creates a temporary tower instance to access its properties.
+     *
+     * @param towerName The name of the tower.
+     * @return The range of the tower in pixels.
+     */
     public int getTowerRangeByName(String towerName) {
         ATower tempTower = towerFactory.createTower(towerName, 0, 0);
         return tempTower.getRange();
