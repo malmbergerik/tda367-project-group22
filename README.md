@@ -1,8 +1,17 @@
 # tda367-project-group22
 # Dungeon Defence
+## Table Of Contents
+ - [About the Game](#about-the-game)
+ - [Software requirments & Build instructions](#software-requirments--build-instructions)
+ - [Game Features](#game-features)
+ - [Architecture & Design Patterns](#architecture--design-patterns)
+ - [Useful commands](#useful-commands)
+ - [Tutorial - How to Play](#tutorial---how-to-play)
 
 ## About the Game
 Dungeon Defence is a fast-paced, tile-based Tower Defence game with a dark dungeon theme. The primary purpose of this product is to serve as a micro-break for students, offering a stimulating yet brief moment of relaxation and fun during or between classes. Our core vision with the game was to offer an engaging experience where players construct a robust defence to fend off incoming enemy waves. It is a refreshing challenge that is instant to start and easy to pause, to ensure it respects the demands of a student’s schedule.
+
+## Software requirments & Build instructions
 
 ## Game Features
 
