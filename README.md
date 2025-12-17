@@ -13,9 +13,11 @@
 ### 📋 System requirments
 
 * **Java Development Kit (JDK):** Version 17 or later.
-  * *Check version:* 'java-version'
+  * *Check version:* `java -version`
 * **Apache Maven:** Version 3.6.0 or later
-  * *Check version:* 'mvn-version'
+  * *Check version:* `mvn-version`
+* **Git:** To clone the project
+   * *Check version:* `git --version`
 
 ### 🛠️ Buld instruction
 
@@ -98,7 +100,7 @@ When you load the game you are met with a main menu page. Here you have two alte
 
 ### 2. Game 
 #### Game Objective
-The goal of the game is to prevent the enemies to from reaching the end of the path. You do this by placing towers provided on the right sidebar on the maptiles. You cannot place more than one tower on the same tile and and on the lava tiles. Make sure to pay attention to the range of 
+The goal of the game is to prevent the enemies to from reaching the end of the path. You do this by placing towers provided on the right sidebar on the maptiles. You cannot place more than one tower on the same tile and and on the lava tiles. Make sure to pay attention to the range of the towers.
 
 #### Central Game Area
 * **Map View**: Occupying the majority of the screen is the game board. This is where the action takes place: the map is rendered here, enemies spawn and follow the path, and the player places their towers to defend.
