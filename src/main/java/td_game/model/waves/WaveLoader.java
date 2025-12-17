@@ -4,7 +4,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
+/**
+ * Responsible for parsing wave configuration files and creating the
+ * corresponding Wave objects.
+ * AI was used to help write implement this class.
+ */
 public class WaveLoader {
+
+    /**
+     * Loads wave configurations from a specified file resource.
+     * The file format is expected to be: ID | Type | Count | Interval | Delay.
+     *
+     * @param filename The path to the wave configuration file (relative to classpath).
+     * @return A Queue containing the loaded Wave objects in sequential order.
+     * @throws RuntimeException if the file cannot be found or an error occurs during loading.
+     */
     public Queue<Wave> loadWaves(String filename) {
         // We use a Map temporarily to group lines by wave ID
         Map<Integer, Wave> waveMap = new TreeMap<>(); // TreeMap keeps keys sorted (Wave 1, 2, 3...)

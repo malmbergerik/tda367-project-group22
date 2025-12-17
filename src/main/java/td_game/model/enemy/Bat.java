@@ -2,6 +2,9 @@ package td_game.model.enemy;
 
 import td_game.model.path.Path;
 
+/**
+ * Represents a Bat enemy that follows a path
+ */
 public class Bat extends PathFollowingEnemy {
 
     private static final int ENEMY_WIDTH = 16;

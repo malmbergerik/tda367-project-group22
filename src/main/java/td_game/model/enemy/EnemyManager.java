@@ -10,6 +10,10 @@ import td_game.model.player.MoneySystem;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Manages the lifecycle and updates of all active enemies in the game.
+ * Handles movement, death logic, player damage, and rewards (money) per tick.
+ */
 public class EnemyManager {
 
     private List<ABaseEnemy> activeEnemies;
@@ -17,6 +21,14 @@ public class EnemyManager {
     private final DamageSystem damageSystem;
     private final MoneySystem moneySystem;
 
+    /**
+     * Constructs the EnemyManager with required dependencies.
+     *
+     * @param activeEnemies The shared list where active enemy objects are stored.
+     * @param notifier      The system to notify the View when enemies move or change.
+     * @param damageSystem  The system to handle deducting player health.
+     * @param moneySystem   The system to handle awarding money to the player.
+     */
     public EnemyManager(List<ABaseEnemy> activeEnemies, GameObservable notifier, DamageSystem damageSystem, MoneySystem moneySystem) {
         this.activeEnemies = activeEnemies;
         this.notifier = notifier;
@@ -24,6 +36,11 @@ public class EnemyManager {
         this.moneySystem = moneySystem;
     }
 
+    /**
+     * Updates the state of all active enemies.
+     * Moves enemies, removes them if they die or reach the end, and triggers
+     * appropriate game events (damage to player or money reward).
+     */
     public void update() {
 
         Iterator<ABaseEnemy> iterator = activeEnemies.iterator();
@@ -34,12 +51,14 @@ public class EnemyManager {
             enemy.move();
 
             if (enemy.hasReachedEnd()) {
-                damageSystem.handleEnemyReachedEnd(enemy.getDamageAmount()); // Damage == enemy baseHealth (current health?)
+                // Inflict damage if enemy breaches defenses
+                damageSystem.handleEnemyReachedEnd(enemy.getDamageAmount());
                 iterator.remove();
 
             }
             else if (!enemy.isAlive()) {
-                moneySystem.handleEnemyKilled(enemy.getDamageAmount() * 3); // Earn == enemy baseHealth, change later
+                // Award money if enemy is killed by player
+                moneySystem.handleEnemyKilled(enemy.getDamageAmount());
                 iterator.remove();
             }
             notifier.notifyObserver(new MovingObjectUpdateEvent());
@@ -47,8 +66,11 @@ public class EnemyManager {
         }
     }
 
-
-
+    /**
+     * Adds a new enemy instance to the active game loop.
+     *
+     * @param enemy The initialized enemy object to add.
+     */
     public void addEnemy(ABaseEnemy enemy) {
         activeEnemies.add(enemy);
     }
@@ -57,6 +79,10 @@ public class EnemyManager {
         return activeEnemies;
     }
 
+    /**
+     * Removes all active enemies from the game immediately.
+     * Typically used when restarting the game.
+     */
     public void reset() {
         activeEnemies.clear();
     }
