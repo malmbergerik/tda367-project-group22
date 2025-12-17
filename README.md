@@ -1,17 +1,44 @@
 # tda367-project-group22
 # Dungeon Defence
 ## Table Of Contents
- - [About the Game](#about-the-game)
  - [Software requirments & Build instructions](#software-requirments--build-instructions)
+ - [About the Game](#about-the-game)
  - [Game Features](#game-features)
  - [Architecture & Design Patterns](#architecture--design-patterns)
  - [Useful commands](#useful-commands)
  - [Tutorial - How to Play](#tutorial---how-to-play)
 
+## System requirments & Build instructions
+
+### 📋 System requirments
+
+* **Java Development Kit (JDK):** Version 17 or later.
+  * *Check version:* 'java-version'
+* **Apache Maven:** Version 3.6.0 or later
+  * *Check version:* 'mvn-version'
+
+## 🛠️ Buld instruction
+
+1. ### Clone the repo:
+   ```bash
+   git clone https://github.com/malmbergerik/tda367-project-group22
+   cd tda267-project-group22 
+   ```
+
+2. ### Build the project:
+   This will install required libraries and compile the code.
+   ```bash
+   mvn clean install
+   ```
+
+3. ### Run the game:
+   Run the following command in the project root-folder.
+   ```bash
+   mvn exec:java
+   ```
+
 ## About the Game
 Dungeon Defence is a fast-paced, tile-based Tower Defence game with a dark dungeon theme. The primary purpose of this product is to serve as a micro-break for students, offering a stimulating yet brief moment of relaxation and fun during or between classes. Our core vision with the game was to offer an engaging experience where players construct a robust defence to fend off incoming enemy waves. It is a refreshing challenge that is instant to start and easy to pause, to ensure it respects the demands of a student’s schedule.
-
-## Software requirments & Build instructions
 
 ## Game Features
 
