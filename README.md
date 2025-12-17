@@ -5,8 +5,7 @@
  - [About the Game](#about-the-game)
  - [Game Features](#game-features)
  - [Architecture & Design Patterns](#architecture--design-patterns)
- - [Useful commands](#useful-commands)
- - [Tutorial - How to Play](#tutorial---how-to-play)
+ - [Game Tutorial](#game-tutorial)
 
 ## System requirments & Build instructions
 
@@ -52,15 +51,16 @@ Dungeon Defence is a fast-paced, tile-based Tower Defence game with a dark dunge
 The game includes diverse towers, each serving a specific tactical role:
 * **Canon Tower**: Standard single-target damage.
 * **Sniper Tower**: High range and damage, slow fire rate.
-* **Flame Thrower**: Deals Area of Effect (AOE) damage.
+* **Flame Thrower**: Constant strea of projectiles (fire).
 * **Fire Tack**: Rapid-fire tower in all directions.
 
 ### Enemies
-Enemies have different stats (health, speed, width, height, damageamount) that are defined in the constructor of 'GameModel'. The initial objective was to create different special abilities (e.g slime to split into more slimes) for the enemies, however as of now, they all have the same abilities which is that they are 'PathFollowingEnemies".
-* **Slime**
-* **Skeleton**:
-* **Golem**
-* **Bat**
+Enemies have different stats (health, speed, width, height, damageamount) that are defined in the constructor. The initial objective was to create different special abilities (e.g slime to split into more slimes) for the enemies, however as of now, they all have the same abilities, which is that they all are a 'PathFollowingEnemy'.
+* **Slime**: Slow-moving enemy with high health.
+* **Skeleton**: Fast-moving enemy with low health.
+* **Bat**: Extremely fast enemy with very low health.
+* **BabyOrc**: Fast enemy with high health.
+* **Golem**: Moderately paced enemy with very high health.
 
 ## Architecture & Design Patterns
 
@@ -86,28 +86,97 @@ Used to define interchangeable behaviors for game entities.
 * **Tower Targeting**: Towers use strategies (e.g., `TargetingFirst`, `TargetingStrongest`) to decide which enemy to attack.
 * **Projectile Movement**: Different projectiles (bullets, fireballs) use movement strategies to define how they travel across the map.
 
-## Useful commands
-Because this is a Java Maven program these are the useful maven commands:
-* **Compile code**: 'mvn compile' or 'mvn clean compile'.
-* **Run the program**: 'mvn exec:java'.
-* **Run the tests**: 'mvn test'.
+---
 
 
-## Tutorial - How to play
+## Game Tutorial
 
-### 1. Main menu
-When you load the game you are met with a main menu page. Here you have two alternatives to play the game or to exit (close down the game). Future implementations are to add different maps and difficulties.
+### 1. Main Menu
 
-### 2. Game 
-#### Game Objective
-The goal of the game is to prevent the enemies to from reaching the end of the path. You do this by placing towers provided on the right sidebar on the maptiles. You cannot place more than one tower on the same tile and and on the lava tiles. Make sure to pay attention to the range of the towers.
+1. Start the game.
+2. The **Main Menu** appears.
+3. Choose one of the following:
+   - **Play** → starts the game.
+   - **Exit** → closes the game.
+4. *(Planned features: map selection and difficulty settings.)*
 
-#### Central Game Area
+---
+
+### 2. 🎮 How to Play the Game
+
+#### 🎯 Game Objective
+Your goal is to **stop enemies from reaching the end of the path** by placing towers along the map.
+
+---
+
+#### 📘 Step-by-Step Gameplay
+
+#### Step 1: Starting the Game
+1. The game begins with **100 HP** and **$100**.
+2. Enemies arrive in **waves**.
+3. There are **15 waves** in total.
+
+---
+
+####  Step 2: Buying a Tower
+1. Look at the **right sidebar**.
+2. Click on one of the **four available towers**.
+3. Move your cursor over the map.
+4. Hover over an **empty tile**.
+5. Click to place the tower.
+
+⚠️ Pay attention to the tower’s **range** so it can hit enemies on the path.
+
+---
+
+#### Step 3: Managing Money
+1. Towers cost different amounts of money.
+2. You earn money by **defeating enemies**.
+3. You can buy towers:
+   - Before the first wave starts
+   - During a wave
+   - After a wave ends
+
+---
+
+####  Step 4: Selling a Tower (Optional)
+1. Click on a tower already placed on the map.
+2. A **Sell** button appears in the action bar.
+3. Click **Sell** to remove the tower.
+4. You receive **50% of the tower’s original cost** back.
+
+---
+
+#### Step 5: Enemy Waves
+1. Each wave becomes more difficult:
+   - More enemies spawn
+   - New enemy types are introduced
+2. Stronger enemies:
+   - Have more health
+   - Deal more damage if they reach the end
+
+---
+
+####  Step 6: Health and Losing
+1. If an enemy reaches the end of the path:
+   - You lose HP.
+2. The amount of HP lost depends on the enemy’s strength.
+3. If your HP reaches **0**, the game is **over**.
+
+---
+
+####  Winning the Game
+- Successfully complete **all 15 waves** to win.
+
+---
+
+### 🗺️ Central Game Area and Action Bar
 * **Map View**: Occupying the majority of the screen is the game board. This is where the action takes place: the map is rendered here, enemies spawn and follow the path, and the player places their towers to defend.
-* **Info & Action Bar**: Directly beneath the map is a sidebar. When a tower on the map is clicked, this area displays its specific details (name and image) and provides a "Sell" button to remove the tower and recover money.
+* **Info & Bottom Sidebar**: Directly beneath the map is an action bar. When a tower on the map is clicked, this area displays its specific details (name and image) and provides a **Sell** button to remove the tower and recover money.
 
-#### Right Sidebar
-* **Stats Panel**: Located at the very top of the sidebar, this panel displays critical player information. It shows the current Health Points (hp) in red and the available money.
+---
+
+### 📊 Right Sidebar
+* **Stats Panel**: Located at the very top of the sidebar, this panel displays critical player information. It shows the current Health Points (HP) in red and the available money.
 * **Tower Shop**: Below the stats is the tower selection grid. This area functions as a shop containing buttons for available towers (e.g., Canon, Sniper, Flame Thrower). Each button displays the tower's icon, name, and cost. Clicking a button selects that tower for placement on the map.
-* **Starting waves**: At the bottom of the sidebar, there is a button used for starting the waves once a wave is finished. 
-  
+* **Starting Waves**: At the bottom of the sidebar, there is a button used for starting the next wave once the current wave is finished.
