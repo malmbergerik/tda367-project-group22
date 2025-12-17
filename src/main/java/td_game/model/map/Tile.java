@@ -1,5 +1,8 @@
 package td_game.model.map;
 
+/**
+ * Represents a single tile with a specific type.
+ */
 public class Tile {
 
     private final String type;
@@ -8,7 +11,7 @@ public class Tile {
         this.type = type;
     }
 
-    //Getter for a tile
+    /** @return the tile type */
     public String getType(){return type;}
 
 

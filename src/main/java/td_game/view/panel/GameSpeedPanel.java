@@ -19,9 +19,11 @@ public class GameSpeedPanel extends JPanel {
     public GameSpeedPanel(int width, int height){
 
         this.setPreferredSize(new Dimension(width, height));
-        this.setBackground(Color.decode("#222222"));
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 30));
+        this.setMinimumSize(new Dimension(width,height));
+        this.setMaximumSize(new Dimension(width,height));
 
+        this.setBackground(Color.decode("#222222"));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 60));
 
         waveLabel = new JLabel();
         waveLabel.setForeground(Color.YELLOW);
@@ -35,22 +37,11 @@ public class GameSpeedPanel extends JPanel {
         startWaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
-        pauseButton = new JButton("Pause");
+        pauseButton = new JButton();
         pauseButton.setPreferredSize(new Dimension(48,48));
         pauseButton.setFocusable(false);
         pauseButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        try (InputStream is = getClass().getResourceAsStream("/assets/pause.png")) {
-            if (is == null) {
-                System.out.println("Image not found!");
-            } else {
-                Image img = ImageIO.read(is);
-                img = img.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
-                pauseButton.setIcon(new ImageIcon(img));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setPauseButtonImage(pauseButton);
 
         pauseButton.setBorderPainted(false);
         pauseButton.setContentAreaFilled(false);
@@ -61,6 +52,18 @@ public class GameSpeedPanel extends JPanel {
         add(pauseButton);
     }
 
+    private void setPauseButtonImage(JButton button){
+        try (InputStream is = getClass().getResourceAsStream("/assets/pause.png")) {
+            if (is == null) {
+                System.out.println("Image not found!");
+            } else {
+                Image img = ImageIO.read(is);
+                button.setIcon(new ImageIcon(img));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /** Update the wave label with the current wave number
      * @param currentWave the current wave number

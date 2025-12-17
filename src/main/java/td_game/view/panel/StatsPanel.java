@@ -23,6 +23,8 @@ public class StatsPanel extends JPanel {
 
 
         this.setPreferredSize(new Dimension(width, height));
+        this.setMinimumSize(new Dimension(width,height));
+        this.setMaximumSize(new Dimension(width,height));
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.decode("#181818"));
 
