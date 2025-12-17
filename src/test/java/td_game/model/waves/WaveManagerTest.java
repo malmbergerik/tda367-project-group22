@@ -109,4 +109,30 @@ class WaveManagerTest {
         // but here we just ensure it didn't throw an exception.
         assertNotNull(waveManager);
     }
+
+    @Test
+    void testWaveStartButton() {
+        assertFalse(waveManager.isWaveActive(), "Button should be ACTIVE initially");
+
+        // Start Wave 1
+        waveManager.startNextWave();
+
+        // Verify: Game is running, Start Button is INACTIVE
+        assertTrue(waveManager.isWaveActive(), "Button should be INACTIVE while wave is running");
+        assertEquals(1, waveManager.getCurrentWave());
+
+        // End of Wave
+        // Skip timers we just tell the manager the wave is done.
+        waveManager.waveFinished();
+
+        // Verify: Game is paused again, Start Button is ACTIVE
+        assertFalse(waveManager.isWaveActive(), "Button should be ACTIVE after wave finishes");
+
+        //  Start Wave 2
+        waveManager.startNextWave();
+
+        // Verify: Game is running again
+        assertTrue(waveManager.isWaveActive(), "Button should be INACTIVE for Wave 2");
+        assertEquals(2, waveManager.getCurrentWave());
+    }
 }
