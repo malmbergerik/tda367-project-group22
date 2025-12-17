@@ -63,6 +63,7 @@ public class GameController implements IGameObserver {
     private void initUIListeners(SideBarPanel sideBar) {
         // Connect the button in the view to the model method
         sideBar.getGameSpeedPanel().addStartWaveListener(e -> model.startNextWave());
+        sideBar.getGameSpeedPanel().addPaueButtonListener(e -> model.togglePause());
     }
 
     @Override

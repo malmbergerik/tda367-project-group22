@@ -1,8 +1,11 @@
 package td_game.view.panel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 
 /**
  * The panel that displays the current wave and a button to start the wave.
@@ -12,12 +15,12 @@ public class GameSpeedPanel extends JPanel {
 
     private JLabel waveLabel;
     private JButton startWaveButton;
-
+    private JButton pauseButton;
     public GameSpeedPanel(int width, int height){
 
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.decode("#222222"));
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 30));
 
 
         waveLabel = new JLabel();
@@ -31,8 +34,31 @@ public class GameSpeedPanel extends JPanel {
         startWaveButton.setFocusable(false);
         startWaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+
+        pauseButton = new JButton("Pause");
+        pauseButton.setPreferredSize(new Dimension(48,48));
+        pauseButton.setFocusable(false);
+        pauseButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        try (InputStream is = getClass().getResourceAsStream("/assets/pause.png")) {
+            if (is == null) {
+                System.out.println("Image not found!");
+            } else {
+                Image img = ImageIO.read(is);
+                img = img.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
+                pauseButton.setIcon(new ImageIcon(img));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        pauseButton.setBorderPainted(false);
+        pauseButton.setContentAreaFilled(false);
+        pauseButton.setFocusPainted(false);
+
         add(waveLabel);
         add(startWaveButton);
+        add(pauseButton);
     }
 
 
@@ -55,4 +81,6 @@ public class GameSpeedPanel extends JPanel {
     public void addStartWaveListener(ActionListener listener) {
         startWaveButton.addActionListener(listener);
     }
+
+    public void addPaueButtonListener(ActionListener listener){pauseButton.addActionListener(listener);}
 }
