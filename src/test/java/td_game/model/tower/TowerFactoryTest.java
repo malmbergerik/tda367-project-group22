@@ -29,8 +29,8 @@ class TowerFactoryTest {
 
         assertNotNull(tower, "Factory should return a tower instance");
         assertTrue(tower instanceof CanonTower, "Should be instance of CanonTower");
-        assertEquals(100, tower.getX(), "X coordinate should match");
-        assertEquals(200, tower.getY(), "Y coordinate should match");
+        assertEquals(100+8, tower.getX(), "X coordinate should match");
+        assertEquals(200+8, tower.getY(), "Y coordinate should match");
     }
 
     @Test

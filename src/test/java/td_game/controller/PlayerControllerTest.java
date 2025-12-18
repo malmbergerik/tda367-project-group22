@@ -19,8 +19,11 @@ class PlayerControllerTest {
     private PlayerController playerController;
     private PlacementController placementController;
     private SelectionController selectionController;
+    private GameModel gameModel;
+
     @BeforeEach
     void setUp() {
+        gameModel = new GameModel(32);
 
         GameModel model = new GameModel(32);
 

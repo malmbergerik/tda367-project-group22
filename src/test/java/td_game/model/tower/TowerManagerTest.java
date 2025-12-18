@@ -9,6 +9,7 @@ import td_game.model.player.PlayerHealth;
 import td_game.model.player.PlayerMoney;
 import td_game.model.projectile.ProjectileManager;
 import td_game.model.towers.ATower;
+import td_game.model.towers.CanonTower;
 import td_game.model.towers.TowerManager;
 import td_game.model.towers.factory.TowerFactory;
 
@@ -21,6 +22,7 @@ class TowerManagerTest {
     private GameModel model;
     private TowerFactory towerFactory;
     private Player player;
+    private ProjectileManager projectileManager;
 
     @BeforeEach
     void setUp() {
@@ -41,7 +43,7 @@ class TowerManagerTest {
     @Test
     void testAddTowerSuccess() {
         // Create a tower (CanonTower costs 10)
-        ATower tower = towerFactory.createTower("CanonTower", 0, 0);
+        CanonTower tower = new CanonTower(0,0,projectileManager);
         int initialMoney = getPlayerMoneyValue(player);
         int towerCost = tower.getValue();
 
@@ -64,7 +66,7 @@ class TowerManagerTest {
         int currentMoney = getPlayerMoneyValue(player);
         player.spendMoney(currentMoney);
 
-        ATower tower = towerFactory.createTower("CanonTower", 0, 0);
+        CanonTower tower = new CanonTower(5,0,projectileManager);
 
         // Attempt to buy
         boolean result = towerManager.addTower(tower);
@@ -75,7 +77,7 @@ class TowerManagerTest {
 
     @Test
     void testRemoveTowerRefundsMoney() {
-        ATower tower = towerFactory.createTower("CanonTower", 0, 0);
+        CanonTower tower = new CanonTower(5,0,projectileManager);
         int cost = tower.getValue();
 
         // Buy
@@ -100,7 +102,7 @@ class TowerManagerTest {
 
     @Test
     void testRemoveTower(){
-        ATower tower = towerFactory.createTower("CanonTower", 0, 0);
+        CanonTower tower = new CanonTower(5,0,projectileManager);
 
         towerManager.addTower(tower);
 

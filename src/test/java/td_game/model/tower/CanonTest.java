@@ -60,9 +60,9 @@ public class CanonTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList),10);
 
-        ATower tower = new CanonTower(5,0,projectileManager);
+        CanonTower tower = new CanonTower(5,0,projectileManager);
 
-        Assertions.assertEquals(5, tower.getX()-enemy.getX());
+        Assertions.assertEquals(5+8, tower.getX()-enemy.getX(), "+8 is from the width of Tower");
     }
 
     @org.junit.jupiter.api.Test
@@ -71,8 +71,8 @@ public class CanonTest {
         List<Waypoint> pathList = new ArrayList<>();
         ABaseEnemy enemy = new Skeleton(1,1,new Path(pathList),10);
 
-        ATower tower = new CanonTower(0,5,projectileManager);
+        CanonTower tower = new CanonTower(0,5,projectileManager);
 
-        Assertions.assertEquals(5, tower.getY() - enemy.getY());
+        Assertions.assertEquals(5+8, tower.getY() - enemy.getY(),"+8 is from the width of Tower");
     }
 }
