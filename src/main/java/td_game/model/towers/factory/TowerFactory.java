@@ -73,4 +73,16 @@ public class TowerFactory  {
     public boolean isValidTower(String name) {
         return factories.containsKey(name);
     }
+
+    public Map<String, Integer> getTowerPrices() {
+        Map<String, Integer> prices = new HashMap<>();
+        for (String name: factories.keySet()) {
+            ATower temp = createTower(name, 0,0);
+            if (temp != null) {
+                prices.put(name, temp.getValue());
+            }
+        }
+
+        return prices;
+    }
 }

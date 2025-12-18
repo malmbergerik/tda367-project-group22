@@ -21,7 +21,7 @@ public class AppController {
     public AppController(GameModel model, IGameLoop gameLoop,  int windowWidth, int windowHeight, int gameWidth, int gameHeight) {
 
         TileViewManager tileManager = new TileViewManager();
-        TowerViewManager towerManager = new TowerViewManager();
+        TowerViewManager towerManager = new TowerViewManager(model.getTowerPrices());
         EnemyViewManager enemyManager = new EnemyViewManager();
         ProjectileViewManager projectileManager = new ProjectileViewManager();
 
