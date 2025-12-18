@@ -2,6 +2,7 @@ package td_game.model.modelnit;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import td_game.model.enemy.ABaseEnemy;
@@ -176,6 +177,10 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
     public List<ATower> getActiveTowers() {
         return activeTowers;
+    }
+
+    public Map<String, Integer> getTowerPrices() {
+        return towerFactory.getTowerPrices();
     }
 
     public void addProjectile(Projectile projectile) {
