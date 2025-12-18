@@ -19,11 +19,15 @@ class PlayerControllerTest {
     private PlayerController playerController;
     private PlacementController placementController;
     private SelectionController selectionController;
+    private GameModel gameModel;
+
     @BeforeEach
     void setUp() {
+        gameModel = new GameModel(32);
 
         TileViewManager tileManager = new TileViewManager();
-        TowerViewManager towerManager = new TowerViewManager();
+
+        TowerViewManager towerManager = new TowerViewManager(gameModel.getTowerPrices());
         EnemyViewManager enemyManager = new EnemyViewManager();
         ProjectileViewManager projectileManager = new ProjectileViewManager();
 
@@ -35,9 +39,9 @@ class PlayerControllerTest {
         );
 
         GamePanel gameView = new GamePanel(10, 10, renderingContext, towerManager);
-        GameModel model = new GameModel(32);
-        selectionController = new SelectionController(model, gameView.getBottomBar(),gameView.getGameViewPanel().getSCALE());
-        placementController = new PlacementController(model,gameView.getGameViewPanel());
+        gameModel = new GameModel(32);
+        selectionController = new SelectionController(gameModel, gameView.getBottomBar(), gameView.getGameViewPanel().getSCALE());
+        placementController = new PlacementController(gameModel, gameView.getGameViewPanel());
         playerController = new PlayerController(placementController, selectionController);
 
     }
