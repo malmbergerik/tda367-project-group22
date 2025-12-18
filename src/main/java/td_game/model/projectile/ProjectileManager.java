@@ -91,10 +91,7 @@ public class ProjectileManager {
             if (!p.getIsAlive()) {
                 activeProjectiles.remove(i);
             }
-
             gameModel.notifyObserver(new ProjectileUpdateEvent());
-
-
         }
     }
 }
