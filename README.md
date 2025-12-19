@@ -113,8 +113,9 @@ Your goal is to **stop enemies from reaching the end of the path** by placing to
 
 #### Step 1: Starting the Game
 1. The game begins with **100 HP** and **$100**.
-2. Enemies arrive in **waves**.
-3. There are **15 waves** in total.
+2. Press the "Start Wave" button to start first wave.
+3. Enemies arrive in **waves**.
+4. There are **15 waves** in total.
 
 ---
 
