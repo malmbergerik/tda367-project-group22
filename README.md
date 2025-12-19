@@ -173,10 +173,11 @@ Your goal is to **stop enemies from reaching the end of the path** by placing to
 ### 🗺️ Central Game Area and Action Bar
 * **Map View**: Occupying the majority of the screen is the game board. This is where the action takes place: the map is rendered here, enemies spawn and follow the path, and the player places their towers to defend.
 * **Info & Bottom Sidebar**: Directly beneath the map is an action bar. When a tower on the map is clicked, this area displays its specific details (name and image) and provides a **Sell** button to remove the tower and recover money.
-
+* **Starting Waves**: To the right of the action bar, there is a button used for starting the next wave once the current wave is finished.
+* **Pausing game**: Next to the “Start Wave” button, there is a pause button.
 ---
 
 ### 📊 Right Sidebar
 * **Stats Panel**: Located at the very top of the sidebar, this panel displays critical player information. It shows the current Health Points (HP) in red and the available money.
 * **Tower Shop**: Below the stats is the tower selection grid. This area functions as a shop containing buttons for available towers (e.g., Canon, Sniper, Flame Thrower). Each button displays the tower's icon, name, and cost. Clicking a button selects that tower for placement on the map.
-* **Starting Waves**: At the bottom of the sidebar, there is a button used for starting the next wave once the current wave is finished.
+
