@@ -3,45 +3,60 @@
 # Wave 1: Intro - Just Slimes
 1 Slime 20 0.2 0
 
-# Wave 2: The Bats join
+# Wave 2:
 2 Slime 50 0.1 0
 
 
-# Wave 3: Skeleton join
+# Wave 3:
 3 Slime 25 0.2 0
 3 Skeleton 15 0.1 0
-3 Bat 100 0.1 0.2
+3 Bat 30 0.1 0.3
 
 # Wave 4:
-4 Skeleton 25 0.2 0
-4 Bat 50 0.1 0.3
-4 Skeleton 25 0.2 0
-4 Bat 50 0.1 0.3
+4 Slime 25 0.1 0
+4 Skeleton 45 0.1 0
+4 Bat 70 0.1 0.3
+4 Skeleton 45 0.2 0
+4 Bat 80 0.1 0.1
 
 # Wave 5:
-5 Skeleton 10 0.8 0
-5 BabyOrc 5 0.6 2.0
+5 Slime 30 0.1 0
+5 Skeleton 50 0.1 0
+5 BabyOrc 30 0.1 0
+5 Bat 100 0.1 0
 
 
 # Wave 6:
-6 Bat 20 0.6 0
-6 BabyOrc 8 1.0 0.5
+6 Slime 100 0.1 0
+5 BabyOrc 50 0.1 0
+6 Skeleton 45 0.1 0
+6 Bat 100 0.1 0
 
 # Wave 7:
-7 Slime 40 0.4 0
-7 Skeleton 20 0.5 2.0
+7 Slime 60 0.1 0
+7 Skeleton 100 0.1 0
+7 BabyOrc 100 0.1 0
+7 Bat 100 0.1 0
 
 # Wave 8:
-8 BabyOrc 15 1.5 0
-8 Skeleton 20 0.6 2.0
+8 Slime 40 0.1 0
+8 Skeleton 100 0.1 0
+8 Bat 80 0.1 0
+8 BabyOrc 120 0.1 0
 
 # Wave 9:
-9 Bat 30 0.2 0
-9 BabyOrc 10 1.0 0.1
+9 Slime 70 0.1 0
+9 Bat 60 0.1 0
+9 BabyOrc 80 0.1 0
+9 Bat 60 0.1 0
+
 
 # Wave 10:
-10 Skeleton 50 0.3 0
-10 Slime 30 0.4 0.1
+10 Skeleton 80 0.1 0
+10 Slime 60 0.1 0
+10 BabyOrc 100 0.1 0
+10 Bat 120 0.1 0
+
 
 # --- LATE GAME ---
 
