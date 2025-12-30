@@ -38,7 +38,7 @@ public class CanonTower extends ATower{
     {
         super(x,y,25,
                 new SingleAttackStrategy(
-                        new ProjectileFactory(new BasicMovementStrategy(1),new BasicPierceStrategy(5),new BasicDamageTypeStrategy(1),new BasicLifeTimeStrategy(120),new BasicRoundSizeStrategy(50,50), "Bullet"),
+                        new ProjectileFactory(new BasicMovementStrategy(1),new BasicPierceStrategy(5),new BasicDamageTypeStrategy(5),new BasicLifeTimeStrategy(120),new BasicRoundSizeStrategy(50,50), "Bullet"),
                         projectileManager
                 ),
                 new NormalCircularRangeStrategy(80),

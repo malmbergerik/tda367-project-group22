@@ -10,7 +10,7 @@
 # Wave 3:
 3 Slime 25 0.2 0
 3 Skeleton 15 0.1 0
-3 Bat 30 0.1 0.3
+3 Bat 20 0.1 0.3
 
 # Wave 4:
 4 Slime 25 0.1 0
