@@ -43,7 +43,7 @@ public class FireTackTower extends ATower{
 
                         projectileManager
                 ),
-                new NormalCircularRangeStrategy(80),
+                new NormalCircularRangeStrategy(40),
                 new BasicCooldownStrategy(20),
                 new TargetingFirst(),
                 new GrassOnlyPlacementRule());

@@ -103,7 +103,7 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         enemyFactory.registerFactory("Skeleton", path -> new Skeleton(100, 0.4, path,3));
         enemyFactory.registerFactory("Golem",    path -> new Golem(10000, 0.1, path,100));
         enemyFactory.registerFactory("Bat",      path -> new Bat(60, 0.7, path,2));
-        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(250, 0.6, path,4));
+        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(200, 0.6, path,4));
 
         this.enemyManager = new EnemyManager(this.activeEnemies, this, damageSystem, moneySystem);
 
