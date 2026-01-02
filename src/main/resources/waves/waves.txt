@@ -10,50 +10,49 @@
 # Wave 3:
 3 Slime 25 0.2 0
 3 Skeleton 10 0.1 0
-3 Bat 15 0.1 0.3
+3 Bat 17 0.1 0.3
 
 # Wave 4:
 4 Slime 25 0.1 0
 4 Skeleton 35 0.1 0
 4 Bat 50 0.1 0.3
-4 Skeleton 30 0.2 0
-4 Bat 50 0.1 0.1
+4 Skeleton 20 0.2 0
 
 # Wave 5:
 5 Slime 20 0.1 0
-5 BabyOrc 30 0.1 0
+5 BabyOrc 35 0.1 0
 5 Skeleton 50 0.1 0
-5 Bat 100 0.1 0
+5 Bat 60 0.1 0
 
 
 # Wave 6:
-6 Slime 50 0.05 0
-5 BabyOrc 60 0.1 0
-6 Skeleton 55 0.1 0
-6 Bat 100 0.1 0
+6 Slime 20 0.05 0
+6 Skeleton 40 0.1 0
+6 BabyOrc 60 0.1 0
+6 Bat 60 0.1 0
 
 # Wave 7:
 7 Slime 30 0.1 0
-7 Skeleton 100 0.1 0
-7 BabyOrc 90 0.05 0
-7 Bat 100 0.1 0
+7 Skeleton 50 0.1 0
+7 BabyOrc 90 0.07 0
+7 Bat 60 0.1 0
 
 # Wave 8:
 8 Slime 20 0.1 0
-8 BabyOrc 140 0.05 0
-8 Bat 80 0.1 0
-8 Skeleton 60 0.1 0
+8 BabyOrc 150 0.05 0
+8 Bat 50 0.1 0
+
 
 # Wave 9:
-9 Slime 20 0.1 0
-9 BabyOrc 150 0.1 0
-9 Bat 100 0.1 0
+9 Slime 30 0.08 0
+9 BabyOrc 220 0.05 0
+9 Bat 80 0.1 0
 
 
 
 # Wave 10:
 10 Skeleton 50 0.1 0
-10 BabyOrc 250 0.05 0
+10 BabyOrc 280 0.04 0
 10 Slime 20 0.1 0
 10 Golem 1 0.0 0.1
 10 Bat 120 0.1 0
