@@ -69,7 +69,7 @@ public class GameSpeedPanel extends JPanel {
      * @param currentWave the current wave number
      */
     public void updateWave(int currentWave) {
-        waveLabel.setText(currentWave + " / " + "15");
+        waveLabel.setText(currentWave + " / " + "10");
     }
 
     /** Enable or disable the start wave button

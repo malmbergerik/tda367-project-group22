@@ -41,7 +41,7 @@ public class SniperTower extends ATower{
                         new ProjectileFactory(new BasicMovementStrategy(4),new BasicPierceStrategy(10),new BasicDamageTypeStrategy(50),new BasicLifeTimeStrategy(400),new BasicRoundSizeStrategy(8,8), "Bullet"),
                         projectileManager
                 ),
-                new NormalCircularRangeStrategy(200),
+                new NormalCircularRangeStrategy(120),
                 new BasicCooldownStrategy(100),
                 new TargetingFirst(),
                 new GrassOnlyPlacementRule());
