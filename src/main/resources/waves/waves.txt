@@ -1,7 +1,8 @@
 
 # Name of enemy, count, interval between spawns (seconds), delay before wave starts (seconds)
 # Wave 1: Intro - Just Slimes
-1 Slime 20 0.2 0
+1 Slime 20 0.5 0
+
 
 # Wave 2:
 2 Slime 50 0.1 0
