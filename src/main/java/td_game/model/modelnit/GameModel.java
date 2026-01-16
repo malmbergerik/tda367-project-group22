@@ -93,17 +93,17 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
         this.pathManager = new PathManager();
         this.currentPath = pathManager.getPathForMap(gridMap);
 
-        this.player = new Player(new PlayerHealth(100), new PlayerMoney(100));
+        this.player = new Player(new PlayerHealth(40), new PlayerMoney(1000));
         player.addObserver(this);
         this.damageSystem = new DamageSystem(player);
         this.moneySystem = new MoneySystem(player);
 
         this.enemyFactory = new EnemyFactory();
-        enemyFactory.registerFactory("Slime",    path -> new Slime(80, 0.2, path,1));
-        enemyFactory.registerFactory("Skeleton", path -> new Skeleton(100, 0.4, path,3));
+        enemyFactory.registerFactory("Slime",    path -> new Slime(40, 0.2, path,1));
+        enemyFactory.registerFactory("Skeleton", path -> new Skeleton(80, 0.4, path,8));
         enemyFactory.registerFactory("Golem",    path -> new Golem(21000, 0.1, path,100));
-        enemyFactory.registerFactory("Bat",      path -> new Bat(60, 0.7, path,2));
-        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(230, 0.6, path,4));
+        enemyFactory.registerFactory("Bat",      path -> new Bat(50, 0.7, path,2));
+        enemyFactory.registerFactory("BabyOrc",  path -> new BabyOrc(200, 0.6, path,4));
 
         this.enemyManager = new EnemyManager(this.activeEnemies, this, damageSystem, moneySystem);
 
@@ -204,7 +204,6 @@ public class GameModel implements GameObservable, IUpdatable, IPlayerObserver {
 
         enemyManager.update();
         waveManager.update();
-
 
         if (waveManager.isWaveComplete() && activeEnemies.isEmpty()) {
             waveManager.waveFinished();
